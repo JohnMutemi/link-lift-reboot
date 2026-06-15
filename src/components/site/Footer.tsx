@@ -1,0 +1,78 @@
+import { Link } from "@tanstack/react-router";
+import { Twitter, Facebook, Linkedin, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="bg-navy text-white/70 pt-20 pb-10">
+      <div className="container mx-auto px-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-sm">
+          <div>
+            <Link to="/" className="flex items-center gap-2.5 mb-6">
+              <div className="w-10 h-10 bg-white flex items-center justify-center rounded-sm">
+                <span className="text-navy font-bold text-xl font-display">L</span>
+              </div>
+              <span className="font-display text-xl text-white uppercase tracking-tighter font-extrabold">
+                Link <span className="text-cyan">Freight</span>
+              </span>
+            </Link>
+            <p className="leading-relaxed mb-6">
+              Specialized freight and logistics across East Africa &mdash; dry containers, reefer
+              units, gensets, and inland haulage tailored to every shipment.
+            </p>
+            <div className="flex gap-3">
+              {[Twitter, Facebook, Linkedin, Instagram, Youtube].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="size-9 grid place-items-center border border-white/15 hover:border-cyan hover:text-cyan transition-colors rounded-sm"
+                  aria-label="social"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">Quick Links</h4>
+            <ul className="space-y-3">
+              <li><Link to="/about" className="hover:text-cyan transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="hover:text-cyan transition-colors">Our Services</Link></li>
+              <li><Link to="/fleet" className="hover:text-cyan transition-colors">Our Fleet</Link></li>
+              <li><Link to="/blog" className="hover:text-cyan transition-colors">Latest Blogs</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan transition-colors">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">Operating Hours</h4>
+            <ul className="space-y-3">
+              <li>Mon &ndash; Fri: 08:00 &ndash; 17:00</li>
+              <li>Sat: 08:00 &ndash; 13:00</li>
+              <li>Sun: Closed</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">Get In Touch</h4>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3"><MapPin className="size-4 text-cyan shrink-0 mt-0.5" /> Off Airport North Road, Nairobi</li>
+              <li className="flex items-center gap-3"><Phone className="size-4 text-cyan shrink-0" /> +254 721 121 287</li>
+              <li className="flex items-center gap-3"><Mail className="size-4 text-cyan shrink-0" /> info@linkfreightltd.co.ke</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+          <p>&copy; {new Date().getFullYear()} Link Freight Logistics Limited. All Rights Reserved.</p>
+          <div className="flex gap-6 uppercase tracking-widest font-bold">
+            <span className="text-cyan">Dry</span>
+            <span>Reefer</span>
+            <span>Gensets</span>
+            <span>Haulage</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
