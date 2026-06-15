@@ -1,29 +1,244 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Container, Snowflake, Zap, Truck, ShieldCheck, Clock, Globe2, Quote } from "lucide-react";
+import heroPort from "@/assets/hero-port.jpg";
+import yard from "@/assets/yard.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Link Freight Logistics Ltd — Precision Freight Across East Africa" },
+      {
+        name: "description",
+        content:
+          "End-to-end freight solutions from Nairobi: dry containers, reefer units, gensets, and inland haulage tailored to every shipment.",
+      },
+      { property: "og:title", content: "Link Freight Logistics Ltd" },
+      {
+        property: "og:description",
+        content: "Precision freight across East Africa — dry, reefer, gensets, haulage.",
+      },
+      { property: "og:image", content: heroPort },
+      { property: "twitter:image", content: heroPort },
     ],
   }),
-  component: Index,
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const services = [
+  { Icon: Container, title: "Dry Containers", desc: "Standard 20ft & 40ft shipping for non-perishable goods, with global reach and door-to-door tracking." },
+  { Icon: Snowflake, title: "Reefer Containers", desc: "Climate-controlled logistics for sensitive perishables and pharmaceuticals across long distances." },
+  { Icon: Zap, title: "Gensets", desc: "Continuous power solutions for refrigerated transport — keeping the cold chain unbroken." },
+  { Icon: Truck, title: "Inland Haulage", desc: "Reliable road transport across Kenya and the Northern Corridor, bridging ports and hubs." },
+];
+
+const stats = [
+  { value: "15+", label: "Years of Service" },
+  { value: "200+", label: "Fleet Units" },
+  { value: "99.8%", label: "On-Time Delivery" },
+  { value: "08", label: "Active Corridors" },
+];
+
+const posts = [
+  { tag: "Logistics", title: "Why reefer logistics is reshaping East African horticulture exports", date: "May 2026" },
+  { tag: "Operations", title: "Inside the Northern Corridor: cutting transit time Mombasa → Kampala", date: "Apr 2026" },
+  { tag: "Industry", title: "Gensets explained: keeping the cold chain alive on long-haul road freight", date: "Mar 2026" },
+];
+
+function HomePage() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      {/* HERO */}
+      <section className="relative h-[85vh] min-h-[560px] flex items-center overflow-hidden bg-navy">
+        <img
+          src={heroPort}
+          alt="Container ship at the Port of Mombasa at dusk"
+          className="absolute inset-0 w-full h-full object-cover opacity-45"
+          width={1920}
+          height={1080}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-transparent" />
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-2xl lf-reveal">
+            <div className="inline-block bg-cyan px-3 py-1 mb-6">
+              <span className="text-navy text-xs font-bold uppercase tracking-widest">Logistics Excellence</span>
+            </div>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.9] mb-8 font-extrabold">
+              East Africa's <br />
+              <span className="text-cyan">Premier Gateway</span>
+            </h1>
+            <p className="text-lg text-slate-300 mb-10 max-w-lg">
+              Precision logistics from Nairobi to the world. We orchestrate dry, reefer and genset freight
+              with engineered reliability and real-time visibility.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/services"
+                className="bg-white text-navy px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-cyan hover:text-white transition-all"
+              >
+                Explore Services
+              </Link>
+              <Link
+                to="/contact"
+                className="border border-white/30 text-white px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-white/10 transition-all"
+              >
+                Get A Quote
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="bg-white border-b border-slate-100">
+        <div className="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-100">
+          {stats.map((s) => (
+            <div key={s.label} className="py-10 px-6 text-center">
+              <div className="font-display text-4xl md:text-5xl font-extrabold text-navy">{s.value}</div>
+              <div className="mt-2 text-xs uppercase tracking-widest text-slate-500 font-medium">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-xl">
+              <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">What We Do</span>
+              <h2 className="font-display text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy">
+                Core Operational <span className="text-cyan">Services</span>
+              </h2>
+              <p className="text-slate-600 mt-4">
+                End-to-end freight solutions tailored for the Kenyan market and international transit corridors.
+              </p>
+            </div>
+            <div className="h-px flex-1 bg-slate-200 hidden md:block mx-12" />
+            <div className="text-orange font-bold text-sm uppercase tracking-widest">Link Freight Ltd</div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map(({ Icon, title, desc }) => (
+              <Link
+                key={title}
+                to="/services"
+                className="group bg-white p-8 border-b-4 border-slate-200 hover:border-cyan transition-all duration-300 shadow-sm hover:shadow-lg"
+              >
+                <div className="w-12 h-12 bg-navy/5 flex items-center justify-center mb-6 group-hover:bg-cyan/10 transition-colors">
+                  <Icon className="size-6 text-navy group-hover:text-cyan transition-colors" />
+                </div>
+                <h3 className="font-display text-xl uppercase mb-3 text-navy">{title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6">{desc}</p>
+                <div className="text-xs font-bold text-navy group-hover:text-cyan transition-colors tracking-widest uppercase flex items-center gap-1">
+                  Learn More <ArrowRight className="size-3.5" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT BAND */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <img
+              src={yard}
+              alt="Aerial view of a Mombasa container yard"
+              loading="lazy"
+              width={1280}
+              height={900}
+              className="w-full aspect-[4/3] object-cover"
+            />
+            <div className="absolute -bottom-6 -right-6 bg-orange text-white p-6 max-w-[220px] hidden md:block">
+              <div className="font-display text-3xl font-extrabold">Since 2008</div>
+              <div className="text-xs uppercase tracking-widest mt-1">Moving Africa's economy</div>
+            </div>
+          </div>
+          <div>
+            <span className="text-xs uppercase font-mono tracking-[0.2em] text-cyan">Who We Are</span>
+            <h2 className="font-display text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy">
+              Engineered for <span className="text-cyan">unique</span> shipments.
+            </h2>
+            <p className="text-slate-600 mt-6 leading-relaxed">
+              Link Freight Logistics Ltd specialises in the transportation of complex shipments, each tailored
+              to meet the unique needs of our clients. Our versatility is evident in our deployment of
+              dry containers, reefer containers, and gensets — selected for the specific requirements of
+              every load we move.
+            </p>
+            <ul className="mt-8 space-y-3 text-sm text-navy">
+              <li className="flex items-center gap-3"><ShieldCheck className="size-5 text-cyan" /> ISO-aligned safety and compliance protocols</li>
+              <li className="flex items-center gap-3"><Clock className="size-5 text-cyan" /> 24/7 dispatch with real-time tracking</li>
+              <li className="flex items-center gap-3"><Globe2 className="size-5 text-cyan" /> Cross-border presence: Kenya, Uganda, Rwanda, South Sudan</li>
+            </ul>
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 mt-10 bg-navy text-white px-7 py-3.5 font-bold uppercase tracking-widest text-sm hover:bg-cyan transition-colors"
+            >
+              About Link Freight <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIAL */}
+      <section className="py-24 bg-navy text-white relative overflow-hidden">
+        <div className="container mx-auto px-6 max-w-3xl text-center">
+          <Quote className="size-10 text-cyan mx-auto mb-6" />
+          <p className="font-display text-2xl md:text-3xl leading-snug">
+            “Link Freight handles our cold chain shipments with surgical precision. Their reefer
+            and genset deployment across the Northern Corridor has transformed our distribution
+            in Kigali and Kampala.”
+          </p>
+          <div className="mt-8 text-sm uppercase tracking-widest text-cyan font-bold">
+            Director of Logistics &mdash; Global Pharma East Africa
+          </div>
+        </div>
+      </section>
+
+      {/* BLOG TEASER */}
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
+            <div>
+              <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">Insights</span>
+              <h2 className="font-display text-4xl uppercase mt-3 font-extrabold text-navy">Latest from the Yard</h2>
+            </div>
+            <Link to="/blog" className="text-sm font-bold uppercase tracking-widest text-navy hover:text-cyan inline-flex items-center gap-2">
+              All Posts <ArrowRight className="size-4" />
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {posts.map((p) => (
+              <article key={p.title} className="bg-white p-8 border-b-4 border-slate-200 hover:border-cyan transition-all shadow-sm hover:shadow-lg group">
+                <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-slate-500 mb-4">
+                  <span className="text-orange font-bold">{p.tag}</span> &middot; <span>{p.date}</span>
+                </div>
+                <h3 className="font-display text-xl uppercase text-navy leading-snug group-hover:text-cyan transition-colors">{p.title}</h3>
+                <Link to="/blog" className="mt-6 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-navy group-hover:text-cyan transition-colors">
+                  Read Article <ArrowRight className="size-3.5" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-orange">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+          <h2 className="font-display text-3xl md:text-4xl uppercase text-white font-extrabold max-w-2xl">
+            Got a shipment that needs precision? Let's move it.
+          </h2>
+          <Link
+            to="/contact"
+            className="bg-white text-navy px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-navy hover:text-white transition-all whitespace-nowrap"
+          >
+            Get A Quote
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }
