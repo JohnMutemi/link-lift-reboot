@@ -48,39 +48,43 @@ function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative h-[85vh] min-h-[560px] flex items-center overflow-hidden bg-navy">
+      <section className="relative min-h-[560px] sm:min-h-[640px] lg:h-[85vh] flex items-center overflow-hidden bg-navy py-20 sm:py-24 lg:py-0">
         <img
           src={heroPort}
-          alt="Container ship at the Port of Mombasa at dusk"
-          className="absolute inset-0 w-full h-full object-cover opacity-45"
+          alt="Link Freight fleet of orange Scania and MAN trucks with crew in safety vests"
+          className="absolute inset-0 w-full h-full object-cover opacity-55"
           width={1920}
           height={1080}
+          fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-transparent to-navy/40" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-2xl lf-reveal">
-            <div className="inline-block bg-cyan px-3 py-1 mb-6">
-              <span className="text-navy text-xs font-bold uppercase tracking-widest">Logistics Excellence</span>
+            <div className="inline-block bg-cyan px-3 py-1 mb-5 sm:mb-6">
+              <span className="text-navy text-[10px] sm:text-xs font-bold uppercase tracking-widest">
+                Logistics Excellence
+              </span>
             </div>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.9] mb-8 font-extrabold">
+            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.95] mb-6 sm:mb-8 font-extrabold">
               East Africa's <br />
               <span className="text-cyan">Premier Gateway</span>
             </h1>
-            <p className="text-lg text-slate-300 mb-10 max-w-lg">
+            <p className="text-base sm:text-lg text-slate-300 mb-8 sm:mb-10 max-w-lg">
               Precision logistics from Nairobi to the world. We orchestrate dry, reefer and genset freight
               with engineered reliability and real-time visibility.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link
                 to="/services"
-                className="bg-white text-navy px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-cyan hover:text-white transition-all"
+                className="bg-white text-navy px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-cyan hover:text-white transition-all text-center"
               >
                 Explore Services
               </Link>
               <Link
                 to="/contact"
-                className="border border-white/30 text-white px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-white/10 transition-all"
+                className="border border-white/30 text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white/10 transition-all text-center"
               >
                 Get A Quote
               </Link>

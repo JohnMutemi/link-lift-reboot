@@ -1,20 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { Twitter, Facebook, Linkedin, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="bg-navy text-white/70 pt-20 pb-10">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-sm">
+    <footer className="bg-navy text-white/70 pt-16 sm:pt-20 pb-10">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 text-sm">
           <div>
-            <Link to="/" className="flex items-center gap-2.5 mb-6">
-              <div className="w-10 h-10 bg-white flex items-center justify-center rounded-sm">
-                <span className="text-navy font-bold text-xl font-display">L</span>
-              </div>
-              <span className="font-display text-xl text-white uppercase tracking-tighter font-extrabold">
-                Link <span className="text-cyan">Freight</span>
-              </span>
-            </Link>
+            <div className="mb-6">
+              <Logo variant="light" />
+            </div>
             <p className="leading-relaxed mb-6">
               Specialized freight and logistics across East Africa &mdash; dry containers, reefer
               units, gensets, and inland haulage tailored to every shipment.
@@ -24,7 +20,7 @@ export function Footer() {
                 <a
                   key={i}
                   href="#"
-                  className="size-9 grid place-items-center border border-white/15 hover:border-cyan hover:text-cyan transition-colors rounded-sm"
+                  className="size-9 grid place-items-center border border-white/15 hover:border-cyan hover:text-cyan hover:bg-cyan/10 transition-colors rounded-sm"
                   aria-label="social"
                 >
                   <Icon className="size-4" />
