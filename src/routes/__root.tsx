@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { TopBar } from "../components/site/TopBar";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
+import { ScrollToTop } from "../components/site/ScrollToTop";
 
 function NotFoundComponent() {
   return (
@@ -137,6 +138,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <ScrollToTop />
       </div>
     </QueryClientProvider>
   );
