@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logoAsset from "@/assets/link-freight-logo.png.asset.json";
+import logoAsset from "@/assets/link-freight-mark.png.asset.json";
 
 type Variant = "dark" | "light";
 
@@ -20,9 +20,10 @@ export function Logo({
       <img
         src={logoAsset.url}
         alt="Link Freight Logistics"
-        width={56}
-        height={36}
-        className="h-8 sm:h-10 lg:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow"
+        width={72}
+        height={44}
+        className="h-9 sm:h-11 lg:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 bg-transparent"
+        style={{ background: "transparent" }}
       />
       <span
         className={`font-display text-lg sm:text-xl lg:text-2xl tracking-tight uppercase font-extrabold leading-none flex flex-col ${

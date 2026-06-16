@@ -48,17 +48,19 @@ function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative min-h-[560px] sm:min-h-[640px] lg:h-[85vh] flex items-center overflow-hidden bg-navy py-20 sm:py-24 lg:py-0">
+      <section className="relative min-h-[560px] sm:min-h-[640px] lg:h-[85vh] flex items-center overflow-hidden bg-[#0a1f44] py-20 sm:py-24 lg:py-0">
         <img
           src={heroPort}
           alt="Link Freight fleet of orange Scania and MAN trucks with crew in safety vests"
-          className="absolute inset-0 w-full h-full object-cover opacity-55"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-luminosity"
           width={1920}
           height={1080}
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-transparent to-navy/40" />
+        {/* Deep navy wash to match brand palette — image reads as a subtle texture, not a photo */}
+        <div className="absolute inset-0 bg-[#0a1f44]/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1f44] via-[#0a1f44]/90 to-[#0a1f44]/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1f44] via-transparent to-[#0a1f44]/50" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-2xl lf-reveal">
