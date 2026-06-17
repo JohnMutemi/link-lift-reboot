@@ -1,13 +1,14 @@
 import { useLocation } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Twitter, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
+import { SITE, socialLinks } from "@/lib/site-config";
 
-const socials = [
-  { Icon: Twitter, href: "#", label: "Twitter" },
-  { Icon: Facebook, href: "#", label: "Facebook" },
-  { Icon: Linkedin, href: "#", label: "LinkedIn" },
-  { Icon: Instagram, href: "#", label: "Instagram" },
-  { Icon: Youtube, href: "#", label: "YouTube" },
-];
+const socialIcons = {
+  twitter: Twitter,
+  facebook: Facebook,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  youtube: Youtube,
+} as const;
 
 function ContactRow() {
   return (
@@ -31,16 +32,24 @@ function ContactRow() {
 function Socials() {
   return (
     <div className="flex items-center gap-3 shrink-0">
-      {socials.map(({ Icon, href, label }) => (
-        <a
-          key={label}
-          href={href}
-          aria-label={label}
-          className="size-6 grid place-items-center rounded-full border border-white/20 text-white/80 hover:text-cyan hover:border-cyan transition-colors"
-        >
-          <Icon className="size-3" />
-        </a>
-      ))}
+      {socialLinks.map(({ key, label }) => {
+        const Icon = socialIcons[key];
+        const href = SITE.social[key] || "#";
+
+        return (
+          <a
+            key={key}
+            href={href}
+            aria-label={label}
+            {...(SITE.social[key]
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : { "aria-disabled": true, tabIndex: -1 })}
+            className="size-6 grid place-items-center rounded-full border border-white/20 text-white/80 hover:text-cyan hover:border-cyan transition-colors"
+          >
+            <Icon className="size-3" />
+          </a>
+        );
+      })}
     </div>
   );
 }
@@ -52,7 +61,6 @@ export function TopBar() {
   return (
     <div className="w-full bg-navy text-white/90 text-[11px] sm:text-xs border-b border-white/10">
       <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
-        {/* Mobile: compact phone + socials only */}
         <div className="flex sm:hidden items-center justify-between gap-2">
           <a href="tel:+254721121287" className="flex items-center gap-1.5 truncate">
             <Phone className="size-3 text-cyan shrink-0" />
@@ -61,9 +69,8 @@ export function TopBar() {
           <Socials />
         </div>
 
-        {/* Tablet/Desktop: contact row + socials, with marquee on home */}
-        <div className="hidden sm:flex items-center justify-between gap-6">
-          <div className="relative flex-1 min-w-0 overflow-hidden">
+        <div className="hidden sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-4">
+          <div className="relative min-w-0 overflow-hidden">
             {isHome ? (
               <div className="lf-marquee-track lf-marquee-animate">
                 <ContactRow />
@@ -73,7 +80,14 @@ export function TopBar() {
               <ContactRow />
             )}
           </div>
-          <Socials />
+
+          <p className="hidden md:block text-cyan/90 font-medium tracking-wide text-center whitespace-nowrap px-2">
+            {SITE.tagline}
+          </p>
+
+          <div className="justify-self-end">
+            <Socials />
+          </div>
         </div>
       </div>
     </div>

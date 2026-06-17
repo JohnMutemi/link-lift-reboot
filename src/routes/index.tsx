@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Container, Snowflake, Zap, Truck, ShieldCheck, Clock, Globe2, Quote } from "lucide-react";
-import heroPort from "@/assets/hero-port.jpg";
-import yard from "@/assets/yard.jpg";
+import { HeroCarousel } from "@/components/site/HeroCarousel";
+import { SiteCard, SiteCardIcon } from "@/components/site/SiteCard";
+
+const HERO_OG_IMAGE = "/hero-carousel-1.jpg";
+const yard = "/about-1.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,8 +20,8 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Precision freight across East Africa — dry, reefer, gensets, haulage.",
       },
-      { property: "og:image", content: heroPort },
-      { property: "twitter:image", content: heroPort },
+      { property: "og:image", content: HERO_OG_IMAGE },
+      { property: "twitter:image", content: HERO_OG_IMAGE },
     ],
   }),
   component: HomePage,
@@ -47,69 +50,23 @@ const posts = [
 function HomePage() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[560px] sm:min-h-[640px] lg:h-[85vh] flex items-center overflow-hidden bg-[#0a1f44] py-20 sm:py-24 lg:py-0">
-        <img
-          src={heroPort}
-          alt="Link Freight fleet of orange Scania and MAN trucks with crew in safety vests"
-          className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-luminosity"
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-        />
-        {/* Deep navy wash to match brand palette — image reads as a subtle texture, not a photo */}
-        <div className="absolute inset-0 bg-[#0a1f44]/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1f44] via-[#0a1f44]/90 to-[#0a1f44]/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1f44] via-transparent to-[#0a1f44]/50" />
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-2xl lf-reveal">
-            <div className="inline-block bg-cyan px-3 py-1 mb-5 sm:mb-6">
-              <span className="text-navy text-[10px] sm:text-xs font-bold uppercase tracking-widest">
-                Logistics Excellence
-              </span>
-            </div>
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.95] mb-6 sm:mb-8 font-extrabold">
-              East Africa's <br />
-              <span className="text-cyan">Premier Gateway</span>
-            </h1>
-            <p className="text-base sm:text-lg text-slate-300 mb-8 sm:mb-10 max-w-lg">
-              Precision logistics from Nairobi to the world. We orchestrate dry, reefer and genset freight
-              with engineered reliability and real-time visibility.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link
-                to="/services"
-                className="bg-white text-navy px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-cyan hover:text-white transition-all text-center"
-              >
-                Explore Services
-              </Link>
-              <Link
-                to="/contact"
-                className="border border-white/30 text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white/10 transition-all text-center"
-              >
-                Get A Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       {/* STATS */}
       <section className="bg-white border-b border-slate-100">
-        <div className="container mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-100">
+        <div className="container mx-auto px-4 sm:px-6 grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-100">
           {stats.map((s) => (
-            <div key={s.label} className="py-10 px-6 text-center">
-              <div className="font-display text-4xl md:text-5xl font-extrabold text-navy">{s.value}</div>
-              <div className="mt-2 text-xs uppercase tracking-widest text-slate-500 font-medium">{s.label}</div>
+            <div key={s.label} className="py-8 sm:py-10 px-3 sm:px-6 text-center bg-white">
+              <div className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy">{s.value}</div>
+              <div className="mt-2 text-[10px] sm:text-xs uppercase tracking-widest text-slate-500 font-medium leading-snug">{s.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-20 lg:py-24 bg-slate-50">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-xl">
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">What We Do</span>
@@ -126,39 +83,38 @@ function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map(({ Icon, title, desc }) => (
-              <Link
-                key={title}
-                to="/services"
-                className="group bg-white p-8 border-b-4 border-slate-200 hover:border-cyan transition-all duration-300 shadow-sm hover:shadow-lg"
-              >
-                <div className="w-12 h-12 bg-navy/5 flex items-center justify-center mb-6 group-hover:bg-cyan/10 transition-colors">
-                  <Icon className="size-6 text-navy group-hover:text-cyan transition-colors" />
-                </div>
+              <SiteCard key={title} as={Link} to="/services" variant="elevated">
+                <SiteCardIcon>
+                  <Icon className="size-6 text-navy group-hover:text-cyan transition-colors duration-300" />
+                </SiteCardIcon>
                 <h3 className="font-display text-xl uppercase mb-3 text-navy">{title}</h3>
                 <p className="text-sm text-slate-600 leading-relaxed mb-6">{desc}</p>
                 <div className="text-xs font-bold text-navy group-hover:text-cyan transition-colors tracking-widest uppercase flex items-center gap-1">
                   Learn More <ArrowRight className="size-3.5" />
                 </div>
-              </Link>
+              </SiteCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* ABOUT BAND */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="relative">
-            <img
-              src={yard}
-              alt="Aerial view of a Mombasa container yard"
-              loading="lazy"
-              width={1280}
-              height={900}
-              className="w-full aspect-[4/3] object-cover"
-            />
-            <div className="absolute -bottom-6 -right-6 bg-orange text-white p-6 max-w-[220px] hidden md:block">
-              <div className="font-display text-3xl font-extrabold">Since 2008</div>
+            <div className="relative overflow-hidden ring-1 ring-slate-200/80 shadow-lg shadow-navy/10">
+              <img
+                src={yard}
+                alt="Link Freight fleet and operations yard"
+                loading="lazy"
+                width={1280}
+                height={900}
+                className="w-full aspect-[4/3] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-transparent pointer-events-none" />
+            </div>
+            <div className="mt-4 sm:absolute sm:-bottom-6 sm:-right-6 bg-orange text-white p-4 sm:p-6 max-w-full sm:max-w-[220px]">
+              <div className="font-display text-2xl sm:text-3xl font-extrabold">Since 2008</div>
               <div className="text-xs uppercase tracking-widest mt-1">Moving Africa's economy</div>
             </div>
           </div>
@@ -189,8 +145,8 @@ function HomePage() {
       </section>
 
       {/* TESTIMONIAL */}
-      <section className="py-24 bg-navy text-white relative overflow-hidden">
-        <div className="container mx-auto px-6 max-w-3xl text-center">
+      <section className="py-16 sm:py-20 lg:py-24 bg-navy text-white relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
           <Quote className="size-10 text-cyan mx-auto mb-6" />
           <p className="font-display text-2xl md:text-3xl leading-snug">
             “Link Freight handles our cold chain shipments with surgical precision. Their reefer
@@ -204,8 +160,8 @@ function HomePage() {
       </section>
 
       {/* BLOG TEASER */}
-      <section className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-20 lg:py-24 bg-slate-50">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">Insights</span>
@@ -217,7 +173,7 @@ function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {posts.map((p) => (
-              <article key={p.title} className="bg-white p-8 border-b-4 border-slate-200 hover:border-cyan transition-all shadow-sm hover:shadow-lg group">
+              <SiteCard key={p.title} as="article" variant="elevated">
                 <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-slate-500 mb-4">
                   <span className="text-orange font-bold">{p.tag}</span> &middot; <span>{p.date}</span>
                 </div>
@@ -225,20 +181,20 @@ function HomePage() {
                 <Link to="/blog" className="mt-6 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-navy group-hover:text-cyan transition-colors">
                   Read Article <ArrowRight className="size-3.5" />
                 </Link>
-              </article>
+              </SiteCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-orange">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <section className="py-14 sm:py-20 bg-orange">
+        <div className="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
           <h2 className="font-display text-3xl md:text-4xl uppercase text-white font-extrabold max-w-2xl">
             Got a shipment that needs precision? Let's move it.
           </h2>
           <Link
-            to="/contact"
+            to="/quote"
             className="bg-white text-navy px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-navy hover:text-white transition-all whitespace-nowrap"
           >
             Get A Quote

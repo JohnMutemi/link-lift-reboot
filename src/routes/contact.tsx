@@ -1,27 +1,27 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { PageHero } from "./about";
+import { SiteCard } from "@/components/site/SiteCard";
+import { SITE } from "@/lib/site-config";
 import { useState } from "react";
-
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact Us — Link Freight Logistics Ltd" },
-      { name: "description", content: "Get in touch with Link Freight Logistics. Request a quote, track a shipment, or partner with East Africa's precision freight operator." },
+      { name: "description", content: "Get in touch with Link Freight Logistics. Track a shipment, partner with us, or reach our Nairobi office." },
       { property: "og:title", content: "Contact Link Freight Logistics" },
-      { property: "og:description", content: "Get a quote or get in touch with our team." },
+      { property: "og:description", content: "Get in touch with our team." },
     ],
   }),
   component: ContactPage,
 });
 
 const channels = [
-  { Icon: MapPin, title: "Office", lines: ["Off Airport North Road", "Nairobi, Kenya"] },
-  { Icon: Phone, title: "Phone", lines: ["+254 721 121 287"] },
-  { Icon: Mail, title: "Email", lines: ["info@linkfreightltd.co.ke"] },
+  { Icon: MapPin, title: "Office", lines: SITE.address },
+  { Icon: Phone, title: "Phone", lines: [SITE.phone] },
+  { Icon: Mail, title: "Email", lines: [SITE.email] },
   { Icon: Clock, title: "Hours", lines: ["Mon–Fri: 08:00–17:00", "Sat: 08:00–13:00"] },
 ];
-
 function ContactPage() {
   const [sent, setSent] = useState(false);
   return (
@@ -29,14 +29,14 @@ function ContactPage() {
       <PageHero
         tag="Contact Us"
         title="Let's move your shipment."
-        subtitle="Whether you need a quote, a tracking update, or want to partner with us — our team is on standby."
+        subtitle="Whether you need a tracking update or want to partner with us — our team is on standby. For pricing, use our dedicated quote form."
       />
 
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 grid lg:grid-cols-5 gap-12">
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-6">
             {channels.map(({ Icon, title, lines }) => (
-              <div key={title} className="flex gap-4 p-6 bg-slate-50 border-l-4 border-cyan">
+              <SiteCard key={title} variant="info">
                 <Icon className="size-6 text-orange shrink-0" />
                 <div>
                   <div className="font-display text-lg uppercase text-navy font-bold">{title}</div>
@@ -44,19 +44,30 @@ function ContactPage() {
                     <div key={l} className="text-sm text-slate-600 mt-1">{l}</div>
                   ))}
                 </div>
-              </div>
+              </SiteCard>
             ))}
-          </div>
+
+            <SiteCard variant="info" className="bg-orange/10 border-l-orange">              <div className="font-display text-lg uppercase text-navy font-bold mb-2">Need a quote?</div>
+              <p className="text-sm text-slate-600 mb-4">
+                Share your route and cargo details on our quote page for a tailored response within 24 hours.
+              </p>
+              <Link
+                to="/quote"
+                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-600 text-white px-6 py-3 font-bold uppercase tracking-widest text-xs transition-colors"
+              >
+                Get a Quote
+              </Link>
+            </SiteCard>          </div>
 
           <form
-            className="lg:col-span-3 bg-navy text-white p-10"
+            className="lg:col-span-3 bg-navy text-white p-6 sm:p-8 lg:p-10"
             onSubmit={(e) => {
               e.preventDefault();
               setSent(true);
             }}
           >
-            <h2 className="font-display text-3xl uppercase font-extrabold mb-2">Request a Quote</h2>
-            <p className="text-white/60 text-sm mb-8">Tell us about your shipment and we'll get back within 24 hours.</p>
+            <h2 className="font-display text-3xl uppercase font-extrabold mb-2">Send a Message</h2>
+            <p className="text-white/60 text-sm mb-8">General enquiries, partnerships, or shipment updates.</p>
 
             <div className="grid sm:grid-cols-2 gap-5">
               <Field label="Full Name" name="name" />
@@ -66,38 +77,36 @@ function ContactPage() {
             </div>
 
             <div className="mt-5">
-              <label className="text-xs uppercase tracking-widest text-cyan font-bold">Service</label>
-              <select className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-cyan">
-                <option className="text-navy">Dry Containers</option>
-                <option className="text-navy">Reefer Containers</option>
-                <option className="text-navy">Gensets</option>
-                <option className="text-navy">Inland Haulage</option>
-                <option className="text-navy">Other</option>
-              </select>
+              <label className="text-xs uppercase tracking-widest text-cyan font-bold">Subject</label>
+              <input
+                name="subject"
+                required
+                className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan"
+              />
             </div>
 
             <div className="mt-5">
-              <label className="text-xs uppercase tracking-widest text-cyan font-bold">Shipment Details</label>
-              <textarea rows={5} className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-cyan" />
+              <label className="text-xs uppercase tracking-widest text-cyan font-bold">Message</label>
+              <textarea rows={5} className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan" />
             </div>
 
             <button
               type="submit"
               className="mt-8 inline-flex items-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-sm transition-colors"
             >
-              <Send className="size-4" /> Send Enquiry
+              <Send className="size-4" /> Send Message
             </button>
 
             {sent && (
-              <p className="mt-4 text-cyan text-sm">Thanks — your enquiry has been received. We'll be in touch shortly.</p>
+              <p className="mt-4 text-cyan text-sm">Thanks — your message has been received. We&apos;ll be in touch shortly.</p>
             )}
           </form>
         </div>
       </section>
 
-      <section className="bg-slate-50 pb-24">
-        <div className="container mx-auto px-6">
-          <div className="aspect-[16/7] w-full bg-navy/5 overflow-hidden border-b-4 border-cyan">
+      <section className="bg-slate-50 pb-16 sm:pb-24">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="aspect-[4/3] sm:aspect-[16/7] w-full bg-navy/5 overflow-hidden border-b-4 border-cyan">
             <iframe
               title="Link Freight office location"
               src="https://www.openstreetmap.org/export/embed.html?bbox=36.8950%2C-1.3450%2C36.9450%2C-1.3050&amp;layer=mapnik"
@@ -119,7 +128,7 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
         name={name}
         type={type}
         required
-        className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-sm focus:outline-none focus:border-cyan"
+        className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan"
       />
     </div>
   );

@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
@@ -15,6 +14,9 @@ import { TopBar } from "../components/site/TopBar";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
 import { ScrollToTop } from "../components/site/ScrollToTop";
+import { WhatsAppWidget } from "../components/site/WhatsAppWidget";
+import { PageTransition } from "../components/site/PageTransition";
+import { SITE } from "../lib/site-config";
 
 function NotFoundComponent() {
   return (
@@ -80,8 +82,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Link Freight Logistics Ltd — East Africa Freight & Logistics" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { name: "theme-color", content: "#0a1f44" },
+      { title: `Link Freight Logistics Ltd — ${SITE.tagline}` },
       {
         name: "description",
         content:
@@ -97,6 +100,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "icon", href: "/link-freight-rams.png", type: "image/png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -135,10 +139,11 @@ function RootComponent() {
         <TopBar />
         <Header />
         <main className="flex-1">
-          <Outlet />
+          <PageTransition />
         </main>
         <Footer />
         <ScrollToTop />
+        <WhatsAppWidget />
       </div>
     </QueryClientProvider>
   );

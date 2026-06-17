@@ -1,6 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Twitter, Facebook, Linkedin, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
 import { Logo } from "./Logo";
+import { SITE, socialLinks } from "@/lib/site-config";
+
+const socialIcons = {
+  twitter: Twitter,
+  facebook: Facebook,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  youtube: Youtube,
+} as const;
 
 export function Footer() {
   return (
@@ -11,21 +20,30 @@ export function Footer() {
             <div className="mb-6">
               <Logo variant="light" />
             </div>
+            <p className="text-cyan/90 text-sm font-medium mb-3">{SITE.tagline}</p>
             <p className="leading-relaxed mb-6">
               Specialized freight and logistics across East Africa &mdash; dry containers, reefer
               units, gensets, and inland haulage tailored to every shipment.
             </p>
             <div className="flex gap-3">
-              {[Twitter, Facebook, Linkedin, Instagram, Youtube].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="size-9 grid place-items-center border border-white/15 hover:border-cyan hover:text-cyan hover:bg-cyan/10 transition-colors rounded-sm"
-                  aria-label="social"
-                >
-                  <Icon className="size-4" />
-                </a>
-              ))}
+              {socialLinks.map(({ key, label }) => {
+                const Icon = socialIcons[key];
+                const href = SITE.social[key] || "#";
+
+                return (
+                  <a
+                    key={key}
+                    href={href}
+                    aria-label={label}
+                    {...(SITE.social[key]
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : { "aria-disabled": true, tabIndex: -1 })}
+                    className="size-9 grid place-items-center border border-white/15 hover:border-cyan hover:text-cyan hover:bg-cyan/10 transition-colors rounded-sm"
+                  >
+                    <Icon className="size-4" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -36,6 +54,7 @@ export function Footer() {
               <li><Link to="/services" className="hover:text-cyan transition-colors">Our Services</Link></li>
               <li><Link to="/fleet" className="hover:text-cyan transition-colors">Our Fleet</Link></li>
               <li><Link to="/blog" className="hover:text-cyan transition-colors">Latest Blogs</Link></li>
+              <li><Link to="/quote" className="hover:text-cyan transition-colors">Get a Quote</Link></li>
               <li><Link to="/contact" className="hover:text-cyan transition-colors">Contact Us</Link></li>
             </ul>
           </div>

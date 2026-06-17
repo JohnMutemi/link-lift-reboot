@@ -121,3 +121,137 @@
 .lf-reveal {
   animation: lf-fade-up 0.8s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
+
+/* Page transition — subtle swing on route change */
+@keyframes lf-swing-in {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) rotateY(-6deg) translateX(-16px);
+  }
+  55% {
+    opacity: 1;
+    transform: perspective(900px) rotateY(1.5deg) translateX(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0) translateX(0);
+  }
+}
+
+.lf-page-swing {
+  animation: lf-swing-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-page-swing {
+    animation: none;
+  }
+}
+
+/* Lighter page transition on mobile — avoids 3D jank on small screens */
+@keyframes lf-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1023px) {
+  .lf-page-swing {
+    animation: lf-fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile — safe-area insets for notched devices & fixed widgets       */
+/* ------------------------------------------------------------------ */
+
+.lf-fixed-corner {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 640px) {
+  .lf-fixed-corner {
+    right: max(2rem, env(safe-area-inset-right, 0px));
+    bottom: max(2rem, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.lf-fixed-bottom {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  bottom: calc(max(5.5rem, env(safe-area-inset-bottom, 0px) + 4rem));
+}
+
+@media (min-width: 640px) {
+  .lf-fixed-bottom {
+    right: max(2rem, env(safe-area-inset-right, 0px));
+    bottom: calc(max(6.5rem, env(safe-area-inset-bottom, 0px) + 4.5rem));
+  }
+}
+
+/* Prevent iOS zoom on form focus — 16px minimum on small screens */
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: max(1rem, 16px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Site cards — unified elevation, accent & hover system               */
+/* ------------------------------------------------------------------ */
+
+.lf-card {
+  position: relative;
+  transition:
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.lf-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: linear-gradient(135deg, rgb(30 167 225 / 0.04) 0%, transparent 55%);
+}
+
+.lf-card-elevated:hover::before,
+.lf-card-media:hover::before,
+.lf-card-stat:hover::before {
+  opacity: 1;
+}
+
+.lf-card-media:hover img {
+  transform: scale(1.05);
+}
+
+.lf-card-info:hover {
+  background-color: rgb(248 250 252 / 1);
+  box-shadow: 0 10px 30px -20px rgb(10 31 68 / 0.35);
+}
+
+.lf-card-compact:hover {
+  background-color: rgb(255 255 255 / 1);
+  box-shadow: 0 8px 24px -18px rgb(10 31 68 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-card,
+  .lf-card-media:hover img {
+    transition: none;
+    transform: none;
+  }
+
+  .lf-card-elevated:hover,
+  .lf-card-stat:hover {
+    transform: none;
+  }
+}

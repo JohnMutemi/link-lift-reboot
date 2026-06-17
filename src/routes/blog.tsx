@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { PageHero, CTA } from "./about";
+import { SiteCard } from "@/components/site/SiteCard";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -32,11 +33,11 @@ function BlogPage() {
         subtitle="Field notes on logistics, cold chain, customs and the people moving East Africa's freight."
       />
 
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((p) => (
-              <article key={p.title} className="bg-slate-50 p-8 border-b-4 border-slate-200 hover:border-cyan transition-all shadow-sm hover:shadow-lg group flex flex-col">
+              <SiteCard key={p.title} as="article" variant="elevated" className="flex flex-col bg-slate-50/90">
                 <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-slate-500 mb-4">
                   <span className="text-orange font-bold">{p.tag}</span> &middot; <span>{p.date}</span>
                 </div>
@@ -45,7 +46,7 @@ function BlogPage() {
                 <Link to="/blog" className="mt-6 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-navy group-hover:text-cyan transition-colors">
                   Read Article <ArrowRight className="size-3.5" />
                 </Link>
-              </article>
+              </SiteCard>
             ))}
           </div>
         </div>
