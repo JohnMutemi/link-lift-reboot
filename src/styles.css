@@ -168,11 +168,18 @@
 
 .lf-fixed-corner {
   position: fixed;
-  right: max(1rem, env(safe-area-inset-right, 0px));
-  bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 640px) {
+  .lf-fixed-corner {
+    right: max(1.25rem, env(safe-area-inset-right, 0px));
+    bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
   .lf-fixed-corner {
     right: max(2rem, env(safe-area-inset-right, 0px));
     bottom: max(2rem, env(safe-area-inset-bottom, 0px));
@@ -181,11 +188,18 @@
 
 .lf-fixed-bottom {
   position: fixed;
-  right: max(1rem, env(safe-area-inset-right, 0px));
-  bottom: calc(max(5.5rem, env(safe-area-inset-bottom, 0px) + 4rem));
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  bottom: calc(max(4.75rem, env(safe-area-inset-bottom, 0px) + 3.5rem));
 }
 
 @media (min-width: 640px) {
+  .lf-fixed-bottom {
+    right: max(1.25rem, env(safe-area-inset-right, 0px));
+    bottom: calc(max(5.75rem, env(safe-area-inset-bottom, 0px) + 4rem));
+  }
+}
+
+@media (min-width: 1024px) {
   .lf-fixed-bottom {
     right: max(2rem, env(safe-area-inset-right, 0px));
     bottom: calc(max(6.5rem, env(safe-area-inset-bottom, 0px) + 4.5rem));

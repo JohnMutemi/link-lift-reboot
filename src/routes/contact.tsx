@@ -32,7 +32,7 @@ function ContactPage() {
         subtitle="Whether you need a tracking update or want to partner with us — our team is on standby. For pricing, use our dedicated quote form."
       />
 
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-6">
             {channels.map(({ Icon, title, lines }) => (
@@ -53,20 +53,20 @@ function ContactPage() {
               </p>
               <Link
                 to="/quote"
-                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-600 text-white px-6 py-3 font-bold uppercase tracking-widest text-xs transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-6 py-3 font-bold uppercase tracking-widest text-xs transition-colors w-full sm:w-auto"
               >
                 Get a Quote
               </Link>
             </SiteCard>          </div>
 
           <form
-            className="lg:col-span-3 bg-navy text-white p-6 sm:p-8 lg:p-10"
+            className="lg:col-span-3 bg-navy text-white p-5 sm:p-8 lg:p-10"
             onSubmit={(e) => {
               e.preventDefault();
               setSent(true);
             }}
           >
-            <h2 className="font-display text-3xl uppercase font-extrabold mb-2">Send a Message</h2>
+            <h2 className="font-display text-2xl sm:text-3xl uppercase font-extrabold mb-2">Send a Message</h2>
             <p className="text-white/60 text-sm mb-8">General enquiries, partnerships, or shipment updates.</p>
 
             <div className="grid sm:grid-cols-2 gap-5">
@@ -92,7 +92,7 @@ function ContactPage() {
 
             <button
               type="submit"
-              className="mt-8 inline-flex items-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-sm transition-colors"
+              className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto"
             >
               <Send className="size-4" /> Send Message
             </button>
@@ -104,7 +104,7 @@ function ContactPage() {
         </div>
       </section>
 
-      <section className="bg-slate-50 pb-16 sm:pb-24">
+      <section className="bg-slate-50 pb-12 sm:pb-16 lg:pb-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="aspect-[4/3] sm:aspect-[16/7] w-full bg-navy/5 overflow-hidden border-b-4 border-cyan">
             <iframe

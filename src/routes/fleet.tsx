@@ -33,7 +33,7 @@ function FleetPage() {
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
       />
 
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             {fleet.map((unit) => (
@@ -67,9 +67,9 @@ function FleetPage() {
         </div>
       </section>
 
-      <section className="py-14 sm:py-20 bg-navy text-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-navy text-white">
         <div className="container mx-auto px-4 sm:px-6 text-center max-w-3xl">
-          <h2 className="font-display text-4xl uppercase font-extrabold">
+          <h2 className="font-display text-3xl sm:text-4xl uppercase font-extrabold leading-tight">
             Every unit, <span className="text-cyan">live tracked</span>.
           </h2>
           <p className="text-white/70 mt-6">

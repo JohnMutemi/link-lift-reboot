@@ -6,13 +6,13 @@ export function QuoteForm() {
 
   return (
     <form
-      className="bg-navy text-white p-6 sm:p-8 lg:p-10"
+      className="bg-navy text-white p-5 sm:p-8 lg:p-10"
       onSubmit={(e) => {
         e.preventDefault();
         setSent(true);
       }}
     >
-      <h2 className="font-display text-3xl uppercase font-extrabold mb-2">Request a Quote</h2>
+      <h2 className="font-display text-2xl sm:text-3xl uppercase font-extrabold mb-2">Request a Quote</h2>
       <p className="text-white/60 text-sm mb-8">
         Tell us about your shipment and we&apos;ll get back within 24 hours.
       </p>
@@ -46,7 +46,7 @@ export function QuoteForm() {
 
       <button
         type="submit"
-        className="mt-8 inline-flex items-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-sm transition-colors"
+        className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto"
       >
         <Send className="size-4" /> Send Enquiry
       </button>

@@ -24,7 +24,7 @@ export function WhatsAppWidget() {
     <div className="lf-fixed-corner z-50 flex flex-col items-end gap-3">
       <div
         className={cn(
-          "w-[min(100vw-3rem,340px)] origin-bottom-right transition-all duration-300",
+          "w-[min(100vw-2rem,340px)] sm:w-[min(100vw-3rem,340px)] origin-bottom-right transition-all duration-300",
           open ? "scale-100 opacity-100 translate-y-0" : "scale-95 opacity-0 translate-y-2 pointer-events-none",
         )}
         aria-hidden={!open}
@@ -88,11 +88,11 @@ export function WhatsAppWidget() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "size-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/35 ring-1 ring-[#1ebe5d]/40 touch-manipulation",
+          "size-12 sm:size-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/35 ring-1 ring-[#1ebe5d]/40 touch-manipulation",
           "hover:bg-[#1ebe5d] hover:scale-105 active:scale-95 transition-all duration-300 grid place-items-center",
         )}
       >
-        {open ? <X className="size-6" /> : <WhatsAppIcon className="size-7" />}
+        {open ? <X className="size-5 sm:size-6" /> : <WhatsAppIcon className="size-6 sm:size-7" />}
       </button>
     </div>
   );

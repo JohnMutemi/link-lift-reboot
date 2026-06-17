@@ -29,7 +29,7 @@ function QuotePage() {
         subtitle="Share your route, cargo type, and timeline — our team will respond with a tailored quote within one business day."
       />
 
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-6">
             <SiteCard variant="info" className="!block">

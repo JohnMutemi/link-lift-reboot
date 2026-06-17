@@ -56,8 +56,8 @@ function HomePage() {
       <section className="bg-white border-b border-slate-100">
         <div className="container mx-auto px-4 sm:px-6 grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-100">
           {stats.map((s) => (
-            <div key={s.label} className="py-8 sm:py-10 px-3 sm:px-6 text-center bg-white">
-              <div className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy">{s.value}</div>
+            <div key={s.label} className="py-6 sm:py-8 md:py-10 px-3 sm:px-5 md:px-6 text-center bg-white">
+              <div className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-navy">{s.value}</div>
               <div className="mt-2 text-[10px] sm:text-xs uppercase tracking-widest text-slate-500 font-medium leading-snug">{s.label}</div>
             </div>
           ))}
@@ -65,12 +65,12 @@ function HomePage() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-slate-50">
+      <section className="py-12 sm:py-16 lg:py-24 bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-4 sm:gap-6">
             <div className="max-w-xl">
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">What We Do</span>
-              <h2 className="font-display text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">
                 Core Operational <span className="text-cyan">Services</span>
               </h2>
               <p className="text-slate-600 mt-4">
@@ -81,7 +81,7 @@ function HomePage() {
             <div className="text-orange font-bold text-sm uppercase tracking-widest">Link Freight Ltd</div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {services.map(({ Icon, title, desc }) => (
               <SiteCard key={title} as={Link} to="/services" variant="elevated">
                 <SiteCardIcon>
@@ -99,7 +99,7 @@ function HomePage() {
       </section>
 
       {/* ABOUT BAND */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="relative">
             <div className="relative overflow-hidden ring-1 ring-slate-200/80 shadow-lg shadow-navy/10">
@@ -120,7 +120,7 @@ function HomePage() {
           </div>
           <div>
             <span className="text-xs uppercase font-mono tracking-[0.2em] text-cyan">Who We Are</span>
-            <h2 className="font-display text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">
               Engineered for <span className="text-cyan">unique</span> shipments.
             </h2>
             <p className="text-slate-600 mt-6 leading-relaxed">
@@ -130,9 +130,9 @@ function HomePage() {
               every load we move.
             </p>
             <ul className="mt-8 space-y-3 text-sm text-navy">
-              <li className="flex items-center gap-3"><ShieldCheck className="size-5 text-cyan" /> ISO-aligned safety and compliance protocols</li>
-              <li className="flex items-center gap-3"><Clock className="size-5 text-cyan" /> 24/7 dispatch with real-time tracking</li>
-              <li className="flex items-center gap-3"><Globe2 className="size-5 text-cyan" /> Cross-border presence: Kenya, Uganda, Rwanda, South Sudan</li>
+              <li className="flex items-start gap-3"><ShieldCheck className="size-5 text-cyan mt-0.5 shrink-0" /> ISO-aligned safety and compliance protocols</li>
+              <li className="flex items-start gap-3"><Clock className="size-5 text-cyan mt-0.5 shrink-0" /> 24/7 dispatch with real-time tracking</li>
+              <li className="flex items-start gap-3"><Globe2 className="size-5 text-cyan mt-0.5 shrink-0" /> Cross-border presence: Kenya, Uganda, Rwanda, South Sudan</li>
             </ul>
             <Link
               to="/about"
@@ -145,10 +145,10 @@ function HomePage() {
       </section>
 
       {/* TESTIMONIAL */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-navy text-white relative overflow-hidden">
+      <section className="py-12 sm:py-16 lg:py-24 bg-navy text-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
           <Quote className="size-10 text-cyan mx-auto mb-6" />
-          <p className="font-display text-2xl md:text-3xl leading-snug">
+          <p className="font-display text-xl sm:text-2xl md:text-3xl leading-snug">
             “Link Freight handles our cold chain shipments with surgical precision. Their reefer
             and genset deployment across the Northern Corridor has transformed our distribution
             in Kigali and Kampala.”
@@ -160,12 +160,12 @@ function HomePage() {
       </section>
 
       {/* BLOG TEASER */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-slate-50">
+      <section className="py-12 sm:py-16 lg:py-24 bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">Insights</span>
-              <h2 className="font-display text-4xl uppercase mt-3 font-extrabold text-navy">Latest from the Yard</h2>
+              <h2 className="font-display text-3xl sm:text-4xl uppercase mt-3 font-extrabold text-navy leading-tight">Latest from the Yard</h2>
             </div>
             <Link to="/blog" className="text-sm font-bold uppercase tracking-widest text-navy hover:text-cyan inline-flex items-center gap-2">
               All Posts <ArrowRight className="size-4" />
@@ -188,14 +188,14 @@ function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-14 sm:py-20 bg-orange">
+      <section className="py-12 sm:py-16 lg:py-20 bg-orange">
         <div className="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-          <h2 className="font-display text-3xl md:text-4xl uppercase text-white font-extrabold max-w-2xl">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl uppercase text-white font-extrabold max-w-2xl text-center md:text-left leading-tight">
             Got a shipment that needs precision? Let's move it.
           </h2>
           <Link
             to="/quote"
-            className="bg-white text-navy px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-navy hover:text-white transition-all whitespace-nowrap"
+            className="bg-white text-navy px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-navy hover:text-white transition-all whitespace-nowrap w-full sm:w-auto text-center"
           >
             Get A Quote
           </Link>

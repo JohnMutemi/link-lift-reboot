@@ -72,8 +72,8 @@ function ServicesPage() {
         subtitle="Three service pillars — corridor haulage, local transport, and associated logistics — engineered for East African trade."
       />
 
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 space-y-16 sm:space-y-20 lg:space-y-24">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16 lg:space-y-24">
           {serviceCategories.map(({ id, tag, Icon, image, title, desc, points, equipment }, i) => (
             <div key={id} id={id} className={`scroll-mt-28 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
               <img src={image} alt={title} className="w-full aspect-[4/3] object-cover lg:sticky lg:top-28" loading="lazy" width={1280} height={900} />
@@ -82,7 +82,7 @@ function ServicesPage() {
                   <Icon className="size-6 text-cyan" />
                 </div>
                 <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">{tag}</span>
-                <h2 className="font-display text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy">{title}</h2>
+                <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">{title}</h2>
                 <p className="text-slate-600 mt-6 leading-relaxed">{desc}</p>
                 <ul className="mt-6 space-y-2">
                   {points.map((p) => (
@@ -92,7 +92,7 @@ function ServicesPage() {
                   ))}
                 </ul>
 
-                <div className="mt-10 grid sm:grid-cols-2 gap-4">
+                <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-4">
                   {equipment.map(({ Icon: EqIcon, title: eqTitle, desc: eqDesc }) => (
                     <SiteCard key={eqTitle} variant="compact">
                       <EqIcon className="size-5 text-navy mb-3" />

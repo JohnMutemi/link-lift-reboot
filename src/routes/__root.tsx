@@ -138,7 +138,7 @@ function RootComponent() {
       <div className="min-h-screen flex flex-col bg-white">
         <TopBar />
         <Header />
-        <main className="flex-1">
+        <main className="flex-1 pb-24 sm:pb-28 lg:pb-0">
           <PageTransition />
         </main>
         <Footer />

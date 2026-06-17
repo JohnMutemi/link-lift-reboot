@@ -33,9 +33,9 @@ function BlogPage() {
         subtitle="Field notes on logistics, cold chain, customs and the people moving East Africa's freight."
       />
 
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {posts.map((p) => (
               <SiteCard key={p.title} as="article" variant="elevated" className="flex flex-col bg-slate-50/90">
                 <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-slate-500 mb-4">

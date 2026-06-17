@@ -51,7 +51,7 @@ export function HeroCarousel() {
   }, []);
 
   return (
-    <section className="relative min-h-[480px] sm:min-h-[560px] md:min-h-[640px] lg:h-[85vh] flex items-center overflow-hidden bg-navy py-16 sm:py-20 lg:py-0">
+    <section className="relative min-h-[500px] sm:min-h-[560px] md:min-h-[620px] lg:h-[85vh] flex items-center overflow-hidden bg-navy py-12 sm:py-16 lg:py-0">
       {slides.map((slide, i) => (
         <img
           key={slide.image}
@@ -72,7 +72,7 @@ export function HeroCarousel() {
       <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-transparent to-navy/20" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="max-w-2xl lf-reveal relative min-h-[280px] sm:min-h-[320px]">
+        <div className="max-w-2xl lf-reveal relative min-h-[300px] sm:min-h-[320px]">
           {slides.map((slide, i) => (
             <div
               key={slide.title}
@@ -88,7 +88,7 @@ export function HeroCarousel() {
                   {slide.tag}
                 </span>
               </div>
-              <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.95] mb-6 sm:mb-8 font-extrabold drop-shadow-sm">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.95] mb-5 sm:mb-8 font-extrabold drop-shadow-sm">
                 {slide.title}
               </h1>
               <p className="text-base sm:text-lg text-white/90 mb-4 sm:mb-5 max-w-lg drop-shadow-sm">
@@ -105,13 +105,13 @@ export function HeroCarousel() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-10">
             <Link
               to="/services"
-              className="bg-white text-navy px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-cyan hover:text-white transition-all text-center"
+              className="bg-white text-navy px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-cyan hover:text-white transition-all text-center w-full sm:w-auto"
             >
               Explore Services
             </Link>
             <Link
               to="/quote"
-              className="border border-white/50 text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white/15 transition-all text-center backdrop-blur-sm"
+              className="border border-white/50 text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white/15 transition-all text-center backdrop-blur-sm w-full sm:w-auto"
             >
               Get A Quote
             </Link>
