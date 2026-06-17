@@ -11,6 +11,9 @@ export default defineConfig({
   // inside its sandbox unless explicitly enabled here.
   nitro: {
     preset: "vercel",
+    // Web entry overwrites runtime.node and breaks SSR on Vercel (500).
+    // See: https://github.com/TanStack/router/issues/6562
+    vercel: { entryFormat: "node" },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
