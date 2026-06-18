@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, Award, Users, TrendingUp } from "lucide-react";
 import { SiteCard } from "@/components/site/SiteCard";
+import { HERO_CAROUSEL_1 } from "@/lib/media";
 
 const yard = "/about-1.jpg";
 export const Route = createFileRoute("/about")({
@@ -121,16 +122,52 @@ function AboutPage() {
   );
 }
 
-export function PageHero({ tag, title, subtitle }: { tag: string; title: string; subtitle: string }) {
+export function PageHero({
+  tag,
+  title,
+  subtitle,
+  image = HERO_CAROUSEL_1,
+}: {
+  tag: string;
+  title: string;
+  subtitle: string;
+  image?: string;
+}) {
   return (
-    <section className="relative bg-navy py-12 sm:py-16 md:py-24 lg:py-28 overflow-hidden">
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_50%,#1ea7e1_0%,transparent_50%)]" />
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="inline-block bg-cyan px-3 py-1 mb-6">
-          <span className="text-navy text-xs font-bold uppercase tracking-widest">{tag}</span>
-        </div>
-        <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white uppercase leading-[0.92] font-extrabold max-w-3xl">{title}</h1>
-        <p className="text-slate-300 mt-4 sm:mt-6 max-w-2xl text-base sm:text-lg">{subtitle}</p>
+    <section className="relative min-h-[320px] sm:min-h-[380px] md:min-h-[420px] flex items-center overflow-hidden bg-navy">
+      <img
+        src={image}
+        alt=""
+        aria-hidden
+        width={1920}
+        height={1080}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-navy/60" />
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center py-16 sm:py-20 md:py-24">
+        <h1 className="font-display text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-[1.05] font-extrabold max-w-4xl mx-auto">
+          {title}
+        </h1>
+        <nav
+          aria-label="Breadcrumb"
+          className="mt-5 sm:mt-6 text-xs sm:text-sm text-white/70 flex items-center justify-center gap-2 flex-wrap"
+        >
+          <Link to="/" className="hover:text-cyan transition-colors">
+            Home
+          </Link>
+          <span className="text-white/40" aria-hidden>
+            ○
+          </span>
+          <span className="text-cyan font-medium">{tag}</span>
+        </nav>
+        <p className="text-white/80 mt-4 sm:mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">{subtitle}</p>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none leading-[0]">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" className="w-full h-10 sm:h-12 text-white" aria-hidden>
+          <path fill="currentColor" d="M0,48 C240,80 480,0 720,32 C960,64 1200,16 1440,48 L1440,80 L0,80 Z" />
+        </svg>
       </div>
     </section>
   );

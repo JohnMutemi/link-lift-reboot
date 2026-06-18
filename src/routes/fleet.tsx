@@ -1,9 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, CTA } from "./about";
-import { SiteCard } from "@/components/site/SiteCard";const truck = "/hero-carousel-1.jpg";
-const reefer = "/hero-carousel-5.jpg";
+import { SiteCard } from "@/components/site/SiteCard";
+import { FleetGallery } from "@/components/site/FleetGallery";
+import { HERO_CAROUSEL_1 } from "@/lib/media";
+
+const truck = HERO_CAROUSEL_1;
+const reefer = "/hero-showcase-truck-sunset.jpg";
 const genset = "/feature.jpg";
-const yard = "/hero-carousel-2.jpg";
+const yard = "/hero-showcase-fleet.jpg";
 
 export const Route = createFileRoute("/fleet")({
   head: () => ({
@@ -31,6 +35,7 @@ function FleetPage() {
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
+        image="/hero-showcase-fleet.jpg"
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
@@ -66,6 +71,8 @@ function FleetPage() {
             ))}          </div>
         </div>
       </section>
+
+      <FleetGallery />
 
       <section className="py-12 sm:py-16 lg:py-20 bg-navy text-white">
         <div className="container mx-auto px-4 sm:px-6 text-center max-w-3xl">

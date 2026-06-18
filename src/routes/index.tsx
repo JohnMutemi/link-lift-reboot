@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Container, Snowflake, Zap, Truck, ShieldCheck, Clock, Globe2, Quote } from "lucide-react";
 import { HeroCarousel } from "@/components/site/HeroCarousel";
+import { FleetGallery } from "@/components/site/FleetGallery";
 import { SiteCard, SiteCardIcon } from "@/components/site/SiteCard";
+import { HERO_CAROUSEL_1, fleetGallery } from "@/lib/media";
 
-const HERO_OG_IMAGE = "/hero-carousel-1.jpg";
-const yard = "/about-1.jpg";
+const HERO_OG_IMAGE = HERO_CAROUSEL_1;
+const yard = fleetGallery[2].src; // twin Scania P360 XT prime movers at the yard
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -51,6 +53,8 @@ function HomePage() {
   return (
     <>
       <HeroCarousel />
+
+      <FleetGallery />
 
       {/* STATS */}
       <section className="bg-white border-b border-slate-100">
@@ -105,7 +109,7 @@ function HomePage() {
             <div className="relative overflow-hidden ring-1 ring-slate-200/80 shadow-lg shadow-navy/10">
               <img
                 src={yard}
-                alt="Link Freight fleet and operations yard"
+                alt="Link Freight Scania P360 XT prime movers at the operations yard"
                 loading="lazy"
                 width={1280}
                 height={900}

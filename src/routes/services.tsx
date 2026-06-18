@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Container, Snowflake, Zap, Truck, ShieldCheck, MapPin, Wrench, FileCheck, Route as RouteIcon, Building2 } from "lucide-react";
 import { PageHero, CTA } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
-const reefer = "/hero-carousel-5.jpg";
+import { HERO_CAROUSEL_1 } from "@/lib/media";
+
+const reefer = "/hero-showcase-truck-sunset.jpg";
 const genset = "/feature.jpg";
-const truck = "/hero-carousel-1.jpg";
-const yard = "/hero-carousel-3.jpg";
+const truck = HERO_CAROUSEL_1;
+const yard = "/hero-showcase-warehouse-aisle.jpg";
 
 export const Route = createFileRoute("/services")({
   head: () => ({

@@ -113,53 +113,45 @@
   .lf-marquee-animate { animation: none; }
 }
 
-/* Subtle fade-in reveal */
+/* ------------------------------------------------------------------ */
+/* Subtle fade-in reveal                                               */
+/* ------------------------------------------------------------------ */
+
 @keyframes lf-fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
 .lf-reveal {
   animation: lf-fade-up 0.8s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
 
-/* Page transition — subtle swing on route change */
-@keyframes lf-swing-in {
-  0% {
-    opacity: 0;
-    transform: perspective(900px) rotateY(-6deg) translateX(-16px);
-  }
-  55% {
-    opacity: 1;
-    transform: perspective(900px) rotateY(1.5deg) translateX(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: perspective(900px) rotateY(0) translateX(0);
-  }
-}
+/* ------------------------------------------------------------------ */
+/* Page transition — antagonistic top ↕ bottom slide                   */
+/* Alternates direction on every navigation                            */
+/* ------------------------------------------------------------------ */
 
-.lf-page-swing {
-  animation: lf-swing-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-  transform-origin: left center;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-page-swing {
-    animation: none;
-  }
-}
-
-/* Lighter page transition on mobile — avoids 3D jank on small screens */
-@keyframes lf-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+@keyframes lf-from-top {
+  from { opacity: 0; transform: translateY(-40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 1023px) {
-  .lf-page-swing {
-    animation: lf-fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-    transform: none;
-  }
+@keyframes lf-from-bottom {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lf-slide-down {
+  animation: lf-from-top 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lf-slide-up {
+  animation: lf-from-bottom 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-slide-down,
+  .lf-slide-up { animation: none; }
 }
 
 /* ------------------------------------------------------------------ */
