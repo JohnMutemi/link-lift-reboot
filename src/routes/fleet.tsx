@@ -35,7 +35,7 @@ function FleetPage() {
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
-        image="/hero-showcase-fleet.jpg"
+        image="/hero-carousel-1.jpg"
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
