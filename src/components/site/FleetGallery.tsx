@@ -14,11 +14,11 @@ export function FleetGallery() {
             <div className="max-w-xl">
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">Our Fleet</span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">
-                Built for the <span className="text-cyan">Northern Corridor</span>
+                Built for <span className="text-cyan">East, Central &amp; Southern Africa</span>
               </h2>
               <p className="text-slate-600 mt-4">
                 Prime movers, reefers, dry containers, and genset trailers — maintained, tracked, and
-                ready for dispatch across East Africa.
+                ready for dispatch across East, Central, and Southern Africa.
               </p>
             </div>
             <Link
@@ -29,25 +29,28 @@ export function FleetGallery() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+          {/* Uniform card grid — 2 per row on mobile, 3 per row from md up.
+              Every photo gets the same frame and aspect ratio; no special-cased
+              "hero" cell, so the grid degrades gracefully at any item count. */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
             {fleetGallery.map((item, i) => (
               <button
                 key={item.src}
                 type="button"
                 onClick={() => setLightbox(i)}
-                className={`group relative overflow-hidden ring-1 ring-slate-200/80 bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan ${
-                  i === 0 ? "col-span-2 row-span-2 aspect-[16/10] md:aspect-auto md:min-h-[320px]" : "aspect-[4/3]"
-                }`}
+                className="group relative overflow-hidden bg-slate-100 ring-1 ring-slate-200/80 shadow-sm hover:shadow-lg hover:shadow-navy/10 transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  width={800}
-                  height={600}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors" />
+                <div className="aspect-[4/3]">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/15 transition-colors" />
               </button>
             ))}
           </div>

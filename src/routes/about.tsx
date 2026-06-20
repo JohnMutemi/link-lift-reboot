@@ -3,7 +3,7 @@ import { Target, Eye, Heart, Award, Users, TrendingUp } from "lucide-react";
 import { SiteCard } from "@/components/site/SiteCard";
 import { HERO_CAROUSEL_1 } from "@/lib/media";
 
-const yard = "/about-1.jpg";
+const yard = "/fleet-gallery-6.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -23,10 +23,9 @@ const values = [
 ];
 
 const milestones = [
-  { year: "2008", text: "Link Freight founded in Nairobi, focused on dry container haulage." },
   { year: "2014", text: "Reefer fleet launched to serve horticulture and pharmaceutical exporters." },
   { year: "2019", text: "Cross-border expansion to Uganda, Rwanda and South Sudan corridors." },
-  { year: "2023", text: "Genset-backed cold chain network rolled out across the Northern Corridor." },
+  { year: "2023", text: "Genset-backed cold chain network rolled out across East, Central, and Southern Africa." },
   { year: "2026", text: "Digital tracking platform launched for real-time shipment visibility." },
 ];
 
@@ -36,7 +35,7 @@ function AboutPage() {
       <PageHero
         tag="About Us"
         title="Built on trust. Driven by precision."
-        subtitle="Since 2008, Link Freight Logistics has been moving East Africa's most critical shipments — engineered for the journey, tailored for the client."
+        subtitle="Since 2014, Link Freight Logistics has been moving East Africa's most critical shipments — engineered for the journey, tailored for the client."
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
@@ -55,10 +54,12 @@ function AboutPage() {
             <span className="text-xs uppercase font-mono tracking-[0.2em] text-cyan">Our Story</span>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">Logistics, the way it should work.</h2>
             <p className="text-slate-600 mt-6 leading-relaxed">
-              We started with a simple conviction: clients deserve a freight partner who treats every
-              container as if it were their own. From a single truck on the Mombasa–Nairobi highway,
-              we've grown into a multi-modal operator running dry, reefer and genset-backed loads across
-              East Africa.
+              Link Freight was founded in 2014 on a simple conviction: clients deserve a freight
+              partner who treats every container as if it were their own. We spent the next three
+              years building the fleet, network and expertise to back that promise, formally
+              launching operations in 2017 with a single truck on the Mombasa–Nairobi highway.
+              Since then, we've grown into a multi-modal operator running dry, reefer and
+              genset-backed loads across East Africa.
             </p>
             <p className="text-slate-600 mt-4 leading-relaxed">
               What hasn't changed is our standard. Every shipment is matched to the right equipment,
@@ -89,7 +90,7 @@ function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-xl mb-10 sm:mb-16">
             <span className="text-xs uppercase font-mono tracking-[0.2em] text-cyan">Milestones</span>
-            <h2 className="font-display text-3xl sm:text-4xl uppercase mt-3 font-extrabold">Almost two decades on the road.</h2>
+            <h2 className="font-display text-3xl sm:text-4xl uppercase mt-3 font-extrabold">Over a decade on the road.</h2>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
             {milestones.map((m) => (
@@ -105,7 +106,7 @@ function AboutPage() {
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 grid sm:grid-cols-3 gap-4 sm:gap-6 text-center">
           {[
-            { Icon: Award, value: "15+", label: "Years in Operation" },
+            { Icon: Award, value: "10+", label: "Years in Operation" },
             { Icon: Users, value: "120+", label: "Team Members" },
             { Icon: TrendingUp, value: "10k+", label: "Shipments Delivered" },
           ].map(({ Icon, value, label }) => (

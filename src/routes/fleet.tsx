@@ -2,12 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, CTA } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
 import { FleetGallery } from "@/components/site/FleetGallery";
-import { HERO_CAROUSEL_1 } from "@/lib/media";
+// import { HERO_CAROUSEL_1 } from "@/lib/media";
 
-const truck = HERO_CAROUSEL_1;
-const reefer = "/hero-showcase-truck-sunset.jpg";
-const genset = "/feature.jpg";
-const yard = "/hero-showcase-fleet.jpg";
+// const truck = HERO_CAROUSEL_1;
+const truck = "/Primemovers.png";
+const reefer = "/Reefers.png";
+const genset = "/Genset.png";
+const yard = "/Containers.png";
 
 export const Route = createFileRoute("/fleet")({
   head: () => ({

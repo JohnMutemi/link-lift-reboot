@@ -4,10 +4,10 @@ import { PageHero, CTA } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
 import { HERO_CAROUSEL_1 } from "@/lib/media";
 
-const reefer = "/hero-showcase-truck-sunset.jpg";
-const genset = "/feature.jpg";
+const reefer = "/fleet-gallery-1.jpg";
+const genset = "/fleet-gallery-7.jpg";
 const truck = HERO_CAROUSEL_1;
-const yard = "/hero-showcase-warehouse-aisle.jpg";
+const yard = "/fleet-gallery-6.jpg";
 
 export const Route = createFileRoute("/services")({
   head: () => ({

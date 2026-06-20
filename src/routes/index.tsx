@@ -33,19 +33,19 @@ const services = [
   { Icon: Container, title: "Dry Containers", desc: "Standard 20ft & 40ft shipping for non-perishable goods, with global reach and door-to-door tracking." },
   { Icon: Snowflake, title: "Reefer Containers", desc: "Climate-controlled logistics for sensitive perishables and pharmaceuticals across long distances." },
   { Icon: Zap, title: "Gensets", desc: "Continuous power solutions for refrigerated transport — keeping the cold chain unbroken." },
-  { Icon: Truck, title: "Inland Haulage", desc: "Reliable road transport across Kenya and the Northern Corridor, bridging ports and hubs." },
+  { Icon: Truck, title: "Inland Haulage", desc: "Reliable road transport bridging ports and hubs across East, Central, and Southern Africa." },
 ];
 
 const stats = [
-  { value: "15+", label: "Years of Service" },
-  { value: "200+", label: "Fleet Units" },
+  { value: "10+", label: "Years of Service" },
+  { value: "100", label: "Fleet Units" },
   { value: "99.8%", label: "On-Time Delivery" },
   { value: "08", label: "Active Corridors" },
 ];
 
 const posts = [
   { tag: "Logistics", title: "Why reefer logistics is reshaping East African horticulture exports", date: "May 2026" },
-  { tag: "Operations", title: "Inside the Northern Corridor: cutting transit time Mombasa → Kampala", date: "Apr 2026" },
+  { tag: "Operations", title: "Cutting transit time: the Mombasa → Kampala route", date: "Apr 2026" },
   { tag: "Industry", title: "Gensets explained: keeping the cold chain alive on long-haul road freight", date: "Mar 2026" },
 ];
 
@@ -118,8 +118,8 @@ function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-navy/20 via-transparent to-transparent pointer-events-none" />
             </div>
             <div className="mt-4 sm:absolute sm:-bottom-6 sm:-right-6 bg-orange text-white p-4 sm:p-6 max-w-full sm:max-w-[220px]">
-              <div className="font-display text-2xl sm:text-3xl font-extrabold">Since 2008</div>
-              <div className="text-xs uppercase tracking-widest mt-1">Moving Africa's economy</div>
+              <div className="font-display text-2xl sm:text-3xl font-extrabold">Since 2014</div>
+              <div className="text-xs uppercase tracking-widest mt-1">Logistics operations since 2017</div>
             </div>
           </div>
           <div>
@@ -154,7 +154,7 @@ function HomePage() {
           <Quote className="size-10 text-cyan mx-auto mb-6" />
           <p className="font-display text-xl sm:text-2xl md:text-3xl leading-snug">
             “Link Freight handles our cold chain shipments with surgical precision. Their reefer
-            and genset deployment across the Northern Corridor has transformed our distribution
+            and genset deployment across East, Central, and Southern Africa has transformed our distribution
             in Kigali and Kampala.”
           </p>
           <div className="mt-8 text-sm uppercase tracking-widest text-cyan font-bold">

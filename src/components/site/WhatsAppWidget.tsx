@@ -21,79 +21,84 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="lf-fixed-corner z-50 flex flex-col items-end gap-3">
-      <div
-        className={cn(
-          "w-[min(100vw-2rem,340px)] sm:w-[min(100vw-3rem,340px)] origin-bottom-right transition-all duration-300",
-          open ? "scale-100 opacity-100 translate-y-0" : "scale-95 opacity-0 translate-y-2 pointer-events-none",
-        )}
-        aria-hidden={!open}
-      >
-        <div className="rounded-2xl bg-white shadow-2xl shadow-navy/15 ring-1 ring-slate-200 overflow-hidden">
-          <div className="bg-[#25D366] px-5 py-4 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="size-10 rounded-full bg-white/20 grid place-items-center shrink-0">
-                <MessageCircle className="size-5 text-white" />
+    <div className="lf-fixed-corner z-50">
+      {/* relative anchor — only as tall as the launcher button itself */}
+      <div className="relative">
+        <div
+          className={cn(
+            "absolute bottom-full right-0 mb-3 w-[min(100vw-2rem,340px)] sm:w-[min(100vw-3rem,340px)] origin-bottom-right transition-all duration-300",
+            open
+              ? "scale-100 opacity-100 translate-y-0"
+              : "scale-95 opacity-0 translate-y-2 pointer-events-none invisible",
+          )}
+          aria-hidden={!open}
+        >
+          <div className="rounded-2xl bg-white shadow-2xl shadow-navy/15 ring-1 ring-slate-200 overflow-hidden">
+            <div className="bg-[#25D366] px-5 py-4 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="size-10 rounded-full bg-white/20 grid place-items-center shrink-0">
+                  <MessageCircle className="size-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-display text-lg uppercase font-bold text-white leading-tight truncate">
+                    Link Freight
+                  </p>
+                  <p className="text-xs text-white/90">Typically replies within an hour</p>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="font-display text-lg uppercase font-bold text-white leading-tight truncate">
-                  Link Freight
-                </p>
-                <p className="text-xs text-white/90">Typically replies within an hour</p>
+              <button
+                type="button"
+                aria-label="Close chat prompt"
+                onClick={() => setOpen(false)}
+                className="size-8 rounded-full hover:bg-white/15 grid place-items-center text-white transition-colors shrink-0"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              <div className="rounded-xl rounded-tl-sm bg-slate-50 px-4 py-3 text-sm text-slate-700 leading-relaxed border border-slate-100">
+                Hi there! Tell us about your shipment and we&apos;ll connect you with our team on WhatsApp.
               </div>
-            </div>
-            <button
-              type="button"
-              aria-label="Close chat prompt"
-              onClick={() => setOpen(false)}
-              className="size-8 rounded-full hover:bg-white/15 grid place-items-center text-white transition-colors shrink-0"
-            >
-              <X className="size-4" />
-            </button>
-          </div>
 
-          <div className="p-5 space-y-4">
-            <div className="rounded-xl rounded-tl-sm bg-slate-50 px-4 py-3 text-sm text-slate-700 leading-relaxed border border-slate-100">
-              Hi there! Tell us about your shipment and we&apos;ll connect you with our team on WhatsApp.
-            </div>
+              <div>
+                <label htmlFor="whatsapp-message" className="text-xs uppercase tracking-widest text-navy font-bold">
+                  Your message
+                </label>
+                <textarea
+                  id="whatsapp-message"
+                  rows={3}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="mt-2 w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base sm:text-sm text-slate-700 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="whatsapp-message" className="text-xs uppercase tracking-widest text-navy font-bold">
-                Your message
-              </label>
-              <textarea
-                id="whatsapp-message"
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="mt-2 w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base sm:text-sm text-slate-700 focus:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
-              />
+              <button
+                type="button"
+                onClick={startChat}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white px-4 py-3 font-bold uppercase tracking-widest text-xs transition-colors"
+              >
+                <WhatsAppIcon className="size-4" />
+                Start Chat
+              </button>
             </div>
-
-            <button
-              type="button"
-              onClick={startChat}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white px-4 py-3 font-bold uppercase tracking-widest text-xs transition-colors"
-            >
-              <WhatsAppIcon className="size-4" />
-              Start Chat
-            </button>
           </div>
         </div>
-      </div>
 
-      <button
-        type="button"
-        aria-label={open ? "Close WhatsApp chat" : "Chat on WhatsApp"}
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "size-12 sm:size-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/35 ring-1 ring-[#1ebe5d]/40 touch-manipulation",
-          "hover:bg-[#1ebe5d] hover:scale-105 active:scale-95 transition-all duration-300 grid place-items-center",
-        )}
-      >
-        {open ? <X className="size-5 sm:size-6" /> : <WhatsAppIcon className="size-6 sm:size-7" />}
-      </button>
+        <button
+          type="button"
+          aria-label={open ? "Close WhatsApp chat" : "Chat on WhatsApp"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className={cn(
+            "size-12 sm:size-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/35 ring-1 ring-[#1ebe5d]/40 touch-manipulation",
+            "hover:bg-[#1ebe5d] hover:scale-105 active:scale-95 transition-all duration-300 grid place-items-center",
+          )}
+        >
+          {open ? <X className="size-5 sm:size-6" /> : <WhatsAppIcon className="size-6 sm:size-7" />}
+        </button>
+      </div>
     </div>
   );
 }
