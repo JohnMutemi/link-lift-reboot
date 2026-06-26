@@ -3,6 +3,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -100,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "icon", href: "/link-freight-rams.png", type: "image/png" },
+      { rel: "icon", href: "/link-freight-logo.png", type: "image/png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -132,18 +133,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+  const hideSiteShell = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col bg-white">
-        <TopBar />
-        <Header />
+      <div className={`h-screen flex flex-col bg-white ${hideSiteShell ? "overflow-hidden" : ""}`}>
+        {!hideSiteShell && <TopBar />}
+        {!hideSiteShell && <Header />}
         <main className="flex-1 pb-24 sm:pb-28 lg:pb-0">
           <PageTransition />
         </main>
         <Footer />
         <ScrollToTop />
-        <WhatsAppWidget />
+        {!hideSiteShell && <WhatsAppWidget />}
       </div>
     </QueryClientProvider>
   );

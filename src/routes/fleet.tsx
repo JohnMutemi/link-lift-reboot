@@ -2,13 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, CTA } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
 import { FleetGallery } from "@/components/site/FleetGallery";
-// import { HERO_CAROUSEL_1 } from "@/lib/media";
+import { HERO_CAROUSEL_5 } from "@/lib/media";
 
 // const truck = HERO_CAROUSEL_1;
 const truck = "/Primemovers.png";
 const reefer = "/Reefers.png";
 const genset = "/Genset.png";
 const yard = "/Containers.png";
+const hero = HERO_CAROUSEL_5;
 
 export const Route = createFileRoute("/fleet")({
   head: () => ({
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/fleet")({
 });
 
 const fleet = [
-  { image: truck, id: "PM-044", name: "Prime Movers", specs: [["Horsepower", "480–540 HP"], ["Payload", "60–80 tons"], ["Fleet Size", "85 units"]] },
+  { image: hero, id: "PM-044", name: "Prime Movers", specs: [["Horsepower", "480–540 HP"], ["Payload", "60–80 tons"], ["Fleet Size", "85 units"]] },
   { image: reefer, id: "RF-882", name: "Reefer Containers", specs: [["Temp Range", "−25°C to +25°C"], ["Capacity", "67.7 CBM"], ["Fleet Size", "60 units"]] },
   { image: yard, id: "DC-201", name: "Dry Containers", specs: [["Sizes", "20ft / 40ft / HC"], ["Max Payload", "28,200 kg"], ["Fleet Size", "120 units"]] },
   { image: genset, id: "GS-209", name: "Genset Trailers", specs: [["Power", "15–25 kW"], ["Runtime", "Continuous duty"], ["Fleet Size", "35 units"]] },
@@ -36,7 +37,7 @@ function FleetPage() {
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
-        image="/hero-carousel-1.jpg"
+        image={hero}
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">

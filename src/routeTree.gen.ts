@@ -13,10 +13,24 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as FleetRouteImport } from './routes/fleet'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as AdminLayoutRouteImport } from './routes/admin/_layout'
+import { Route as AdminLayoutIndexRouteImport } from './routes/admin/_layout/index'
+import { Route as AdminLayoutSettingsRouteImport } from './routes/admin/_layout/settings'
+import { Route as AdminLayoutRoutesRouteImport } from './routes/admin/_layout/routes'
+import { Route as AdminLayoutReportsRouteImport } from './routes/admin/_layout/reports'
+import { Route as AdminLayoutQuotesRouteImport } from './routes/admin/_layout/quotes'
+import { Route as AdminLayoutFleetRouteImport } from './routes/admin/_layout/fleet'
+import { Route as AdminLayoutDriversRouteImport } from './routes/admin/_layout/drivers'
+import { Route as AdminLayoutCustomersRouteImport } from './routes/admin/_layout/customers'
+import { Route as AdminLayoutContainersRouteImport } from './routes/admin/_layout/containers'
+import { Route as AdminLayoutBookingsRouteImport } from './routes/admin/_layout/bookings'
+import { Route as AdminLayoutApprovalsRouteImport } from './routes/admin/_layout/approvals'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -36,6 +50,16 @@ const FleetRoute = FleetRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -58,74 +82,213 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLayoutRoute = AdminLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLayoutIndexRoute = AdminLayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutSettingsRoute = AdminLayoutSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutRoutesRoute = AdminLayoutRoutesRouteImport.update({
+  id: '/routes',
+  path: '/routes',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutReportsRoute = AdminLayoutReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutQuotesRoute = AdminLayoutQuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutFleetRoute = AdminLayoutFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutDriversRoute = AdminLayoutDriversRouteImport.update({
+  id: '/drivers',
+  path: '/drivers',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutCustomersRoute = AdminLayoutCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutContainersRoute = AdminLayoutContainersRouteImport.update({
+  id: '/containers',
+  path: '/containers',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutBookingsRoute = AdminLayoutBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
+const AdminLayoutApprovalsRoute = AdminLayoutApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/admin/approvals': typeof AdminLayoutApprovalsRoute
+  '/admin/bookings': typeof AdminLayoutBookingsRoute
+  '/admin/containers': typeof AdminLayoutContainersRoute
+  '/admin/customers': typeof AdminLayoutCustomersRoute
+  '/admin/drivers': typeof AdminLayoutDriversRoute
+  '/admin/fleet': typeof AdminLayoutFleetRoute
+  '/admin/quotes': typeof AdminLayoutQuotesRoute
+  '/admin/reports': typeof AdminLayoutReportsRoute
+  '/admin/routes': typeof AdminLayoutRoutesRoute
+  '/admin/settings': typeof AdminLayoutSettingsRoute
+  '/admin/': typeof AdminLayoutIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminLayoutIndexRoute
+  '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/admin/approvals': typeof AdminLayoutApprovalsRoute
+  '/admin/bookings': typeof AdminLayoutBookingsRoute
+  '/admin/containers': typeof AdminLayoutContainersRoute
+  '/admin/customers': typeof AdminLayoutCustomersRoute
+  '/admin/drivers': typeof AdminLayoutDriversRoute
+  '/admin/fleet': typeof AdminLayoutFleetRoute
+  '/admin/quotes': typeof AdminLayoutQuotesRoute
+  '/admin/reports': typeof AdminLayoutReportsRoute
+  '/admin/routes': typeof AdminLayoutRoutesRoute
+  '/admin/settings': typeof AdminLayoutSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
+  '/admin/_layout': typeof AdminLayoutRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/admin/_layout/approvals': typeof AdminLayoutApprovalsRoute
+  '/admin/_layout/bookings': typeof AdminLayoutBookingsRoute
+  '/admin/_layout/containers': typeof AdminLayoutContainersRoute
+  '/admin/_layout/customers': typeof AdminLayoutCustomersRoute
+  '/admin/_layout/drivers': typeof AdminLayoutDriversRoute
+  '/admin/_layout/fleet': typeof AdminLayoutFleetRoute
+  '/admin/_layout/quotes': typeof AdminLayoutQuotesRoute
+  '/admin/_layout/reports': typeof AdminLayoutReportsRoute
+  '/admin/_layout/routes': typeof AdminLayoutRoutesRoute
+  '/admin/_layout/settings': typeof AdminLayoutSettingsRoute
+  '/admin/_layout/': typeof AdminLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
+    | '/admin-login'
     | '/contact'
     | '/fleet'
     | '/quote'
     | '/services'
     | '/blog/$slug'
     | '/blog/'
+    | '/admin/approvals'
+    | '/admin/bookings'
+    | '/admin/containers'
+    | '/admin/customers'
+    | '/admin/drivers'
+    | '/admin/fleet'
+    | '/admin/quotes'
+    | '/admin/reports'
+    | '/admin/routes'
+    | '/admin/settings'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/admin'
+    | '/admin-login'
     | '/contact'
     | '/fleet'
     | '/quote'
     | '/services'
     | '/blog/$slug'
     | '/blog'
+    | '/admin/approvals'
+    | '/admin/bookings'
+    | '/admin/containers'
+    | '/admin/customers'
+    | '/admin/drivers'
+    | '/admin/fleet'
+    | '/admin/quotes'
+    | '/admin/reports'
+    | '/admin/routes'
+    | '/admin/settings'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
+    | '/admin-login'
     | '/contact'
     | '/fleet'
     | '/quote'
     | '/services'
+    | '/admin/_layout'
     | '/blog/$slug'
     | '/blog/'
+    | '/admin/_layout/approvals'
+    | '/admin/_layout/bookings'
+    | '/admin/_layout/containers'
+    | '/admin/_layout/customers'
+    | '/admin/_layout/drivers'
+    | '/admin/_layout/fleet'
+    | '/admin/_layout/quotes'
+    | '/admin/_layout/reports'
+    | '/admin/_layout/routes'
+    | '/admin/_layout/settings'
+    | '/admin/_layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
   ContactRoute: typeof ContactRoute
   FleetRoute: typeof FleetRoute
   QuoteRoute: typeof QuoteRoute
@@ -164,6 +327,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -192,12 +369,140 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/_layout': {
+      id: '/admin/_layout'
+      path: ''
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminLayoutRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/_layout/': {
+      id: '/admin/_layout/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminLayoutIndexRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/settings': {
+      id: '/admin/_layout/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminLayoutSettingsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/routes': {
+      id: '/admin/_layout/routes'
+      path: '/routes'
+      fullPath: '/admin/routes'
+      preLoaderRoute: typeof AdminLayoutRoutesRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/reports': {
+      id: '/admin/_layout/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminLayoutReportsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/quotes': {
+      id: '/admin/_layout/quotes'
+      path: '/quotes'
+      fullPath: '/admin/quotes'
+      preLoaderRoute: typeof AdminLayoutQuotesRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/fleet': {
+      id: '/admin/_layout/fleet'
+      path: '/fleet'
+      fullPath: '/admin/fleet'
+      preLoaderRoute: typeof AdminLayoutFleetRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/drivers': {
+      id: '/admin/_layout/drivers'
+      path: '/drivers'
+      fullPath: '/admin/drivers'
+      preLoaderRoute: typeof AdminLayoutDriversRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/customers': {
+      id: '/admin/_layout/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminLayoutCustomersRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/containers': {
+      id: '/admin/_layout/containers'
+      path: '/containers'
+      fullPath: '/admin/containers'
+      preLoaderRoute: typeof AdminLayoutContainersRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/bookings': {
+      id: '/admin/_layout/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminLayoutBookingsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
+    '/admin/_layout/approvals': {
+      id: '/admin/_layout/approvals'
+      path: '/approvals'
+      fullPath: '/admin/approvals'
+      preLoaderRoute: typeof AdminLayoutApprovalsRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
   }
 }
+
+interface AdminLayoutRouteChildren {
+  AdminLayoutApprovalsRoute: typeof AdminLayoutApprovalsRoute
+  AdminLayoutBookingsRoute: typeof AdminLayoutBookingsRoute
+  AdminLayoutContainersRoute: typeof AdminLayoutContainersRoute
+  AdminLayoutCustomersRoute: typeof AdminLayoutCustomersRoute
+  AdminLayoutDriversRoute: typeof AdminLayoutDriversRoute
+  AdminLayoutFleetRoute: typeof AdminLayoutFleetRoute
+  AdminLayoutQuotesRoute: typeof AdminLayoutQuotesRoute
+  AdminLayoutReportsRoute: typeof AdminLayoutReportsRoute
+  AdminLayoutRoutesRoute: typeof AdminLayoutRoutesRoute
+  AdminLayoutSettingsRoute: typeof AdminLayoutSettingsRoute
+  AdminLayoutIndexRoute: typeof AdminLayoutIndexRoute
+}
+
+const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
+  AdminLayoutApprovalsRoute: AdminLayoutApprovalsRoute,
+  AdminLayoutBookingsRoute: AdminLayoutBookingsRoute,
+  AdminLayoutContainersRoute: AdminLayoutContainersRoute,
+  AdminLayoutCustomersRoute: AdminLayoutCustomersRoute,
+  AdminLayoutDriversRoute: AdminLayoutDriversRoute,
+  AdminLayoutFleetRoute: AdminLayoutFleetRoute,
+  AdminLayoutQuotesRoute: AdminLayoutQuotesRoute,
+  AdminLayoutReportsRoute: AdminLayoutReportsRoute,
+  AdminLayoutRoutesRoute: AdminLayoutRoutesRoute,
+  AdminLayoutSettingsRoute: AdminLayoutSettingsRoute,
+  AdminLayoutIndexRoute: AdminLayoutIndexRoute,
+}
+
+const AdminLayoutRouteWithChildren = AdminLayoutRoute._addFileChildren(
+  AdminLayoutRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminLayoutRoute: AdminLayoutRouteWithChildren,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
   ContactRoute: ContactRoute,
   FleetRoute: FleetRoute,
   QuoteRoute: QuoteRoute,

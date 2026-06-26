@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Container, Snowflake, Zap, Truck, ShieldCheck, MapPin, Wrench, FileCheck, Route as RouteIcon, Building2 } from "lucide-react";
 import { PageHero, CTA } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
-import { HERO_CAROUSEL_1 } from "@/lib/media";
+import { HERO_CAROUSEL_3 } from "@/lib/media";
 
 const reefer = "/fleet-gallery-1.jpg";
 const genset = "/fleet-gallery-7.jpg";
-const truck = HERO_CAROUSEL_1;
+const truck = HERO_CAROUSEL_3;
 const yard = "/fleet-gallery-6.jpg";
 
 export const Route = createFileRoute("/services")({
@@ -72,10 +72,11 @@ function ServicesPage() {
         tag="Our Services"
         title="Long distance. Short distance. Full support."
         subtitle="Three service pillars — corridor haulage, local transport, and associated logistics — engineered for East African trade."
-      />
+        image={truck}
+ />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16 lg:space-y-24">
+        <div className="container mx-a uto px-4 sm:px-6 space-y-12 sm:space-y-16 lg:space-y-24">
           {serviceCategories.map(({ id, tag, Icon, image, title, desc, points, equipment }, i) => (
             <div key={id} id={id} className={`scroll-mt-28 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
               <img src={image} alt={title} className="w-full aspect-[4/3] object-cover lg:sticky lg:top-28" loading="lazy" width={1280} height={900} />

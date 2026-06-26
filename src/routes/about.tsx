@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, Award, Users, TrendingUp } from "lucide-react";
 import { SiteCard } from "@/components/site/SiteCard";
-import { HERO_CAROUSEL_1 } from "@/lib/media";
+import { HERO_CAROUSEL_2 } from "@/lib/media";
 
-const yard = "/fleet-gallery-6.jpg";
+const yard = "/fleet-gallery-24.jpeg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -127,7 +127,7 @@ export function PageHero({
   tag,
   title,
   subtitle,
-  image = HERO_CAROUSEL_1,
+  image = HERO_CAROUSEL_2,
 }: {
   tag: string;
   title: string;

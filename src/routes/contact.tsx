@@ -4,6 +4,10 @@ import { PageHero } from "./about";
 import { SiteCard } from "@/components/site/SiteCard";
 import { SITE } from "@/lib/site-config";
 import { useState } from "react";
+import { HERO_CAROUSEL_4 } from "@/lib/media";
+
+const hero = HERO_CAROUSEL_4;
+
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
@@ -30,6 +34,7 @@ function ContactPage() {
         tag="Contact Us"
         title="Let's move your shipment."
         subtitle="Whether you need a tracking update or want to partner with us — our team is on standby. For pricing, use our dedicated quote form."
+        image={hero}
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">

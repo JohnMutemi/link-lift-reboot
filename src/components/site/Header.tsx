@@ -1,5 +1,5 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { Menu, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
@@ -24,20 +24,83 @@ const activeNavClass =
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
+  const [navHeight, setNavHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Ensure header stays sticky and visible on scroll
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    // Force visible transform so other scripts/styles can't hide it
+    el.style.transform = "translateY(0)";
+    el.style.willChange = "transform";
+
+    const keepVisible = () => {
+      el.style.transform = "translateY(0)";
+    };
+
+    window.addEventListener("scroll", keepVisible, { passive: true });
+    return () => window.removeEventListener("scroll", keepVisible);
+  }, []);
+
+  // Measure nav height and keep a spacer so fixed header doesn't overlap content
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    function updateHeight() {
+      setNavHeight(el.offsetHeight || null);
+    }
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    // also update on scroll because padding may change when scrolled class toggles
+    window.addEventListener("scroll", updateHeight, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+      window.removeEventListener("scroll", updateHeight);
+    };
+  }, []);
+
+  const linkClass = scrolled
+    ? `${navLinkClass} text-xs`
+    : `text-white/95 hover:text-white/80 text-xs`;
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 transition-colors">
-      <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-2 lg:gap-8">
+    <>
+      <nav
+        ref={navRef}
+        className={`fixed top-0 left-0 right-0 z-50 translate-y-0 transition-all duration-300 ${
+        scrolled
+          ? "bg-white shadow-sm border-b border-slate-200"
+          : "bg-transparent"
+      }`}
+      style={{ WebkitBackfaceVisibility: "hidden" }}
+    >
+      <div
+        className={`container mx-auto px-4 sm:px-6 ${
+          scrolled ? "py-2.5" : "py-3 sm:py-4"
+        } grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-2 lg:gap-8`}
+      >
         <div className="min-w-0">
-          <Logo variant="dark" />
+          <Logo imgClassName={scrolled ? "h-10 sm:h-11" : "h-12 sm:h-14"} />
         </div>
 
-        <div className="hidden lg:flex items-center justify-center gap-8 xl:gap-10 font-medium text-sm uppercase tracking-wider">
+        <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-8 font-medium uppercase tracking-wider whitespace-nowrap mt-2">
           {navItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className={navLinkClass}
+              className={linkClass}
               activeOptions={{ exact: item.to === "/" }}
               activeProps={{ className: activeNavClass }}
             >
@@ -52,7 +115,9 @@ export function Header() {
           </Link>
 
           <button
-            className="lg:hidden size-11 grid place-items-center rounded-sm transition-colors touch-manipulation text-navy hover:bg-slate-100"
+            className={`lg:hidden size-11 grid place-items-center rounded-sm transition-colors touch-manipulation hover:bg-slate-100 ${
+              scrolled ? "text-navy" : "text-white/95"
+            }`}
             onClick={() => setOpen(true)}
             aria-label="Open menu"
           >
@@ -91,5 +156,8 @@ export function Header() {
         </SheetContent>
       </Sheet>
     </nav>
+      {/* Spacer to preserve document flow for the fixed header */}
+      {navHeight !== null && <div aria-hidden style={{ height: navHeight }} />}
+    </>
   );
 }

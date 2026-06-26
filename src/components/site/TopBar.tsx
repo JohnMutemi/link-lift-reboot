@@ -12,16 +12,40 @@ const socialIcons = {
 
 function ContactRow() {
   return (
-    <div className="flex items-center gap-5 sm:gap-7 shrink-0">
-      <span className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-3 sm:gap-5 shrink-0">
+      <span className="flex items-center gap-2 whitespace-nowrap">
         <MapPin className="size-3.5 text-cyan shrink-0" />
         <span>Off Airport North Road, Nairobi</span>
       </span>
-      <a href="tel:+254721121287" className="flex items-center gap-2 hover:text-cyan transition-colors">
+      <a
+        href="tel:+254721121287"
+        className="flex items-center gap-2 whitespace-nowrap hover:text-cyan transition-colors"
+      >
         <Phone className="size-3.5 text-cyan shrink-0" />
         <span>+254 721 121 287</span>
       </a>
-      <a href="mailto:info@linkfreightltd.co.ke" className="flex items-center gap-2 hover:text-cyan transition-colors">
+    </div>
+  );
+}
+
+function ContactRowWithEmail() {
+  return (
+    <div className="flex flex-wrap items-center gap-3 sm:gap-5 shrink-0">
+      <span className="flex items-center gap-2 whitespace-nowrap">
+        <MapPin className="size-3.5 text-cyan shrink-0" />
+        <span>Off Airport North Road, Nairobi</span>
+      </span>
+      <a
+        href="tel:+254721121287"
+        className="flex items-center gap-2 whitespace-nowrap hover:text-cyan transition-colors"
+      >
+        <Phone className="size-3.5 text-cyan shrink-0" />
+        <span>+254 721 121 287</span>
+      </a>
+      <a
+        href="mailto:info@linkfreightltd.co.ke"
+        className="flex items-center gap-2 whitespace-nowrap hover:text-cyan transition-colors"
+      >
         <Mail className="size-3.5 text-cyan shrink-0" />
         <span>info@linkfreightltd.co.ke</span>
       </a>
@@ -59,12 +83,12 @@ export function TopBar() {
   const isHome = pathname === "/";
 
   return (
-    <div className="w-full bg-navy text-white/90 text-[11px] sm:text-xs border-b border-white/10">
+    <div className="w-full bg-navy text-white/90 text-[11px] sm:text-xs">
       <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
         <div className="flex sm:hidden items-center justify-between gap-2">
-          <a href="tel:+254721121287" className="flex items-center gap-1.5 truncate">
+          <a href="tel:+254721121287" className="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
             <Phone className="size-3 text-cyan shrink-0" />
-            <span className="truncate">+254 721 121 287</span>
+            <span className="text-sm">+254 721 121 287</span>
           </a>
           <Socials />
         </div>
@@ -73,8 +97,8 @@ export function TopBar() {
           <div className="relative min-w-0 overflow-hidden">
             {isHome ? (
               <div className="lf-marquee-track lf-marquee-animate">
-                <ContactRow />
-                <ContactRow />
+                <ContactRowWithEmail />
+                <ContactRowWithEmail />
               </div>
             ) : (
               <ContactRow />

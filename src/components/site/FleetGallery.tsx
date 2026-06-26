@@ -1,10 +1,103 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, X } from "lucide-react";
 import { fleetGallery } from "@/lib/media";
 
+const FLEET_GALLERY_STORAGE_KEY = "lf-selected-fleet-gallery";
+
+function parseGalleryId(src: string) {
+  const match = src.match(/fleet-gallery-(\d+)\./);
+  return match ? Number(match[1]) : 0;
+}
+
+function shuffleArray<T>(items: T[]) {
+  const array = [...items];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function pickRandom<T>(items: T[], count: number) {
+  const array = [...items];
+  const picked: T[] = [];
+  while (picked.length < count && array.length > 0) {
+    const index = Math.floor(Math.random() * array.length);
+    picked.push(array[index]);
+    array.splice(index, 1);
+  }
+  return picked;
+}
+
+function makeFleetSelection(previousSrcs: string[] | null) {
+  const firstGroup = fleetGallery.filter((item) => {
+    const id = parseGalleryId(item.src);
+    return id >= 1 && id <= 11;
+  });
+
+  const secondGroup = fleetGallery.filter((item) => {
+    const id = parseGalleryId(item.src);
+    return id >= 12 && id <= 28;
+  });
+
+  let selection = [...pickRandom(firstGroup, 3), ...pickRandom(secondGroup, 6)];
+  selection = shuffleArray(selection);
+
+  const selectionSrcs = selection.map((item) => item.src);
+  if (
+    previousSrcs &&
+    previousSrcs.length === selectionSrcs.length &&
+    selectionSrcs.every((src) => previousSrcs.includes(src))
+  ) {
+    const alternative = [...pickRandom(firstGroup, 3), ...pickRandom(secondGroup, 6)];
+    return shuffleArray(alternative);
+  }
+
+  return selection;
+}
+
 export function FleetGallery() {
+  const defaultSelection = useMemo(() => {
+    const firstGroup = fleetGallery.filter((item) => {
+      const id = parseGalleryId(item.src);
+      return id >= 1 && id <= 11;
+    }).slice(0, 3);
+
+    const secondGroup = fleetGallery.filter((item) => {
+      const id = parseGalleryId(item.src);
+      return id >= 12 && id <= 28;
+    }).slice(0, 6);
+
+    return [...firstGroup, ...secondGroup];
+  }, []);
+
+  const [selectedImages, setSelectedImages] = useState(defaultSelection);
   const [lightbox, setLightbox] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let previousSelection: string[] | null = null;
+    try {
+      const stored = window.localStorage.getItem(FLEET_GALLERY_STORAGE_KEY);
+      previousSelection = stored ? JSON.parse(stored) : null;
+    } catch {
+      previousSelection = null;
+    }
+
+    const selection = makeFleetSelection(previousSelection);
+    setSelectedImages(selection);
+
+    try {
+      window.localStorage.setItem(
+        FLEET_GALLERY_STORAGE_KEY,
+        JSON.stringify(selection.map((item) => item.src)),
+      );
+    } catch {
+      // ignore storage failures
+    }
+  }, []);
 
   return (
     <>
@@ -32,25 +125,25 @@ export function FleetGallery() {
           {/* Uniform card grid — 2 per row on mobile, 3 per row from md up.
               Every photo gets the same frame and aspect ratio; no special-cased
               "hero" cell, so the grid degrades gracefully at any item count. */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
-            {fleetGallery.map((item, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
+            {selectedImages.map((item, i) => (
               <button
                 key={item.src}
                 type="button"
                 onClick={() => setLightbox(i)}
-                className="group relative overflow-hidden bg-slate-100 ring-1 ring-slate-200/80 shadow-sm hover:shadow-lg hover:shadow-navy/10 transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                className="group relative overflow-hidden rounded-[1.75rem] bg-slate-100 ring-1 ring-slate-200/80 shadow-md shadow-slate-900/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
-                <div className="aspect-[4/3]">
+                <div className="aspect-[4/3] overflow-hidden rounded-[1.75rem]">
                   <img
                     src={item.src}
                     alt={item.alt}
                     loading="lazy"
-                    width={800}
-                    height={600}
+                    width={900}
+                    height={675}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/15 transition-colors" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
             ))}
           </div>
@@ -74,8 +167,8 @@ export function FleetGallery() {
             <X className="size-6" />
           </button>
           <img
-            src={fleetGallery[lightbox].src}
-            alt={fleetGallery[lightbox].alt}
+            src={selectedImages[lightbox].src}
+            alt={selectedImages[lightbox].alt}
             className="max-w-full max-h-[85vh] object-contain shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
