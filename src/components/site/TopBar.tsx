@@ -83,7 +83,7 @@ export function TopBar() {
   const isHome = pathname === "/";
 
   return (
-    <div className="w-full bg-navy text-white/90 text-[11px] sm:text-xs">
+    <div data-site-topbar className="w-full bg-navy text-white/90 text-[11px] sm:text-xs">
       <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
         <div className="flex sm:hidden items-center justify-between gap-2">
           <a href="tel:+254721121287" className="flex min-w-0 items-center gap-1.5 whitespace-nowrap">

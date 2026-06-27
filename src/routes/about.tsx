@@ -135,7 +135,7 @@ export function PageHero({
   image?: string;
 }) {
   return (
-    <section className="relative min-h-[320px] sm:min-h-[380px] md:min-h-[420px] flex items-center overflow-hidden bg-navy">
+    <section className="relative min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden bg-navy pt-12 sm:pt-14 lg:pt-16 pb-10">
       <img
         src={image}
         alt=""
@@ -143,6 +143,7 @@ export function PageHero({
         width={1920}
         height={1080}
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: "center 15%" }}
       />
       <div className="absolute inset-0 bg-navy/60" />
 

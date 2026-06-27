@@ -22,7 +22,7 @@ function HeroWave() {
 
 export function HeroCarousel() {
   return (
-    <section className="relative min-h-[520px] sm:min-h-[580px] md:min-h-[640px] lg:min-h-[85vh] flex items-center overflow-hidden bg-navy">
+    <section className="relative min-h-[calc(100vh-5.5rem)] sm:min-h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden bg-navy pt-10 sm:pt-12 md:pt-14 lg:pt-16 pb-10">
       <img
         src={heroSlide.image}
         alt=""
@@ -32,6 +32,7 @@ export function HeroCarousel() {
         fetchPriority="high"
         loading="eager"
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: "center 18%" }}
       />
 
       <div className="absolute inset-0 bg-navy/55" />
@@ -39,27 +40,27 @@ export function HeroCarousel() {
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center">
         <div className="max-w-4xl mx-auto lf-reveal flex flex-col items-center justify-center">
-          <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white uppercase leading-[1.05] font-extrabold drop-shadow-md">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white uppercase leading-[1.05] font-extrabold drop-shadow-md">
             {heroSlide.title}
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-white/85 mt-4 sm:mt-6 max-w-2xl mx-auto drop-shadow-sm">
             {heroSlide.subtitle}
           </p>
 
-          <p className="text-xs sm:text-sm text-cyan font-medium tracking-widest uppercase mt-6 sm:mt-8 drop-shadow-sm">
+          <p className="text-[10px] sm:text-xs text-cyan font-medium tracking-widest uppercase mt-5 sm:mt-6 drop-shadow-sm">
             {SITE.tagline}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 sm:mt-10 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8 justify-center">
             <Link
               to="/services"
-              className="bg-cyan text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-cyan-600 transition-all text-center w-full sm:w-auto"
+              className="bg-cyan text-white px-5 sm:px-6 py-3 font-bold uppercase tracking-widest text-[10px] sm:text-xs hover:bg-cyan-600 transition-all text-center w-full sm:w-auto"
             >
               Explore Services
             </Link>
             <Link
               to="/quote"
-              className="border border-white/50 text-white px-6 sm:px-8 py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white/15 transition-all text-center backdrop-blur-sm w-full sm:w-auto"
+              className="border border-white/50 text-white px-5 sm:px-6 py-3 font-bold uppercase tracking-widest text-[10px] sm:text-xs hover:bg-white/15 transition-all text-center backdrop-blur-sm w-full sm:w-auto"
             >
               Get A Quote
             </Link>

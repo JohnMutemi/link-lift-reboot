@@ -75,6 +75,23 @@ export function FleetGallery() {
   const [selectedImages, setSelectedImages] = useState(defaultSelection);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
+  const refreshGallery = () => {
+    if (typeof window === "undefined") return;
+
+    const previousSelection = selectedImages.map((item) => item.src);
+    const selection = makeFleetSelection(previousSelection);
+    setSelectedImages(selection);
+
+    try {
+      window.localStorage.setItem(
+        FLEET_GALLERY_STORAGE_KEY,
+        JSON.stringify(selection.map((item) => item.src)),
+      );
+    } catch {
+      // ignore storage failures
+    }
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -114,12 +131,21 @@ export function FleetGallery() {
                 ready for dispatch across East, Central, and Southern Africa.
               </p>
             </div>
-            <Link
-              to="/fleet"
-              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-navy hover:text-cyan transition-colors shrink-0"
-            >
-              Full Fleet Details <ArrowRight className="size-4" />
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/fleet"
+                className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-navy hover:text-cyan transition-colors shrink-0"
+              >
+                Full Fleet Details <ArrowRight className="size-4" />
+              </Link>
+              <button
+                type="button"
+                onClick={refreshGallery}
+                className="inline-flex items-center justify-center rounded-sm border border-slate-300 bg-white px-4 py-2 text-sm font-bold uppercase tracking-widest text-navy transition-colors hover:border-cyan hover:text-cyan"
+              >
+                Refresh Gallery
+              </button>
+            </div>
           </div>
 
           {/* Uniform card grid — 2 per row on mobile, 3 per row from md up.

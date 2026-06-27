@@ -14,7 +14,7 @@ const navItems = [
 ] as const;
 
 const quoteLinkClass =
-  "inline-flex items-center gap-2 bg-cyan hover:bg-cyan-600 text-white px-4 lg:px-5 xl:px-6 py-2.5 rounded-sm font-bold text-[10px] lg:text-xs uppercase tracking-widest transition-all shadow-md shadow-cyan/25 shrink-0 touch-manipulation";
+  "inline-flex items-center gap-2 bg-cyan hover:bg-cyan-600 text-white px-3 lg:px-4 py-2 rounded-sm font-bold text-[10px] lg:text-xs uppercase tracking-widest transition-all shadow-md shadow-cyan/25 shrink-0 touch-manipulation";
 
 const navLinkClass =
   "text-navy/80 hover:text-cyan transition-colors relative py-1 whitespace-nowrap";
@@ -25,28 +25,49 @@ const activeNavClass =
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [topbarHeight, setTopbarHeight] = useState(0);
   const navRef = useRef<HTMLElement | null>(null);
   const [navHeight, setNavHeight] = useState<number | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const updateTopbarHeight = () => {
+      const topbar = document.querySelector("[data-site-topbar]") as HTMLElement | null;
+      setTopbarHeight(topbar?.offsetHeight ?? 0);
+    };
+
+    updateTopbarHeight();
+    window.addEventListener("resize", updateTopbarHeight);
+    return () => window.removeEventListener("resize", updateTopbarHeight);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrollY(currentY);
+      setScrolled(currentY > Math.max(topbarHeight, 20));
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [topbarHeight]);
 
   // Ensure header stays sticky and visible on scroll
   useEffect(() => {
-    const el = navRef.current;
-    if (!el) return;
-
-    // Force visible transform so other scripts/styles can't hide it
-    el.style.transform = "translateY(0)";
-    el.style.willChange = "transform";
-
+    // Ensure nav stays visible — read current ref on each handler call
     const keepVisible = () => {
+      const el = navRef.current;
+      if (!el) return;
       el.style.transform = "translateY(0)";
     };
+
+    // Apply initial styles if element exists now
+    const initialEl = navRef.current;
+    if (initialEl) {
+      initialEl.style.transform = "translateY(0)";
+      initialEl.style.willChange = "transform";
+    }
 
     window.addEventListener("scroll", keepVisible, { passive: true });
     return () => window.removeEventListener("scroll", keepVisible);
@@ -54,11 +75,9 @@ export function Header() {
 
   // Measure nav height and keep a spacer so fixed header doesn't overlap content
   useEffect(() => {
-    const el = navRef.current;
-    if (!el) return;
-
     function updateHeight() {
-      setNavHeight(el.offsetHeight || null);
+      const el = navRef.current;
+      setNavHeight(el?.offsetHeight ?? null);
     }
 
     updateHeight();
@@ -79,23 +98,26 @@ export function Header() {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 translate-y-0 transition-all duration-300 ${
-        scrolled
-          ? "bg-white shadow-sm border-b border-slate-200"
-          : "bg-transparent"
-      }`}
-      style={{ WebkitBackfaceVisibility: "hidden" }}
-    >
+        className={`fixed left-0 right-0 z-50 translate-y-0 transition-all duration-300 border-t border-b ${
+          scrolled
+            ? "bg-white shadow-sm border-slate-200"
+            : "bg-white/5 backdrop-blur-sm border-slate-200/20"
+        }`}
+        style={{
+          WebkitBackfaceVisibility: "hidden",
+          top: scrollY >= topbarHeight ? "0" : `${topbarHeight - scrollY}px`,
+        }}
+      >
       <div
         className={`container mx-auto px-4 sm:px-6 ${
-          scrolled ? "py-2.5" : "py-3 sm:py-4"
-        } grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-2 lg:gap-8`}
+          scrolled ? "py-1" : "py-1.5 sm:py-2"
+        } grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-2 lg:gap-3`}
       >
         <div className="min-w-0">
-          <Logo imgClassName={scrolled ? "h-10 sm:h-11" : "h-12 sm:h-14"} />
+          <Logo imgClassName={scrolled ? "h-7 sm:h-8" : "h-8 sm:h-9"} />
         </div>
 
-        <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-8 font-medium uppercase tracking-wider whitespace-nowrap mt-2">
+        <div className="hidden lg:flex items-center justify-center gap-3 xl:gap-5 font-medium uppercase tracking-wider whitespace-nowrap">
           {navItems.map((item) => (
             <Link
               key={item.to}
@@ -115,7 +137,7 @@ export function Header() {
           </Link>
 
           <button
-            className={`lg:hidden size-11 grid place-items-center rounded-sm transition-colors touch-manipulation hover:bg-slate-100 ${
+            className={`lg:hidden size-9 grid place-items-center rounded-sm transition-colors touch-manipulation hover:bg-slate-100 ${
               scrolled ? "text-navy" : "text-white/95"
             }`}
             onClick={() => setOpen(true)}
