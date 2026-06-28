@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, Snowflake, Zap, Truck, ShieldCheck, MapPin, Wrench, FileCheck, Route as RouteIcon, Building2 } from "lucide-react";
-import { PageHero, CTA } from "./about";
+import { CTA } from "./about";
+import { SplitHero } from "@/components/site/SplitHero";
+import { SplitSection } from "@/components/site/SplitSection";
 import { SiteCard } from "@/components/site/SiteCard";
 import { HERO_CAROUSEL_3 } from "@/lib/media";
 
@@ -68,46 +70,41 @@ const serviceCategories = [
 function ServicesPage() {
   return (
     <>
-      <PageHero
+      <SplitHero
         tag="Our Services"
         title="Long distance. Short distance. Full support."
         subtitle="Three service pillars — corridor haulage, local transport, and associated logistics — engineered for East African trade."
-        image={truck}
- />
+      />
 
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
-        <div className="container mx-a uto px-4 sm:px-6 space-y-12 sm:space-y-16 lg:space-y-24">
-          {serviceCategories.map(({ id, tag, Icon, image, title, desc, points, equipment }, i) => (
-            <div key={id} id={id} className={`scroll-mt-28 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-              <img src={image} alt={title} className="w-full aspect-[4/3] object-cover lg:sticky lg:top-28" loading="lazy" width={1280} height={900} />
-              <div>
-                <div className="w-12 h-12 bg-cyan/10 flex items-center justify-center mb-6">
-                  <Icon className="size-6 text-cyan" />
-                </div>
-                <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">{tag}</span>
-                <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">{title}</h2>
-                <p className="text-slate-600 mt-6 leading-relaxed">{desc}</p>
-                <ul className="mt-6 space-y-2">
-                  {points.map((p) => (
-                    <li key={p} className="flex items-center gap-3 text-sm text-navy">
-                      <span className="size-1.5 bg-orange shrink-0" /> {p}
-                    </li>
-                  ))}
-                </ul>
+      <div className="space-y-12 sm:space-y-16 lg:space-y-24">
+        {serviceCategories.map(({ id, tag, Icon, title, desc, points, equipment }, i) => (
+          <SplitSection
+            key={id}
+            tag={tag}
+            title={title}
+            description={desc}
+            reverse={i % 2 === 1}
+          >
+            <ul className="mt-6 space-y-2">
+              {points.map((p) => (
+                <li key={p} className="flex items-center gap-3 text-sm text-navy">
+                  <span className="h-2.5 w-2.5 rounded-full bg-orange shrink-0" /> {p}
+                </li>
+              ))}
+            </ul>
 
-                <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-4">
-                  {equipment.map(({ Icon: EqIcon, title: eqTitle, desc: eqDesc }) => (
-                    <SiteCard key={eqTitle} variant="compact">
-                      <EqIcon className="size-5 text-navy mb-3" />
-                      <h3 className="font-display text-sm uppercase text-navy mb-2">{eqTitle}</h3>
-                      <p className="text-xs text-slate-600 leading-relaxed">{eqDesc}</p>
-                    </SiteCard>
-                  ))}
-                </div>              </div>
+            <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-4">
+              {equipment.map(({ Icon: EqIcon, title: eqTitle, desc: eqDesc }) => (
+                <SiteCard key={eqTitle} variant="compact">
+                  <EqIcon className="size-5 text-navy mb-3" />
+                  <h3 className="font-display text-sm uppercase text-navy mb-2">{eqTitle}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{eqDesc}</p>
+                </SiteCard>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </SplitSection>
+        ))}
+      </div>
 
       <CTA />
     </>

@@ -20,6 +20,7 @@ interface DataTableProps<T> {
   data: T[];
   className?: string;
   emptyMessage?: string;
+  loading?: boolean;
 }
 
 export function DataTable<T extends Record<string, any>>({
@@ -27,7 +28,16 @@ export function DataTable<T extends Record<string, any>>({
   data,
   className = "",
   emptyMessage = "No data available",
+  loading = false,
 }: DataTableProps<T>) {
+  if (loading) {
+    return (
+      <div className={`bg-white rounded-lg border border-slate-100 p-12 text-center ${className}`}>
+        <p className="text-slate-500">Loading...</p>
+      </div>
+    );
+  }
+
   if (data.length === 0) {
     return (
       <div className={`bg-white rounded-lg border border-slate-100 p-12 text-center ${className}`}>

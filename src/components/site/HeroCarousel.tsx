@@ -40,11 +40,11 @@ export function HeroCarousel() {
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center">
         <div className="max-w-4xl mx-auto lf-reveal flex flex-col items-center justify-center">
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white uppercase leading-[1.05] font-extrabold drop-shadow-md">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase leading-[1.05] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-navy via-cyan to-orange drop-shadow-md">
             {heroSlide.title}
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-white/85 mt-4 sm:mt-6 max-w-2xl mx-auto drop-shadow-sm">
-            {heroSlide.subtitle}
+          <p className="text-sm sm:text-base md:text-lg text-slate-100/95 mt-4 sm:mt-6 max-w-2xl mx-auto drop-shadow-sm">
+            Prime movers, <span className="text-cyan">reefer units</span>, and <span className="text-orange">genset-backed freight</span> across East and Central Africa.
           </p>
 
           <p className="text-[10px] sm:text-xs text-cyan font-medium tracking-widest uppercase mt-5 sm:mt-6 drop-shadow-sm">

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as FleetRouteImport } from './routes/fleet'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
@@ -40,6 +41,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const QuoteRoute = QuoteRouteImport.update({
   id: '/quote',
   path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FleetRoute = FleetRouteImport.update({
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -195,6 +203,7 @@ export interface FileRoutesById {
   '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
   '/fleet': typeof FleetRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
   '/admin/_layout': typeof AdminLayoutRouteWithChildren
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/admin-login'
     | '/contact'
     | '/fleet'
+    | '/projects'
     | '/quote'
     | '/services'
     | '/blog/$slug'
@@ -244,6 +254,7 @@ export interface FileRouteTypes {
     | '/admin-login'
     | '/contact'
     | '/fleet'
+    | '/projects'
     | '/quote'
     | '/services'
     | '/blog/$slug'
@@ -266,6 +277,7 @@ export interface FileRouteTypes {
     | '/admin-login'
     | '/contact'
     | '/fleet'
+    | '/projects'
     | '/quote'
     | '/services'
     | '/admin/_layout'
@@ -291,6 +303,7 @@ export interface RootRouteChildren {
   AdminLoginRoute: typeof AdminLoginRoute
   ContactRoute: typeof ContactRoute
   FleetRoute: typeof FleetRoute
+  ProjectsRoute: typeof ProjectsRoute
   QuoteRoute: typeof QuoteRoute
   ServicesRoute: typeof ServicesRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/quote'
       fullPath: '/quote'
       preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fleet': {
@@ -505,6 +525,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminLoginRoute: AdminLoginRoute,
   ContactRoute: ContactRoute,
   FleetRoute: FleetRoute,
+  ProjectsRoute: ProjectsRoute,
   QuoteRoute: QuoteRoute,
   ServicesRoute: ServicesRoute,
   BlogSlugRoute: BlogSlugRoute,

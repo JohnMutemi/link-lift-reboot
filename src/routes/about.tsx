@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, Heart, Award, Users, TrendingUp } from "lucide-react";
 import { SiteCard } from "@/components/site/SiteCard";
-import { HERO_CAROUSEL_2 } from "@/lib/media";
-
-const yard = "/fleet-gallery-24.jpeg";
+import { SplitHero } from "@/components/site/SplitHero";
+import { SplitSection } from "@/components/site/SplitSection";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -32,42 +31,28 @@ const milestones = [
 function AboutPage() {
   return (
     <>
-      <PageHero
+      <SplitHero
         tag="About Us"
         title="Built on trust. Driven by precision."
         subtitle="Since 2014, Link Freight Logistics has been moving East Africa's most critical shipments — engineered for the journey, tailored for the client."
       />
 
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div className="relative overflow-hidden ring-1 ring-slate-200/80 shadow-lg shadow-navy/10">
-            <img
-              src={yard}
-              alt="Link Freight operations and fleet yard"
-              className="w-full aspect-[4/3] object-cover"
-              loading="lazy"
-              width={1280}
-              height={900}
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-navy/15 via-transparent to-transparent pointer-events-none" />
-          </div>          <div>
-            <span className="text-xs uppercase font-mono tracking-[0.2em] text-cyan">Our Story</span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">Logistics, the way it should work.</h2>
-            <p className="text-slate-600 mt-6 leading-relaxed">
-              Link Freight was founded in 2014 on a simple conviction: clients deserve a freight
-              partner who treats every container as if it were their own. We spent the next three
-              years building the fleet, network and expertise to back that promise, formally
-              launching operations in 2017 with a single truck on the Mombasa–Nairobi highway.
-              Since then, we've grown into a multi-modal operator running dry, reefer and
-              genset-backed loads across East Africa.
-            </p>
-            <p className="text-slate-600 mt-4 leading-relaxed">
-              What hasn't changed is our standard. Every shipment is matched to the right equipment,
-              tracked end-to-end, and handed over on time.
-            </p>
-          </div>
-        </div>
-      </section>
+      <SplitSection
+        tag="Our Story"
+        title="Logistics, the way it should work."
+        description="Link Freight was founded in 2014 on a simple conviction: clients deserve a freight partner who treats every container as if it were their own."
+      >
+        <p className="text-slate-600 leading-relaxed">
+          We spent the next three years building the fleet, network and expertise to back that promise,
+          formally launching operations in 2017 with a single truck on the Mombasa–Nairobi highway.
+          Since then, we've grown into a multi-modal operator running dry, reefer and genset-backed loads
+          across East Africa.
+        </p>
+        <p className="text-slate-600 leading-relaxed">
+          What hasn't changed is our standard. Every shipment is matched to the right equipment,
+          tracked end-to-end, and handed over on time.
+        </p>
+      </SplitSection>
 
       <section className="py-12 sm:py-16 lg:py-24 bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6">
@@ -127,33 +112,41 @@ export function PageHero({
   tag,
   title,
   subtitle,
-  image = HERO_CAROUSEL_2,
+  image,
 }: {
   tag: string;
   title: string;
   subtitle: string;
   image?: string;
 }) {
-  return (
-    <section className="relative min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden bg-navy pt-12 sm:pt-14 lg:pt-16 pb-10">
-      <img
-        src={image}
-        alt=""
-        aria-hidden
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 15%" }}
-      />
-      <div className="absolute inset-0 bg-navy/60" />
+  const hasImage = Boolean(image);
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center py-16 sm:py-20 md:py-24">
-        <h1 className="font-display text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-[1.05] font-extrabold max-w-4xl mx-auto">
+  return (
+    <section className="relative min-h-[72vh] sm:min-h-[calc(100vh-4rem)] flex items-center justify-center sm:justify-start overflow-hidden bg-navy pt-12 sm:pt-14 lg:pt-16 pb-12 sm:pb-10">
+      {hasImage ? (
+        <>
+          <img
+            src={image}
+            alt=""
+            aria-hidden
+            width={1920}
+            height={1080}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "center 15%" }}
+          />
+          <div className="absolute inset-0 bg-navy/60" />
+        </>
+      ) : (
+        <div className="absolute inset-0 bg-navy" />
+      )}
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left py-16 sm:py-20 md:py-24">
+        <h1 className="font-display text-3xl sm:text-5xl md:text-6xl text-white uppercase leading-[1.05] font-extrabold max-w-4xl mx-auto sm:mx-0">
           {title}
         </h1>
         <nav
           aria-label="Breadcrumb"
-          className="mt-5 sm:mt-6 text-xs sm:text-sm text-white/70 flex items-center justify-center gap-2 flex-wrap"
+          className="mt-5 sm:mt-6 text-xs sm:text-sm text-white/70 flex items-center justify-center sm:justify-start gap-2 flex-wrap"
         >
           <Link to="/" className="hover:text-cyan transition-colors">
             Home
@@ -163,7 +156,7 @@ export function PageHero({
           </span>
           <span className="text-cyan font-medium">{tag}</span>
         </nav>
-        <p className="text-white/80 mt-4 sm:mt-6 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">{subtitle}</p>
+        <p className="text-white/80 mt-4 sm:mt-6 max-w-2xl text-sm sm:text-base md:text-lg mx-auto sm:mx-0">{subtitle}</p>
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none leading-[0]">

@@ -2,57 +2,29 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ApprovalCard } from "@/components/admin/common";
-
-const mockApprovalsData = [
-  {
-    bookingNumber: "LF-2024-001",
-    client: "Fresh Exports Ltd",
-    container: "REF-005",
-    driver: "John Kamau",
-    pickup: "Nairobi",
-    destination: "Mombasa",
-    priority: "high" as const,
-  },
-  {
-    bookingNumber: "LF-2024-002",
-    client: "Tech Logistics",
-    container: "DRY-010",
-    driver: "Peter Njoroge",
-    pickup: "Nairobi",
-    destination: "Kisumu",
-    priority: "medium" as const,
-  },
-  {
-    bookingNumber: "LF-2024-003",
-    client: "Cargo Solutions",
-    container: "GEN-008",
-    driver: "Samuel Ochieng",
-    pickup: "Mombasa",
-    destination: "Nairobi",
-    priority: "low" as const,
-  },
-];
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { listApprovals, approveBooking, rejectBooking } from "@/lib/api/admin.functions";
 
 export function ApprovalsPage() {
-  const [pending, setPending] = useState(mockApprovalsData);
-  const [approved, setApproved] = useState(mockApprovalsData.slice(0, 1));
-  const [rejected, setRejected] = useState<typeof mockApprovalsData>([]);
+  const qc = useQueryClient();
+  const { data: all = [], isLoading } = useQuery(["approvals"], () => listApprovals().then((r) => r));
 
-  const handleApprove = (bookingNumber: string) => {
-    const item = pending.find((p) => p.bookingNumber === bookingNumber);
-    if (item) {
-      setPending(pending.filter((p) => p.bookingNumber !== bookingNumber));
-      setApproved([...approved, item]);
-    }
-  };
+  const pending = all.filter((a: any) => a.status === "pending");
+  const approved = all.filter((a: any) => a.status === "approved");
+  const rejected = all.filter((a: any) => a.status === "rejected");
 
-  const handleReject = (bookingNumber: string) => {
-    const item = pending.find((p) => p.bookingNumber === bookingNumber);
-    if (item) {
-      setPending(pending.filter((p) => p.bookingNumber !== bookingNumber));
-      setRejected([...rejected, item]);
-    }
-  };
+  const approveMut = useMutation({
+    mutationFn: (id: string) => approveBooking({ data: { id } }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["approvals"] }),
+  });
+
+  const rejectMut = useMutation({
+    mutationFn: (id: string) => rejectBooking({ data: { id } }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["approvals"] }),
+  });
+
+  const handleApprove = (bookingNumber: string) => approveMut.mutate(bookingNumber);
+  const handleReject = (bookingNumber: string) => rejectMut.mutate(bookingNumber);
 
   const KanbanColumn = ({
     title,

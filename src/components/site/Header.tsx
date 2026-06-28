@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Menu, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
@@ -8,7 +8,8 @@ const navItems = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
-  { to: "/fleet", label: "Our Fleet" },
+  { to: "/fleet", label: "Fleet Gallery" },
+  { to: "/projects", label: "Projects" },
   { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -23,6 +24,7 @@ const activeNavClass =
   "text-cyan after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-cyan";
 
 export function Header() {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -90,19 +92,22 @@ export function Header() {
     };
   }, []);
 
-  const linkClass = scrolled
-    ? `${navLinkClass} text-xs`
-    : `text-white/95 hover:text-white/80 text-xs`;
+  const isRoot = location.pathname === "/";
+  const isTransparent = !scrolled && isRoot;
+
+  const navPanelClass = isTransparent
+    ? "bg-white/5 backdrop-blur-sm border-slate-200/20"
+    : "bg-white shadow-sm border-slate-200";
+
+  const linkClass = isTransparent
+    ? `text-white/95 hover:text-white/80 text-xs`
+    : `${navLinkClass} text-xs`;
 
   return (
     <>
       <nav
         ref={navRef}
-        className={`fixed left-0 right-0 z-50 translate-y-0 transition-all duration-300 border-t border-b ${
-          scrolled
-            ? "bg-white shadow-sm border-slate-200"
-            : "bg-white/5 backdrop-blur-sm border-slate-200/20"
-        }`}
+        className={`fixed left-0 right-0 z-50 translate-y-0 transition-all duration-300 border-t border-b ${navPanelClass}`}
         style={{
           WebkitBackfaceVisibility: "hidden",
           top: scrollY >= topbarHeight ? "0" : `${topbarHeight - scrollY}px`,
@@ -117,7 +122,7 @@ export function Header() {
           <Logo imgClassName={scrolled ? "h-7 sm:h-8" : "h-8 sm:h-9"} />
         </div>
 
-        <div className="hidden lg:flex items-center justify-center gap-3 xl:gap-5 font-medium uppercase tracking-wider whitespace-nowrap">
+        <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-10 font-medium uppercase tracking-wider whitespace-nowrap">
           {navItems.map((item) => (
             <Link
               key={item.to}
@@ -138,7 +143,7 @@ export function Header() {
 
           <button
             className={`lg:hidden size-9 grid place-items-center rounded-sm transition-colors touch-manipulation hover:bg-slate-100 ${
-              scrolled ? "text-navy" : "text-white/95"
+              isTransparent ? "text-white/95" : "text-navy"
             }`}
             onClick={() => setOpen(true)}
             aria-label="Open menu"

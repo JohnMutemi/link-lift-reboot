@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { PageHero, CTA } from "../about";
+import { CTA } from "../about";
+import { SplitHero } from "@/components/site/SplitHero";
+import { SplitSection } from "@/components/site/SplitSection";
 import { posts } from "@/lib/blog-posts";
 
 export const Route = createFileRoute("/blog/")({
@@ -37,10 +39,16 @@ function BlogPage() {
 
   return (
     <>
-      <PageHero
+      <SplitHero
         tag="Insights"
         title="From the corridor."
         subtitle="Field notes on logistics, cold chain, customs and the people moving East Africa's freight."
+      />
+
+      <SplitSection
+        tag="Blog"
+        title="Insights that connect logistics with business."
+        description="Practical field stories, customs advice and corridor intelligence from the Link Freight team."
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">

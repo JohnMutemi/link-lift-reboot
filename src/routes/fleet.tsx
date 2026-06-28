@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, CTA } from "./about";
+import { CTA } from "./about";
+import { SplitHero } from "@/components/site/SplitHero";
 import { SiteCard } from "@/components/site/SiteCard";
 import { FleetGallery } from "@/components/site/FleetGallery";
 import { HERO_CAROUSEL_5 } from "@/lib/media";
@@ -33,11 +34,10 @@ const fleet = [
 function FleetPage() {
   return (
     <>
-      <PageHero
+      <SplitHero
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
-        image={hero}
       />
 
       <section className="py-12 sm:py-16 lg:py-24 bg-white">

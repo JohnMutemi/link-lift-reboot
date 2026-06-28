@@ -3,7 +3,7 @@
 export const HERO_CAROUSEL_1 = "/hero-carousel-1.jpg";
 
 export const HERO_CAROUSEL_2 = "/fleet-gallery-18.jpeg";
-export const HERO_CAROUSEL_3 = "/Primemovers.png";
+export const HERO_CAROUSEL_3 = "/feature.jpg";
 export const HERO_CAROUSEL_4 = "/fleet-gallery-20.jpeg";
 export const HERO_CAROUSEL_5 = "/fleet-gallery-16.jpeg";
 export const HERO_CAROUSEL_6 = "/fleet-gallery-26.jpeg";
