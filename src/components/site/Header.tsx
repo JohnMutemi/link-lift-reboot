@@ -42,6 +42,7 @@ const navPanelBackground: Record<string, string> = {
 export function Header() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [topbarHeight, setTopbarHeight] = useState(0);
@@ -144,7 +145,12 @@ export function Header() {
 
             if (item.to === "/projects") {
               return (
-                <div key={item.to} className="relative group">
+                <div
+                  key={item.to}
+                  className="relative"
+                  onMouseEnter={() => setProjectsMenuOpen(true)}
+                  onMouseLeave={() => setProjectsMenuOpen(false)}
+                >
                   <Link
                     to={item.to}
                     className={linkClass}
@@ -153,7 +159,12 @@ export function Header() {
                   >
                     {item.label}
                   </Link>
-                  <div className="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden min-w-[14rem] rounded-3xl border border-slate-200 bg-white p-3 shadow-lg transition-all duration-200 group-hover:block group-hover:pointer-events-auto">
+                  <div
+                    className={`absolute left-0 top-full z-20 mt-3 min-w-[14rem] rounded-3xl border border-slate-200 bg-white p-3 shadow-xl transition-all duration-200 ${
+                      projectsMenuOpen ? "block opacity-100" : "invisible opacity-0"
+                    }`}
+                    style={{ transitionProperty: "opacity, visibility", transitionDuration: "200ms" }}
+                  >
                     <a
                       href="/projects#oil-gas"
                       className="block rounded-2xl px-4 py-3 text-sm text-navy transition-colors hover:bg-slate-100"

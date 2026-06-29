@@ -161,48 +161,128 @@ export function ProjectsPage() {
 
   return (
     <>
-      <section className="py-12 sm:py-16 lg:py-24 bg-slate-50">
+      <SplitHero
+        tag="Projects"
+        title="Browse our flagship logistics projects."
+        subtitle="Tap a project below to explore tailored cargo, crew and field logistics for East Africa's most demanding routes."
+        action={
+          <ScrollCue
+            toId="projects-selection"
+            Icon={ChevronDown}
+            label="Pick a project"
+            subLabel="Scroll into the selection panel"
+            variant="solid"
+          />
+        }
+      />
+
+      <section id="projects-selection" className="py-12 sm:py-16 lg:py-24 bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-10 shadow-sm">
-            <div className="text-center">
-              <span className="text-xs uppercase tracking-[0.3em] text-slate-500 font-semibold">Projects</span>
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase font-extrabold text-navy mt-4 leading-tight">
-                Browse our flagship logistics projects.
-              </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-slate-600 leading-relaxed text-base sm:text-lg">
-                Hover the Projects menu item for fast navigation, then pick a project below to populate the details section without using a native select box.
-              </p>
+          <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
+            <div className="space-y-6">
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 sm:p-10 shadow-sm">
+                <div className="text-center lg:text-left">
+                  <span className="text-xs uppercase tracking-[0.3em] text-slate-500 font-semibold">Projects</span>
+                  <h2 className="font-display text-3xl sm:text-4xl uppercase font-extrabold text-navy mt-4 leading-tight">
+                    Choose a flagship plan built for project freight.
+                  </h2>
+                  <p className="mx-auto mt-4 max-w-2xl text-slate-600 leading-relaxed text-base sm:text-lg">
+                    The option below reveals a full case study for our Oil & Gas logistics capability, with clear mobile spacing and a strong tap target.
+                  </p>
+                </div>
+
+                <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                  {projectOptions.map(({ id, title, description, icon: Icon }) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setSelectedProject(id)}
+                      className={`group flex min-h-[220px] flex-col justify-between rounded-[2rem] border p-6 text-left transition-all duration-300 ${
+                        selectedProject === id
+                          ? "border-cyan bg-cyan/10 shadow-lg"
+                          : "border-slate-200 bg-slate-50 hover:border-cyan hover:bg-slate-50"
+                      }`}
+                    >
+                      <div>
+                        <span className="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-cyan/10 text-cyan transition-colors duration-300 group-hover:bg-cyan group-hover:text-white">
+                          <Icon className="size-5" />
+                        </span>
+                        <h3 className="font-display text-xl uppercase text-navy font-extrabold mt-6">{title}</h3>
+                        <p className="mt-3 text-slate-600 leading-relaxed text-sm">{description}</p>
+                      </div>
+                      <span className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-slate-500 group-hover:text-cyan">
+                        View details
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 sm:p-10 shadow-sm">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="bg-cyan/5 rounded-3xl p-6">
+                    <span className="text-xs uppercase tracking-[0.3em] text-cyan font-semibold">Why choose it?</span>
+                    <p className="mt-4 text-slate-700 text-sm leading-relaxed">
+                      A project-first logistics model designed for high-value cargo, crew support and corridor coordination.
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 rounded-3xl p-6">
+                    <span className="text-xs uppercase tracking-[0.3em] text-orange font-semibold">Mobile friendly</span>
+                    <p className="mt-4 text-slate-700 text-sm leading-relaxed">
+                      Clear tap targets, larger cards and a focused selection area to make navigation easy on phones.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {projectOptions.map(({ id, title, description, icon: Icon }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => setSelectedProject(id)}
-                  className="group flex flex-col items-start gap-4 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 text-left transition-all duration-300 hover:border-cyan hover:bg-white"
-                >
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan/10 text-cyan transition-colors duration-300 group-hover:bg-cyan group-hover:text-white">
-                    <Icon className="size-5" />
-                  </div>
-                  <div>
-                    <h2 className="font-display text-xl uppercase text-navy font-extrabold">{title}</h2>
-                    <p className="mt-2 text-slate-600 leading-relaxed">{description}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
+            <div className="space-y-6">
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 sm:p-10 shadow-sm">
+                <div className="text-center">
+                  <span className="text-xs uppercase tracking-[0.3em] text-orange font-semibold">Start here</span>
+                  <h3 className="font-display text-2xl uppercase text-navy font-extrabold mt-4">
+                    Select Oil & Gas to explore the flagship project.
+                  </h3>
+                  <p className="mt-4 text-slate-600 leading-relaxed text-sm">
+                    Once selected, the project details below will expand with photos, focus areas, and supporting outcomes.
+                  </p>
+                </div>
 
-            {selectedProject === "oil-gas" ? (
-              <div className="mt-12">
-                <OilGasProject />
+                <div className="mt-8 grid gap-4">
+                  <div className="flex items-center gap-3 rounded-3xl bg-slate-50 p-4">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-3xl bg-cyan/10 text-cyan">
+                      <Box className="size-5" />
+                    </span>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Priority</p>
+                      <p className="text-sm font-semibold text-navy">Project-ready operations</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-3xl bg-slate-50 p-4">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-3xl bg-orange/10 text-orange">
+                      <Users className="size-5" />
+                    </span>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Focus</p>
+                      <p className="text-sm font-semibold text-navy">Crew logistics and field support</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="mt-12 rounded-[2rem] border border-slate-200 bg-slate-50 p-8 text-center">
-                <p className="text-slate-600">Select a project above to reveal the full logistics story.</p>
-              </div>
-            )}
+            </div>
           </div>
+
+          <div className="mt-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-8 text-center">
+            <p className="text-slate-600">
+              Scroll or tap the project card above to see the next section. The layout is optimized for mobile and desktop.
+            </p>
+          </div>
+
+          {selectedProject === "oil-gas" && (
+            <div className="mt-10">
+              <OilGasProject />
+            </div>
+          )}
         </div>
       </section>
     </>
