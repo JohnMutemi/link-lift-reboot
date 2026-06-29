@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Target, Eye, Heart, Award, Users, TrendingUp } from "lucide-react";
+import { Target, Eye, Heart, Award, Users, TrendingUp, ChevronDown } from "lucide-react";
 import { SiteCard } from "@/components/site/SiteCard";
+import { ScrollCue } from "@/components/site/ScrollCue";
 import { SplitHero } from "@/components/site/SplitHero";
 import { SplitSection } from "@/components/site/SplitSection";
 export const Route = createFileRoute("/about")({
@@ -35,9 +36,19 @@ function AboutPage() {
         tag="About Us"
         title="Built on trust. Driven by precision."
         subtitle="Since 2014, Link Freight Logistics has been moving East Africa's most critical shipments — engineered for the journey, tailored for the client."
+        action={
+          <ScrollCue
+            toId="about-story"
+            Icon={ChevronDown}
+            label="View more"
+            subLabel="Scroll into our story & values"
+            variant="solid"
+          />
+        }
       />
 
       <SplitSection
+        id="about-story"
         tag="Our Story"
         title="Logistics, the way it should work."
         description="Link Freight was founded in 2014 on a simple conviction: clients deserve a freight partner who treats every container as if it were their own."

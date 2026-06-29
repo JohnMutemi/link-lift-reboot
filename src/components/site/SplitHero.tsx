@@ -8,6 +8,7 @@ export function SplitHero({
   alt,
   reverse = false,
   aside,
+  action,
 }: {
   tag: string;
   title: string;
@@ -16,6 +17,7 @@ export function SplitHero({
   alt?: string;
   reverse?: boolean;
   aside?: ReactNode;
+  action?: ReactNode;
 }) {
   const hasImage = Boolean(image);
   const hasAside = Boolean(aside);
@@ -40,6 +42,7 @@ export function SplitHero({
             <p className="mt-6 text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto sm:mx-0">
               {subtitle}
             </p>
+            {action ? <div className="mt-10">{action}</div> : null}
           </div>
           {aside ? (
             <div className="w-full max-w-[26rem] rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-xl ring-1 ring-slate-200/80 backdrop-blur-sm">

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Eye } from "lucide-react";
+import { ScrollCue } from "@/components/site/ScrollCue";
 import { CTA } from "../about";
 import { SplitHero } from "@/components/site/SplitHero";
 import { SplitSection } from "@/components/site/SplitSection";
@@ -43,6 +44,15 @@ function BlogPage() {
         tag="Insights"
         title="From the corridor."
         subtitle="Field notes on logistics, cold chain, customs and the people moving East Africa's freight."
+        action={
+          <ScrollCue
+            toId="blog-list"
+            Icon={Eye}
+            label="Read more"
+            subLabel="Explore the latest stories below"
+            variant="ghost"
+          />
+        }
       />
 
       <SplitSection
@@ -51,7 +61,7 @@ function BlogPage() {
         description="Practical field stories, customs advice and corridor intelligence from the Link Freight team."
       />
 
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
+      <section id="blog-list" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
 
           {/* Featured post */}

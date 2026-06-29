@@ -118,7 +118,7 @@ export function FleetGallery() {
 
   return (
     <>
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
+      <section id="home-fleet" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-4 sm:gap-6">
             <div className="max-w-xl">

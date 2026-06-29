@@ -20,8 +20,24 @@ const quoteLinkClass =
 const navLinkClass =
   "text-navy/80 hover:text-cyan transition-colors relative py-1 whitespace-nowrap";
 
-const activeNavClass =
-  "text-cyan after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-cyan";
+const activeNavMap: Record<string, string> = {
+  "/": "text-cyan after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-cyan",
+  "/about": "text-cyan bg-cyan/10 rounded-full px-3 py-1",
+  "/services": "text-orange bg-orange/10 rounded-full px-3 py-1",
+  "/fleet": "text-cyan bg-cyan/10 rounded-full px-3 py-1",
+  "/projects": "text-orange/600 bg-orange/10 rounded-full px-3 py-1",
+  "/blog": "text-navy bg-navy/10 rounded-full px-3 py-1",
+  "/contact": "text-cyan bg-cyan/10 rounded-full px-3 py-1",
+};
+
+const navPanelBackground: Record<string, string> = {
+  "/about": "bg-white/95 shadow-sm border-slate-200",
+  "/services": "bg-slate-50/95 shadow-sm border-slate-200",
+  "/fleet": "bg-cyan/5 shadow-sm border-cyan/20",
+  "/projects": "bg-orange/5 shadow-sm border-orange/20",
+  "/blog": "bg-slate-50/95 shadow-sm border-slate-200",
+  "/contact": "bg-white/95 shadow-sm border-slate-200",
+};
 
 export function Header() {
   const location = useLocation();
@@ -97,7 +113,7 @@ export function Header() {
 
   const navPanelClass = isTransparent
     ? "bg-white/5 backdrop-blur-sm border-slate-200/20"
-    : "bg-white shadow-sm border-slate-200";
+    : navPanelBackground[location.pathname] ?? "bg-white shadow-sm border-slate-200";
 
   const linkClass = isTransparent
     ? `text-white/95 hover:text-white/80 text-xs`
@@ -123,17 +139,43 @@ export function Header() {
         </div>
 
         <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-10 font-medium uppercase tracking-wider whitespace-nowrap">
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={linkClass}
-              activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: activeNavClass }}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isHomeLink = item.to === "/";
+
+            if (item.to === "/projects") {
+              return (
+                <div key={item.to} className="relative group">
+                  <Link
+                    to={item.to}
+                    className={linkClass}
+                    activeOptions={{ exact: isHomeLink }}
+                    activeProps={{ className: activeNavMap[item.to] ?? activeNavMap["/"] }}
+                  >
+                    {item.label}
+                  </Link>
+                  <div className="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden min-w-[14rem] rounded-3xl border border-slate-200 bg-white p-3 shadow-lg transition-all duration-200 group-hover:block group-hover:pointer-events-auto">
+                    <a
+                      href="/projects#oil-gas"
+                      className="block rounded-2xl px-4 py-3 text-sm text-navy transition-colors hover:bg-slate-100"
+                    >
+                      Oil & Gas
+                    </a>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={linkClass}
+                activeOptions={{ exact: isHomeLink }}
+                activeProps={{ className: activeNavMap[item.to] ?? activeNavMap["/"] }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="flex items-center justify-end gap-2 shrink-0">

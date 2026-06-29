@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ChevronDown, Truck } from "lucide-react";
 import { CTA } from "./about";
+import { ScrollCue } from "@/components/site/ScrollCue";
 import { SplitHero } from "@/components/site/SplitHero";
 import { SiteCard } from "@/components/site/SiteCard";
 import { FleetGallery } from "@/components/site/FleetGallery";
@@ -38,9 +40,18 @@ function FleetPage() {
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
         subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
+        action={
+          <ScrollCue
+            toId="fleet-overview"
+            Icon={Truck}
+            label="View full fleet"
+            subLabel="Explore equipment, specs and live capacity"
+            variant="solid"
+          />
+        }
       />
 
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
+      <section id="fleet-overview" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             {fleet.map((unit) => (

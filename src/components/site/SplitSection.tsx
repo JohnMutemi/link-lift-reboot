@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 type SplitSectionProps = {
+  id?: string;
   tag?: string;
   title: string;
   description: string;
@@ -11,6 +12,7 @@ type SplitSectionProps = {
 };
 
 export function SplitSection({
+  id,
   tag,
   title,
   description,
@@ -22,7 +24,7 @@ export function SplitSection({
   const hasImage = Boolean(image);
 
   return (
-    <section className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
+    <section id={id} className="relative py-12 sm:py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
       {hasImage ? (
         <div
           className={`absolute inset-y-0 ${reverse ? "left-0" : "right-0"} hidden lg:block w-1/2`}

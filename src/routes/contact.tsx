@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { ScrollCue } from "@/components/site/ScrollCue";
 import { SplitHero } from "@/components/site/SplitHero";
 import { SiteCard } from "@/components/site/SiteCard";
 import { SITE } from "@/lib/site-config";
@@ -31,9 +32,18 @@ function ContactPage() {
         tag="Contact Us"
         title="Let's move your shipment."
         subtitle="Whether you need a tracking update or want to partner with us — our team is on standby. For pricing, use our dedicated quote form."
+        action={
+          <ScrollCue
+            toId="contact-form"
+            Icon={MapPin}
+            label="Get in touch"
+            subLabel="Scroll to the contact form below"
+            variant="solid"
+          />
+        }
       />
 
-      <section className="py-12 sm:py-16 lg:py-24 bg-white">
+      <section id="contact-form" className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-6">
             {channels.map(({ Icon, title, lines }) => (

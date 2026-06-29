@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, Snowflake, Zap, Truck, ShieldCheck, MapPin, Wrench, FileCheck, Route as RouteIcon, Building2 } from "lucide-react";
+import { ArrowDownCircle, Container, Snowflake, Zap, Truck, ShieldCheck, MapPin, Wrench, FileCheck, Route as RouteIcon, Building2 } from "lucide-react";
 import { CTA } from "./about";
+import { ScrollCue } from "@/components/site/ScrollCue";
 import { SplitHero } from "@/components/site/SplitHero";
 import { SplitSection } from "@/components/site/SplitSection";
 import { SiteCard } from "@/components/site/SiteCard";
@@ -74,9 +75,18 @@ function ServicesPage() {
         tag="Our Services"
         title="Long distance. Short distance. Full support."
         subtitle="Three service pillars — corridor haulage, local transport, and associated logistics — engineered for East African trade."
+        action={
+          <ScrollCue
+            toId="services-details"
+            Icon={ArrowDownCircle}
+            label="Click for more"
+            subLabel="Discover each service pillar below"
+            variant="outline"
+          />
+        }
       />
 
-      <div className="space-y-12 sm:space-y-16 lg:space-y-24">
+      <div id="services-details" className="space-y-12 sm:space-y-16 lg:space-y-24">
         {serviceCategories.map(({ id, tag, Icon, title, desc, points, equipment }, i) => (
           <SplitSection
             key={id}
