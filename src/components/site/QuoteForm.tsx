@@ -1,12 +1,16 @@
 import { Send } from "lucide-react";
 import { useState } from "react";
-import { SITE } from "@/lib/site-config";
+import { submitQuoteForm } from "@/lib/api/contact.functions";
 
 export function QuoteForm() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const values = {
@@ -18,19 +22,17 @@ export function QuoteForm() {
       details: formData.get("details")?.toString() ?? "",
     };
 
-    const subject = `Enquiry from ${values.name || "website visitor"}`;
-    const body = [
-      `Name: ${values.name}`,
-      `Company: ${values.company}`,
-      `Email: ${values.email}`,
-      `Phone: ${values.phone}`,
-      `Service: ${values.service}`,
-      "",
-      `Shipment details:\n${values.details}`,
-    ].join("\n");
-
-    window.location.href = `mailto:jmtutorsalp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    try {
+      await submitQuoteForm({ data: values });
+      setSent(true);
+      if (e.currentTarget) {
+        e.currentTarget.reset();
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to send quote request right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -72,9 +74,10 @@ export function QuoteForm() {
 
       <button
         type="submit"
-        className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto"
+        disabled={isSubmitting}
+        className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-70"
       >
-        <Send className="size-4" /> Send Enquiry
+        <Send className="size-4" /> {isSubmitting ? "Sending..." : "Send Enquiry"}
       </button>
 
       {sent && (
@@ -82,6 +85,7 @@ export function QuoteForm() {
           Thanks — your enquiry has been received. We&apos;ll be in touch shortly.
         </p>
       )}
+      {error && <p className="mt-4 text-red-300 text-sm">{error}</p>}
     </form>
   );
 }

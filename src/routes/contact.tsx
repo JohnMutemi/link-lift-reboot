@@ -5,6 +5,7 @@ import { SplitHero } from "@/components/site/SplitHero";
 import { SiteCard } from "@/components/site/SiteCard";
 import { SITE } from "@/lib/site-config";
 import { useState } from "react";
+import { submitContactForm } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -26,9 +27,13 @@ const channels = [
 ];
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const values = {
@@ -40,17 +45,17 @@ function ContactPage() {
       message: formData.get("message")?.toString() ?? "",
     };
 
-    const body = [
-      `Name: ${values.name}`,
-      `Company: ${values.company}`,
-      `Email: ${values.email}`,
-      `Phone: ${values.phone}`,
-      "",
-      `Message:\n${values.message}`,
-    ].join("\n");
-
-    window.location.href = `mailto:jmtutorsalp@gmail.com?subject=${encodeURIComponent(values.subject || "Contact enquiry")}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    try {
+      await submitContactForm({ data: values });
+      setSent(true);
+      if (e.currentTarget) {
+        e.currentTarget.reset();
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to deliver your message right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,14 +135,16 @@ function ContactPage() {
 
             <button
               type="submit"
-              className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto"
+              disabled={isSubmitting}
+              className="mt-8 inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-600 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm transition-colors w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-70"
             >
-              <Send className="size-4" /> Send Message
+              <Send className="size-4" /> {isSubmitting ? "Sending..." : "Send Message"}
             </button>
 
             {sent && (
               <p className="mt-4 text-cyan text-sm">Thanks — your message has been received. We&apos;ll be in touch shortly.</p>
             )}
+            {error && <p className="mt-4 text-red-300 text-sm">{error}</p>}
           </form>
         </div>
       </section>

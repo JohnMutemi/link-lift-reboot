@@ -1,5 +1,5 @@
-import { Plus, Download } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { Plus, Download, RotateCcw } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { DashboardCard, DataTable, ApprovalCard, StatusBadge } from "@/components/admin/common";
 import {
@@ -9,7 +9,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { BookingsChart, StatusChart, RevenueChart } from "./Charts";
-import { listBookings, listApprovals } from "@/lib/api/admin.functions";
+import { listBookings, listApprovals, resetAdminTables } from "@/lib/api/admin.functions";
 
 const dashboardBookingColumns = [
   { key: "bookingNumber", label: "Booking #" },
@@ -30,21 +30,85 @@ const dashboardBookingColumns = [
 ];
 
 export function AdminDashboard() {
-  const { data: bookings = [], isLoading: bookingsLoading } = useQuery<any[]>(
-    { queryKey: ["dashboardBookings"], queryFn: () => listBookings().then((r: any) => (Array.isArray(r) ? r : [])) }
-  );
+  const qc = useQueryClient();
+  const { data: bookings = [], isLoading: bookingsLoading, error: bookingsError } = useQuery<any[]>({
+    queryKey: ["dashboardBookings"],
+    queryFn: async () => {
+      try {
+        const r = await listBookings();
+        return Array.isArray(r) ? r : [];
+      } catch (err) {
+        console.error("Dashboard bookings error:", err);
+        return [];
+      }
+    },
+  });
 
-  const { data: approvals = [], isLoading: approvalsLoading } = useQuery<any[]>(
-    { queryKey: ["dashboardApprovals"], queryFn: () => listApprovals().then((r: any) => (Array.isArray(r) ? r : [])) }
-  );
+  const { data: approvals = [], isLoading: approvalsLoading, error: approvalsError } = useQuery<any[]>({
+    queryKey: ["dashboardApprovals"],
+    queryFn: async () => {
+      try {
+        const r = await listApprovals();
+        return Array.isArray(r) ? r : [];
+      } catch (err) {
+        console.error("Dashboard approvals error:", err);
+        return [];
+      }
+    },
+  });
 
-  const pendingApprovals = approvals.filter((item: any) => item.status === "pending");
-  const totalBookings = bookings.length;
-  const activeTrips = bookings.filter((item: any) => item.status === "in-transit").length;
+  const resetMut = useMutation({
+    mutationFn: () => resetAdminTables(),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["dashboardBookings"] });
+      qc.invalidateQueries({ queryKey: ["dashboardApprovals"] });
+      qc.invalidateQueries({ queryKey: ["bookings"] });
+      qc.invalidateQueries({ queryKey: ["customers"] });
+      qc.invalidateQueries({ queryKey: ["drivers"] });
+      qc.invalidateQueries({ queryKey: ["fleet"] });
+      qc.invalidateQueries({ queryKey: ["approvals"] });
+    },
+  });
+
+  const normalizedBookings = (bookings ?? []).map((booking: any) => ({
+    ...booking,
+    bookingNumber: booking.bookingNumber ?? booking.booking_number,
+    customer: booking.customer ?? booking.client ?? booking.customer_name,
+    container: booking.container ?? booking.container_number ?? "N/A",
+    destination: booking.destination ?? booking.route ?? "Unknown",
+    date: booking.date ?? booking.created_at?.slice(0, 10),
+    status: booking.status ?? "pending",
+    value: booking.value ?? 0,
+  }));
+
+  const normalizedApprovals = (approvals ?? []).map((item: any) => ({
+    ...item,
+    bookingNumber: item.bookingNumber ?? item.booking_number,
+    client: item.client ?? item.customer ?? item.customer_name ?? "Unknown Client",
+    container: item.container ?? item.container_number ?? "N/A",
+    driver: item.driver ?? item.assigned_driver ?? "Unassigned",
+    pickup: item.pickup ?? item.origin,
+    destination: item.destination ?? item.route ?? "Unknown destination",
+    date: item.date ?? item.created_at?.slice(0, 10),
+    status: item.status ?? "pending",
+    priority: item.priority ?? (item.status === "pending" ? "high" : item.status === "rejected" ? "medium" : "low"),
+  }));
+
+  const pendingApprovals = normalizedApprovals.filter((item: any) => item.status === "pending");
+  const totalBookings = normalizedBookings.length;
+  const activeTrips = normalizedBookings.filter((item: any) => item.status === "in-transit").length;
   const pendingCount = pendingApprovals.length;
+
+  const hasErrors = bookingsError || approvalsError;
 
   return (
     <div className="space-y-8">
+      {hasErrors && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-900">
+          <p className="font-semibold">⚠️ Data connection issue</p>
+          <p className="text-sm mt-1">Some data may be unavailable. Check server logs for details.</p>
+        </div>
+      )}
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -52,9 +116,13 @@ export function AdminDashboard() {
           <p className="text-slate-600 mt-1">Welcome back! Here's your logistics overview.</p>
         </div>
         <div className="flex gap-2">
-          <Button className="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg h-10">
-            <Download className="w-4 h-4 mr-2" />
-            Export
+          <Button
+            className="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg h-10"
+            onClick={() => resetMut.mutate()}
+            disabled={resetMut.isPending}
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            {resetMut.isPending ? "Resetting..." : "Reset Data"}
           </Button>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-10">
             <Plus className="w-4 h-4 mr-2" />
@@ -108,7 +176,7 @@ export function AdminDashboard() {
             View All →
           </Button>
         </div>
-        <DataTable columns={dashboardBookingColumns} data={bookings} loading={bookingsLoading} />
+        <DataTable columns={dashboardBookingColumns} data={normalizedBookings} loading={bookingsLoading} />
       </div>
 
       {/* Pending Approvals */}

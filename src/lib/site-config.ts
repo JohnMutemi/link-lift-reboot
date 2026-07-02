@@ -3,7 +3,7 @@ export const SITE = {
   phone: "+254 721 121 287",
   phoneTel: "+254721121287",
   phoneWhatsApp: "254721121287",
-  email: "jmtutorsalp@gmail.com",
+  email: "info@linkfreightltd.co.ke",
   address: ["Off Airport North Road", "Nairobi, Kenya"],
   /** Replace empty strings with real profile URLs when available */
   social: {
