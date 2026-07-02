@@ -89,13 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Link Freight Logistics Ltd specialises in dry containers, reefer containers, gensets and inland haulage across East Africa. Reliable, engineered logistics from Nairobi.",
+          "Link Freight Logistics Ltd specialises in dry containers, reefer containers, gensets and inland haulage across East & Southern Africa. Reliable, engineered logistics from Nairobi.",
       },
       { name: "author", content: "Link Freight Logistics Ltd" },
       { property: "og:title", content: "Link Freight Logistics Ltd" },
       {
         property: "og:description",
-        content: "Specialised freight, reefer and dry container transport across East Africa.",
+        content: "Specialised freight, reefer and dry container transport across East & Southern Africa.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminTopbar } from "./AdminTopbar";
+import { clearAdminSession } from "@/lib/auth";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -14,6 +16,12 @@ export function AdminLayout({
   userName = "Admin User",
 }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    clearAdminSession();
+    navigate({ to: "/admin-login", replace: true });
+  };
 
   return (
     <div className="flex min-h-screen flex-col lg:flex-row overflow-hidden bg-slate-50">
@@ -26,6 +34,7 @@ export function AdminLayout({
           userInitial={userInitial}
           userName={userName}
           onMenuToggle={() => setSidebarOpen((prev) => !prev)}
+          onLogout={handleLogout}
         />
 
         <main className="flex-1 min-h-0 overflow-y-auto">

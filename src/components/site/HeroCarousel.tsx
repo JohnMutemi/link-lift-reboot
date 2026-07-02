@@ -56,7 +56,7 @@ export function HeroCarousel() {
             })()}
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-slate-100/95 mt-4 sm:mt-6 max-w-2xl mx-auto drop-shadow-sm">
-            Prime movers, <span className="text-cyan">reefer units</span>, and <span className="text-orange">genset-backed freight</span> across East and Central Africa.
+            Prime movers, <span className="text-cyan">reefer units</span>, and <span className="text-orange">genset-backed freight</span> across East & Southern Africa.
           </p>
 
           <p className="text-[10px] sm:text-xs text-cyan font-medium tracking-widest uppercase mt-5 sm:mt-6 drop-shadow-sm">

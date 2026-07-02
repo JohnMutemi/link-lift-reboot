@@ -1,17 +1,49 @@
-import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ApprovalCard } from "@/components/admin/common";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { listApprovals, approveBooking, rejectBooking } from "@/lib/api/admin.functions";
 
+type ApprovalItem = {
+  bookingNumber: string;
+  client: string;
+  container: string;
+  driver?: string;
+  pickup?: string;
+  destination: string;
+  date?: string;
+  status: string;
+  priority: "high" | "medium" | "low";
+};
+
 export function ApprovalsPage() {
   const qc = useQueryClient();
-  const { data: all = [], isLoading } = useQuery(["approvals"], () => listApprovals().then((r) => r));
+  const { data: all = [], isLoading } = useQuery<ApprovalItem[]>({
+    queryKey: ["approvals"],
+    queryFn: () => listApprovals().then((r: any) => (Array.isArray(r) ? r : [])),
+  });
 
-  const pending = all.filter((a: any) => a.status === "pending");
-  const approved = all.filter((a: any) => a.status === "approved");
-  const rejected = all.filter((a: any) => a.status === "rejected");
+  const approvals: ApprovalItem[] = all.map((item: any) => ({
+    bookingNumber: item.bookingNumber ?? item.booking_number ?? "Unknown",
+    client: item.client ?? item.customer ?? "Unknown Client",
+    container: item.container ?? "N/A",
+    driver: item.driver ?? item.assigned_driver ?? "Unassigned",
+    pickup: item.pickup ?? item.origin ?? undefined,
+    destination: item.destination ?? item.route ?? item.destination ?? "Unknown destination",
+    date: item.date ?? item.created_at ?? undefined,
+    status: item.status ?? "pending",
+    priority:
+      item.priority ??
+      (item.status === "pending"
+        ? "high"
+        : item.status === "rejected"
+        ? "medium"
+        : "low"),
+  }));
+
+  const pending = approvals.filter((a) => a.status === "pending");
+  const approved = approvals.filter((a) => a.status === "approved");
+  const rejected = approvals.filter((a) => a.status === "rejected");
 
   const approveMut = useMutation({
     mutationFn: (id: string) => approveBooking({ data: { id } }),
@@ -36,7 +68,7 @@ export function ApprovalsPage() {
   }: {
     title: string;
     count: number;
-    items: typeof mockApprovalsData;
+    items: ApprovalItem[];
     onApprove?: (id: string) => void;
     onReject?: (id: string) => void;
     variant: "pending" | "approved" | "rejected";
@@ -71,7 +103,15 @@ export function ApprovalsPage() {
             items.map((item) => (
               <ApprovalCard
                 key={item.bookingNumber}
-                {...item}
+                bookingNumber={item.bookingNumber}
+                client={item.client}
+                container={item.container}
+                driver={item.driver}
+                pickup={item.pickup}
+                destination={item.destination}
+                priority={item.priority}
+                status={item.status}
+                date={item.date}
                 onApprove={onApprove ? () => onApprove(item.bookingNumber) : undefined}
                 onReject={onReject ? () => onReject(item.bookingNumber) : undefined}
               />

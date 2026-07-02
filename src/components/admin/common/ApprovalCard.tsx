@@ -6,10 +6,12 @@ interface ApprovalCardProps {
   bookingNumber: string;
   client: string;
   container: string;
-  driver: string;
-  pickup: string;
+  driver?: string;
+  pickup?: string;
   destination: string;
-  priority: "high" | "medium" | "low";
+  priority?: "high" | "medium" | "low";
+  status?: string;
+  date?: string;
   onApprove?: () => void;
   onReject?: () => void;
 }
@@ -28,10 +30,19 @@ export function ApprovalCard({
   pickup,
   destination,
   priority,
+  status,
+  date,
   onApprove,
   onReject,
 }: ApprovalCardProps) {
-  const priorityStyle = priorityConfig[priority];
+  const resolvedPriority =
+    priority ??
+    (status === "pending"
+      ? "high"
+      : status === "rejected"
+      ? "medium"
+      : "low");
+  const priorityStyle = priorityConfig[resolvedPriority];
 
   return (
     <div className="bg-white rounded-xl border border-slate-100 p-5 hover:shadow-md transition-shadow">
@@ -43,7 +54,7 @@ export function ApprovalCard({
               className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
             >
               <div className={`w-1.5 h-1.5 rounded-full ${priorityStyle.dot}`} />
-              {priority.charAt(0).toUpperCase() + priority.slice(1)}
+              {resolvedPriority.charAt(0).toUpperCase() + resolvedPriority.slice(1)}
             </div>
           </div>
           <p className="text-sm text-slate-600">{client}</p>
@@ -57,14 +68,20 @@ export function ApprovalCard({
         </div>
         <div className="text-sm">
           <p className="text-slate-600 mb-1">Driver</p>
-          <p className="font-medium text-slate-900">{driver}</p>
+          <p className="font-medium text-slate-900">{driver ?? "Unassigned"}</p>
         </div>
         <div className="text-sm col-span-2">
           <p className="text-slate-600 mb-1">Route</p>
           <p className="font-medium text-slate-900">
-            {pickup} → {destination}
+            {pickup ? `${pickup} → ${destination}` : destination}
           </p>
         </div>
+        {date && (
+          <div className="text-sm col-span-2">
+            <p className="text-slate-600 mb-1">Date</p>
+            <p className="font-medium text-slate-900">{date}</p>
+          </div>
+        )}
       </div>
 
       <div className="flex gap-2">

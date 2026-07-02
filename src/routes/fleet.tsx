@@ -18,7 +18,7 @@ export const Route = createFileRoute("/fleet")({
   head: () => ({
     meta: [
       { title: "Our Fleet — Link Freight Logistics Ltd" },
-      { name: "description", content: "Prime movers, reefer containers, dry containers and genset trailers — engineered for the Northern Corridor." },
+      { name: "description", content: "Prime movers, reefer containers, dry containers and genset trailers — engineered for East & Southern corridor trade." },
       { property: "og:title", content: "Our Fleet" },
       { property: "og:description", content: "Engineered hardware for serious freight." },
     ],
@@ -39,7 +39,7 @@ function FleetPage() {
       <SplitHero
         tag="Our Fleet"
         title="Engineered hardware for serious freight."
-        subtitle="A modern, maintained, GPS-tracked fleet built for the demands of the East African corridor — from coastal port to inland hub."
+        subtitle="A modern, maintained, GPS-tracked fleet built for the demands of East & Southern corridor trade — from coastal port to inland hub."
         action={
           <ScrollCue
             toId="fleet-overview"

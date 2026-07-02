@@ -49,14 +49,14 @@ export function AdminSidebar({ open = false, onOpenChange }: SidebarProps) {
     <div className="flex flex-col h-full bg-slate-900 text-white w-full max-w-[18rem]">
       {/* Header */}
       <div className="px-5 pt-6 pb-4 flex items-center justify-between border-b border-slate-800">
-        <div className="min-w-0">
+        <Link to="/admin" className="min-w-0">
           <img
             src="/link-freight-logo.png"
             alt="Link Freight Logistics"
             className="h-10 w-auto"
           />
           <p className="text-xs text-slate-400 mt-2">Admin dashboard</p>
-        </div>
+        </Link>
         <button
           onClick={close}
           className="lg:hidden p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 transition-colors"

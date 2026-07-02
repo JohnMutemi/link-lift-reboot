@@ -43,7 +43,7 @@ function BlogPage() {
       <SplitHero
         tag="Insights"
         title="From the corridor."
-        subtitle="Field notes on logistics, cold chain, customs and the people moving East Africa's freight."
+        subtitle="Field notes on logistics, cold chain, customs and the people moving freight across East & Southern Africa."
         action={
           <ScrollCue
             toId="blog-list"

@@ -26,11 +26,11 @@ export type BlogPost = {
       slug: "northern-corridor-transit-time",
       tag: "Operations",
       date: "Apr 28, 2026",
-      title: "Inside the Northern Corridor: cutting transit time Mombasa → Kampala",
+      title: "Inside East & Southern corridor trade: cutting transit time Mombasa → Kampala",
       excerpt:
         "How upgraded weighbridges, OSBP processing and predictive dispatch shaved 36 hours off our average run.",
       content: [
-        "The Northern Corridor is the backbone of regional trade — handling more than 35 million metric tonnes of cargo a year and accounting for over 80% of Kenya's transit trade. For years, though, its biggest bottleneck wasn't the road itself, but what sat on it: dozens of informal checkpoints between Mombasa and the Malaba border.",
+        "East & Southern corridor trade continues to grow as a vital artery for regional freight, with more than 35 million metric tonnes of cargo moving each year. For years, though, its biggest bottleneck wasn't the road itself, but what sat on it: dozens of informal checkpoints between Mombasa and the Malaba border.",
         "That's now changing. Reforms announced in April 2026 are cutting the number of police roadblocks on the Mombasa–Malaba route from as many as 22–27 down to fewer than five gazetted stops, the internationally recommended maximum. The stated goal is to bring average transit time down from 76–80 hours to a 36–48 hour target — nearly halving the journey.",
         "Border processing is moving in the same direction. One Stop Border Posts along the corridor allow exit and entry formalities to be handled in a single location instead of two, while upgrades to the Regional Electronic Cargo Tracking System aim to cut emergency response time on flagged shipments to under an hour.",
         "For dispatch planning, the practical effect is less buffer time built into every schedule and tighter, more predictable handover windows at the border. Fewer unscheduled stops also means fewer opportunities for temperature drift on reefer loads — which matters as much for a shipment of avocados as it does for an on-time delivery commitment.",

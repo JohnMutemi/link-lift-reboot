@@ -43,11 +43,11 @@ function ContactRowWithEmail() {
         <span>+254 721 121 287</span>
       </a>
       <a
-        href="mailto:info@linkfreightltd.co.ke"
+        href={`mailto:${SITE.email}`}
         className="flex items-center gap-2 whitespace-nowrap hover:text-cyan transition-colors"
       >
         <Mail className="size-3.5 text-cyan shrink-0" />
-        <span>info@linkfreightltd.co.ke</span>
+        <span>{SITE.email}</span>
       </a>
     </div>
   );

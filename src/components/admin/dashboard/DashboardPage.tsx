@@ -1,4 +1,5 @@
 import { Plus, Download } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { DashboardCard, DataTable, ApprovalCard, StatusBadge } from "@/components/admin/common";
 import {
@@ -6,65 +7,11 @@ import {
   Clock,
   Truck,
   DollarSign,
-  AlertCircle,
-  CheckCircle,
-  XCircle,
 } from "lucide-react";
 import { BookingsChart, StatusChart, RevenueChart } from "./Charts";
+import { listBookings, listApprovals } from "@/lib/api/admin.functions";
 
-// Mock data
-const mockBookings = [
-  {
-    id: "1",
-    bookingNumber: "LF-0931",
-    customer: "Silverline Exporters",
-    container: "REF-001",
-    destination: "Kampala",
-    status: "in-transit" as const,
-    date: "2026-06-12",
-  },
-  {
-    id: "2",
-    bookingNumber: "LF-1047",
-    customer: "Jambo Foods Ltd.",
-    container: "DRY-002",
-    destination: "Dar es Salaam",
-    status: "pending" as const,
-    date: "2026-06-18",
-  },
-  {
-    id: "3",
-    bookingNumber: "LF-0988",
-    customer: "Green Cargo Co.",
-    container: "GEN-003",
-    destination: "Kigali",
-    status: "delivered" as const,
-    date: "2026-06-03",
-  },
-];
-
-const mockApprovals = [
-  {
-    bookingNumber: "LF-2024-001",
-    client: "Fresh Exports Ltd",
-    container: "REF-005",
-    driver: "John Kamau",
-    pickup: "Nairobi",
-    destination: "Mombasa",
-    priority: "high" as const,
-  },
-  {
-    bookingNumber: "LF-2024-002",
-    client: "Tech Logistics",
-    container: "DRY-010",
-    driver: "Peter Njoroge",
-    pickup: "Nairobi",
-    destination: "Kisumu",
-    priority: "medium" as const,
-  },
-];
-
-const bookingColumns = [
+const dashboardBookingColumns = [
   { key: "bookingNumber", label: "Booking #" },
   { key: "customer", label: "Customer" },
   { key: "container", label: "Container" },
@@ -83,6 +30,19 @@ const bookingColumns = [
 ];
 
 export function AdminDashboard() {
+  const { data: bookings = [], isLoading: bookingsLoading } = useQuery<any[]>(
+    { queryKey: ["dashboardBookings"], queryFn: () => listBookings().then((r: any) => (Array.isArray(r) ? r : [])) }
+  );
+
+  const { data: approvals = [], isLoading: approvalsLoading } = useQuery<any[]>(
+    { queryKey: ["dashboardApprovals"], queryFn: () => listApprovals().then((r: any) => (Array.isArray(r) ? r : [])) }
+  );
+
+  const pendingApprovals = approvals.filter((item: any) => item.status === "pending");
+  const totalBookings = bookings.length;
+  const activeTrips = bookings.filter((item: any) => item.status === "in-transit").length;
+  const pendingCount = pendingApprovals.length;
+
   return (
     <div className="space-y-8">
       {/* Page Header */}
@@ -108,19 +68,19 @@ export function AdminDashboard() {
         <DashboardCard
           icon={TrendingUp}
           title="Total Bookings"
-          value="1,284"
+          value={totalBookings.toString()}
           change={{ percentage: 12, trend: "up" }}
         />
         <DashboardCard
           icon={Clock}
           title="Pending Approvals"
-          value="24"
+          value={pendingCount.toString()}
           change={{ percentage: 8, trend: "up" }}
         />
         <DashboardCard
           icon={Truck}
           title="Active Trips"
-          value="42"
+          value={activeTrips.toString()}
           change={{ percentage: 5, trend: "down" }}
         />
         <DashboardCard
@@ -148,7 +108,7 @@ export function AdminDashboard() {
             View All →
           </Button>
         </div>
-        <DataTable columns={bookingColumns} data={mockBookings} />
+        <DataTable columns={dashboardBookingColumns} data={bookings} loading={bookingsLoading} />
       </div>
 
       {/* Pending Approvals */}
@@ -160,14 +120,26 @@ export function AdminDashboard() {
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {mockApprovals.map((approval) => (
-            <ApprovalCard
-              key={approval.bookingNumber}
-              {...approval}
-              onApprove={() => console.log("Approve:", approval.bookingNumber)}
-              onReject={() => console.log("Reject:", approval.bookingNumber)}
-            />
-          ))}
+          {pendingApprovals.length === 0 ? (
+            <p className="text-slate-500">No pending approvals found.</p>
+          ) : (
+            pendingApprovals.map((approval) => (
+              <ApprovalCard
+                key={approval.bookingNumber}
+                bookingNumber={approval.bookingNumber}
+                client={approval.client}
+                container={approval.container}
+                driver={approval.driver}
+                pickup={approval.pickup}
+                destination={approval.destination}
+                priority={approval.priority}
+                status={approval.status}
+                date={approval.date}
+                onApprove={() => console.log("Approve:", approval.bookingNumber)}
+                onReject={() => console.log("Reject:", approval.bookingNumber)}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

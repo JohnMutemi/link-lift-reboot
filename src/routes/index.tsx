@@ -11,7 +11,7 @@ const yard = fleetGallery[2].src; // twin Scania P360 XT prime movers at the yar
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Link Freight Logistics Ltd — Precision Freight Across East Africa" },
+      { title: "Link Freight Logistics Ltd — Precision Freight Across East & Southern Africa" },
       {
         name: "description",
         content:
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Link Freight Logistics Ltd" },
       {
         property: "og:description",
-        content: "Precision freight across East Africa — dry, reefer, gensets, haulage.",
+        content: "Precision freight across East & Southern Africa — dry, reefer, gensets, haulage.",
       },
       { property: "og:image", content: HERO_OG_IMAGE },
       { property: "twitter:image", content: HERO_OG_IMAGE },
@@ -78,11 +78,11 @@ function HomePage() {
                 Core Operational <span className="text-cyan">Services</span>
               </h2>
               <p className="text-slate-600 mt-4">
-                End-to-end freight solutions tailored for the Kenyan market and international transit corridors.
+                End-to-end freight solutions tailored for long-distance corridor trade across East and Southern Africa.
               </p>
             </div>
             <div className="h-px flex-1 bg-slate-200 hidden md:block mx-12" />
-            <div className="text-orange font-bold text-sm uppercase tracking-widest">Link Freight Ltd</div>
+            <div className="text-orange font-bold text-sm uppercase tracking-widest">Link Freight Logistics Ltd</div>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -136,7 +136,7 @@ function HomePage() {
             <ul className="mt-8 space-y-3 text-sm text-navy">
               <li className="flex items-start gap-3"><ShieldCheck className="size-5 text-cyan mt-0.5 shrink-0" /> ISO-aligned safety and compliance protocols</li>
               <li className="flex items-start gap-3"><Clock className="size-5 text-cyan mt-0.5 shrink-0" /> 24/7 dispatch with real-time tracking</li>
-              <li className="flex items-start gap-3"><Globe2 className="size-5 text-cyan mt-0.5 shrink-0" /> Cross-border presence: Kenya, Uganda, Rwanda, South Sudan</li>
+              <li className="flex items-start gap-3"><Globe2 className="size-5 text-cyan mt-0.5 shrink-0" /> Cross-border presence: Kenya, Uganda, Rwanda, Tanzania, Zambia, and Zimbabwe</li>
             </ul>
             <Link
               to="/about"
@@ -154,8 +154,8 @@ function HomePage() {
           <Quote className="size-10 text-cyan mx-auto mb-6" />
           <p className="font-display text-xl sm:text-2xl md:text-3xl leading-snug">
             “Link Freight handles our cold chain shipments with surgical precision. Their reefer
-            and genset deployment across East, Central, and Southern Africa has transformed our distribution
-            in Kigali and Kampala.”
+            and genset deployment across East and Southern Africa has transformed our distribution
+            in Kigali, Kampala, and Lusaka.”
           </p>
           <div className="mt-8 text-sm uppercase tracking-widest text-cyan font-bold">
             Director of Logistics &mdash; Global Pharma East Africa

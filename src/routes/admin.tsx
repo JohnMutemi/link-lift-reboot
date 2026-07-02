@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { getAdminSession } from "@/lib/auth";
 
@@ -16,12 +16,16 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const currentSession = getAdminSession();
     if (!currentSession) {
-      window.location.href = "/admin-login";
+      navigate({ to: "/admin-login", replace: true });
+      return;
     }
-  }, []);
+  }, [location.pathname, navigate]);
 
   return <Outlet />;
 }

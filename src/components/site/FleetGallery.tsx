@@ -124,11 +124,11 @@ export function FleetGallery() {
             <div className="max-w-xl">
               <span className="text-xs uppercase font-mono tracking-[0.2em] text-orange">Our Fleet</span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase mt-3 font-extrabold text-navy leading-tight">
-                Built for <span className="text-cyan">East, Central &amp; Southern Africa</span>
+                Built for <span className="text-cyan">East &amp; Southern Africa</span>
               </h2>
               <p className="text-slate-600 mt-4">
                 Prime movers, reefers, dry containers, and genset trailers — maintained, tracked, and
-                ready for dispatch across East, Central, and Southern Africa.
+                ready for dispatch across East and Southern Africa.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">

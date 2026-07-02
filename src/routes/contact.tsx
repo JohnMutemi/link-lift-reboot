@@ -10,9 +10,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact Us — Link Freight Logistics Ltd" },
-      { name: "description", content: "Get in touch with Link Freight Logistics. Track a shipment, partner with us, or reach our Nairobi office." },
-      { property: "og:title", content: "Contact Link Freight Logistics" },
-      { property: "og:description", content: "Get in touch with our team." },
+      { name: "description", content: "Get in touch with Link Freight Logistics Ltd for long-distance freight, corridor support, and shipment coordination." },
+      { property: "og:title", content: "Contact Link Freight Logistics Ltd" },
+      { property: "og:description", content: "Get in touch with our team for long-distance freight and corridor support." },
     ],
   }),
   component: ContactPage,
@@ -26,12 +26,39 @@ const channels = [
 ];
 function ContactPage() {
   const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const values = {
+      name: formData.get("name")?.toString() ?? "",
+      company: formData.get("company")?.toString() ?? "",
+      email: formData.get("email")?.toString() ?? "",
+      phone: formData.get("phone")?.toString() ?? "",
+      subject: formData.get("subject")?.toString() ?? "",
+      message: formData.get("message")?.toString() ?? "",
+    };
+
+    const body = [
+      `Name: ${values.name}`,
+      `Company: ${values.company}`,
+      `Email: ${values.email}`,
+      `Phone: ${values.phone}`,
+      "",
+      `Message:\n${values.message}`,
+    ].join("\n");
+
+    window.location.href = `mailto:jmtutorsalp@gmail.com?subject=${encodeURIComponent(values.subject || "Contact enquiry")}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
   return (
     <>
       <SplitHero
         tag="Contact Us"
         title="Let's move your shipment."
-        subtitle="Whether you need a tracking update or want to partner with us — our team is on standby. For pricing, use our dedicated quote form."
+        subtitle="Whether you need a tracking update or want to partner with us — our team is on standby for long-distance freight and corridor support."
         action={
           <ScrollCue
             toId="contact-form"
@@ -58,7 +85,8 @@ function ContactPage() {
               </SiteCard>
             ))}
 
-            <SiteCard variant="info" className="bg-orange/10 border-l-orange">              <div className="font-display text-lg uppercase text-navy font-bold mb-2">Need a quote?</div>
+            <SiteCard variant="info" className="bg-orange/10 border-l-orange">
+              <div className="font-display text-lg uppercase text-navy font-bold mb-2">Need a quote?</div>
               <p className="text-sm text-slate-600 mb-4">
                 Share your route and cargo details on our quote page for a tailored response within 24 hours.
               </p>
@@ -68,15 +96,10 @@ function ContactPage() {
               >
                 Get a Quote
               </Link>
-            </SiteCard>          </div>
+            </SiteCard>
+          </div>
 
-          <form
-            className="lg:col-span-3 bg-navy text-white p-5 sm:p-8 lg:p-10"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
-          >
+          <form className="lg:col-span-3 bg-navy text-white p-5 sm:p-8 lg:p-10" onSubmit={handleSubmit}>
             <h2 className="font-display text-2xl sm:text-3xl uppercase font-extrabold mb-2">Send a Message</h2>
             <p className="text-white/60 text-sm mb-8">General enquiries, partnerships, or shipment updates.</p>
 
@@ -98,7 +121,11 @@ function ContactPage() {
 
             <div className="mt-5">
               <label className="text-xs uppercase tracking-widest text-cyan font-bold">Message</label>
-              <textarea rows={5} className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan" />
+              <textarea
+                name="message"
+                rows={5}
+                className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan"
+              />
             </div>
 
             <button
@@ -120,7 +147,7 @@ function ContactPage() {
           <div className="aspect-[4/3] sm:aspect-[16/7] w-full bg-navy/5 overflow-hidden border-b-4 border-cyan">
             <iframe
               title="Link Freight office location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=36.8950%2C-1.3450%2C36.9450%2C-1.3050&amp;layer=mapnik"
+              src="https://www.google.com/maps?q=Off+Airport+North+Road,+Nairobi,+Kenya&z=15&output=embed"
               className="w-full h-full"
               loading="lazy"
             />

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/quote")({
       {
         name: "description",
         content:
-          "Request a freight quote from Link Freight Logistics. Long distance, short distance, and associated logistics services across East Africa.",
+          "Request a freight quote from Link Freight Logistics Ltd for long-distance freight and logistics support across East & Southern Africa.",
       },
       { property: "og:title", content: "Get a Quote — Link Freight Logistics" },
       { property: "og:description", content: "Request a tailored freight quote within 24 hours." },

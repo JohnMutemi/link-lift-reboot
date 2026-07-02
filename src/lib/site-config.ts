@@ -1,9 +1,9 @@
 export const SITE = {
-  tagline: "Delivering Possibilities, Connecting Worlds",
+  tagline: "Link Freight Logistics Ltd",
   phone: "+254 721 121 287",
   phoneTel: "+254721121287",
   phoneWhatsApp: "254721121287",
-  email: "info@linkfreightltd.co.ke",
+  email: "jmtutorsalp@gmail.com",
   address: ["Off Airport North Road", "Nairobi, Kenya"],
   /** Replace empty strings with real profile URLs when available */
   social: {

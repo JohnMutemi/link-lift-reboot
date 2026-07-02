@@ -22,7 +22,7 @@ export function Footer() {
             </div>
             <p className="text-cyan/90 text-sm font-medium mb-3">{SITE.tagline}</p>
             <p className="leading-relaxed mb-6">
-              Specialized freight and logistics across East Africa &mdash; dry containers, reefer
+              Specialized freight and logistics across East & Southern Africa &mdash; dry containers, reefer
               units, gensets, and inland haulage tailored to every shipment.
             </p>
             <div className="flex gap-3">
@@ -74,13 +74,13 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3"><MapPin className="size-4 text-cyan shrink-0 mt-0.5" /> Off Airport North Road, Nairobi</li>
               <li className="flex items-center gap-3"><Phone className="size-4 text-cyan shrink-0" /> +254 721 121 287</li>
-              <li className="flex items-center gap-3"><Mail className="size-4 text-cyan shrink-0" /> info@linkfreightltd.co.ke</li>
+              <li className="flex items-center gap-3"><Mail className="size-4 text-cyan shrink-0" /> {SITE.email}</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p>&copy; {new Date().getFullYear()} Link Freight Logistics Limited. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Link Freight Logistics Ltd. All Rights Reserved.</p>
           <div className="flex gap-6 uppercase tracking-widest font-bold">
             <span className="text-cyan">Dry</span>
             <span>Reefer</span>

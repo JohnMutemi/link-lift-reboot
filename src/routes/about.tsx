@@ -8,9 +8,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About Us — Link Freight Logistics Ltd" },
-      { name: "description", content: "Learn about Link Freight Logistics — our mission, story, and people moving East Africa's freight with precision and care." },
+      { name: "description", content: "Learn about Link Freight Logistics Ltd — our mission, story, and people moving freight across East & Southern Africa with precision and care." },
       { property: "og:title", content: "About Link Freight Logistics" },
-      { property: "og:description", content: "Our mission, story and people powering precision freight across East Africa." },
+      { property: "og:description", content: "Our mission, story and people powering precision freight across East & Southern Africa." },
     ],
   }),
   component: AboutPage,
@@ -18,13 +18,13 @@ export const Route = createFileRoute("/about")({
 
 const values = [
   { Icon: Target, title: "Mission", text: "To deliver tailored, dependable freight solutions that empower African trade and connect markets across the continent." },
-  { Icon: Eye, title: "Vision", text: "To be East Africa's most trusted logistics partner — recognised for precision, integrity, and operational excellence." },
+  { Icon: Eye, title: "Vision", text: "To be East & Southern Africa's most trusted logistics partner — recognised for precision, integrity, and operational excellence." },
   { Icon: Heart, title: "Values", text: "Reliability. Safety. Transparency. Long-term partnership over short-term wins, every shipment." },
 ];
 
 const milestones = [
   { year: "2014", text: "Reefer fleet launched to serve horticulture and pharmaceutical exporters." },
-  { year: "2019", text: "Cross-border expansion to Uganda, Rwanda and South Sudan corridors." },
+  { year: "2019", text: "Cross-border expansion to Uganda, Rwanda, Tanzania, Zambia, and Zimbabwe corridors." },
   { year: "2023", text: "Genset-backed cold chain network rolled out across East, Central, and Southern Africa." },
   { year: "2026", text: "Digital tracking platform launched for real-time shipment visibility." },
 ];
@@ -35,7 +35,7 @@ function AboutPage() {
       <SplitHero
         tag="About Us"
         title="Built on trust. Driven by precision."
-        subtitle="Since 2014, Link Freight Logistics has been moving East Africa's most critical shipments — engineered for the journey, tailored for the client."
+        subtitle="Since 2014, Link Freight Logistics Ltd has been moving the region's most critical shipments — engineered for the journey, tailored for the client."
         action={
           <ScrollCue
             toId="about-story"
@@ -50,14 +50,14 @@ function AboutPage() {
       <SplitSection
         id="about-story"
         tag="Our Story"
-        title="Logistics, the way it should work."
+        title="Logistics, the way we work."
         description="Link Freight was founded in 2014 on a simple conviction: clients deserve a freight partner who treats every container as if it were their own."
       >
         <p className="text-slate-600 leading-relaxed">
           We spent the next three years building the fleet, network and expertise to back that promise,
           formally launching operations in 2017 with a single truck on the Mombasa–Nairobi highway.
           Since then, we've grown into a multi-modal operator running dry, reefer and genset-backed loads
-          across East Africa.
+          across East & Southern Africa.
         </p>
         <p className="text-slate-600 leading-relaxed">
           What hasn't changed is our standard. Every shipment is matched to the right equipment,

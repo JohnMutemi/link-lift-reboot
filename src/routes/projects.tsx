@@ -13,7 +13,7 @@ export const Route = createFileRoute("/projects")({
       { property: "og:title", content: "Projects — Link Freight Logistics" },
       {
         property: "og:description",
-        content: "Discover our Oil & Gas freight and logistics project on East Africa's most demanding corridors.",
+        content: "Discover our Oil & Gas freight and logistics project on East & Southern Africa's most demanding corridors.",
       },
     ],
   }),

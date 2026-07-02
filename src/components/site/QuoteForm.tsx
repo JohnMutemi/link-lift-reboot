@@ -1,17 +1,40 @@
 import { Send } from "lucide-react";
 import { useState } from "react";
+import { SITE } from "@/lib/site-config";
 
 export function QuoteForm() {
   const [sent, setSent] = useState(false);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const values = {
+      name: formData.get("name")?.toString() ?? "",
+      company: formData.get("company")?.toString() ?? "",
+      email: formData.get("email")?.toString() ?? "",
+      phone: formData.get("phone")?.toString() ?? "",
+      service: formData.get("service")?.toString() ?? "Long Distance Haulage",
+      details: formData.get("details")?.toString() ?? "",
+    };
+
+    const subject = `Enquiry from ${values.name || "website visitor"}`;
+    const body = [
+      `Name: ${values.name}`,
+      `Company: ${values.company}`,
+      `Email: ${values.email}`,
+      `Phone: ${values.phone}`,
+      `Service: ${values.service}`,
+      "",
+      `Shipment details:\n${values.details}`,
+    ].join("\n");
+
+    window.location.href = `mailto:jmtutorsalp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
   return (
-    <form
-      className="bg-navy text-white p-5 sm:p-8 lg:p-10"
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
-    >
+    <form className="bg-navy text-white p-5 sm:p-8 lg:p-10" onSubmit={handleSubmit}>
       <h2 className="font-display text-2xl sm:text-3xl uppercase font-extrabold mb-2">Request a Quote</h2>
       <p className="text-white/60 text-sm mb-8">
         Tell us about your shipment and we&apos;ll get back within 24 hours.
@@ -26,9 +49,11 @@ export function QuoteForm() {
 
       <div className="mt-5">
         <label className="text-xs uppercase tracking-widest text-cyan font-bold">Service</label>
-        <select className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan">
+        <select
+          name="service"
+          className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan"
+        >
           <option className="text-navy">Long Distance Haulage</option>
-          <option className="text-navy">Short Distance Haulage</option>
           <option className="text-navy">Dry Containers</option>
           <option className="text-navy">Reefer Containers</option>
           <option className="text-navy">Gensets</option>
@@ -39,6 +64,7 @@ export function QuoteForm() {
       <div className="mt-5">
         <label className="text-xs uppercase tracking-widest text-cyan font-bold">Shipment Details</label>
         <textarea
+          name="details"
           rows={5}
           className="mt-2 w-full bg-white/5 border border-white/15 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-cyan"
         />
