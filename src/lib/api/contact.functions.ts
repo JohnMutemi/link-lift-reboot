@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { sendEmail } from "@/lib/email";
-import { SITE } from "@/lib/site-config";
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -106,7 +105,6 @@ export const submitContactForm = createServerFn({ method: "POST" })
     });
 
     await sendEmail({
-      to: SITE.email,
       replyTo: data.email,
       subject: data.subject || "Contact enquiry",
       text: body,
@@ -142,7 +140,6 @@ export const submitQuoteForm = createServerFn({ method: "POST" })
     });
 
     await sendEmail({
-      to: SITE.email,
       replyTo: data.email,
       subject: `Enquiry from ${data.name || "website visitor"}`,
       text: body,
