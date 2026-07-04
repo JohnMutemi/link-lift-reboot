@@ -1,8 +1,9 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Lock, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { validateAdminLogin, createAdminSession, seedDefaultAdminLogins } from "@/lib/auth";
+import { createAdminSession } from "@/lib/auth";
+import { validateAdminLogin } from "@/lib/api/admin.functions";
 
 export function AdminLoginPage() {
   const navigate = useNavigate();
@@ -16,28 +17,21 @@ export function AdminLoginPage() {
     setError(null);
     setIsLoading(true);
 
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const user = validateAdminLogin(email, password);
-    if (user) {
-      createAdminSession(user);
-      setIsLoading(false);
-      navigate({ to: "/admin" });
-    } else {
-      setError("Invalid email or password. Please try again.");
+    try {
+      const result = await validateAdminLogin({ data: { email, password } });
+      if (result?.success && result?.user) {
+        createAdminSession(result.user);
+        navigate({ to: "/admin" });
+      } else {
+        setError(result?.error || "Invalid email or password. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    } finally {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    // Seed default credentials only on the client
-    try {
-      seedDefaultAdminLogins();
-    } catch (e) {
-      // ignore in environments without storage
-    }
-  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy via-slate-900 to-navy px-4 py-10">

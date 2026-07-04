@@ -1,7 +1,7 @@
-import { Plus, Download, RotateCcw } from "lucide-react";
+import { Plus, RotateCcw } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { DashboardCard, DataTable, ApprovalCard, StatusBadge } from "@/components/admin/common";
+import { DashboardCard, ApprovalCard, StatusBadge } from "@/components/admin/common";
 import {
   TrendingUp,
   Clock,
@@ -11,27 +11,11 @@ import {
 import { BookingsChart, StatusChart, RevenueChart } from "./Charts";
 import { listBookings, listApprovals, resetAdminTables } from "@/lib/api/admin.functions";
 
-const dashboardBookingColumns = [
-  { key: "bookingNumber", label: "Booking #" },
-  { key: "customer", label: "Customer" },
-  { key: "container", label: "Container" },
-  { key: "destination", label: "Destination" },
-  {
-    key: "status",
-    label: "Status",
-    render: (value: string) => (
-      <StatusBadge
-        status={value as any}
-        label={value.charAt(0).toUpperCase() + value.slice(1).replace("-", " ")}
-      />
-    ),
-  },
-  { key: "date", label: "Date" },
-];
+
 
 export function AdminDashboard() {
   const qc = useQueryClient();
-  const { data: bookings = [], isLoading: bookingsLoading, error: bookingsError } = useQuery<any[]>({
+  const { data: bookings = [] } = useQuery<any[]>({
     queryKey: ["dashboardBookings"],
     queryFn: async () => {
       try {
@@ -99,7 +83,7 @@ export function AdminDashboard() {
   const activeTrips = normalizedBookings.filter((item: any) => item.status === "in-transit").length;
   const pendingCount = pendingApprovals.length;
 
-  const hasErrors = bookingsError || approvalsError;
+  const hasErrors = approvalsError;
 
   return (
     <div className="space-y-8">
@@ -110,21 +94,21 @@ export function AdminDashboard() {
         </div>
       )}
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-          <p className="text-slate-600 mt-1">Welcome back! Here's your logistics overview.</p>
+          <h1 className="text-4xl font-bold text-slate-900">Dashboard</h1>
+          <p className="text-slate-600 mt-2">Welcome back! Here's your logistics overview.</p>
         </div>
         <div className="flex gap-2">
           <Button
-            className="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg h-10"
+            className="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 rounded-lg h-10 transition-all"
             onClick={() => resetMut.mutate()}
             disabled={resetMut.isPending}
           >
             <RotateCcw className="w-4 h-4 mr-2" />
             {resetMut.isPending ? "Resetting..." : "Reset Data"}
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-10">
+          <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-lg h-10 shadow-lg hover:shadow-xl transition-all">
             <Plus className="w-4 h-4 mr-2" />
             New Booking
           </Button>
@@ -137,25 +121,21 @@ export function AdminDashboard() {
           icon={TrendingUp}
           title="Total Bookings"
           value={totalBookings.toString()}
-          change={{ percentage: 12, trend: "up" }}
         />
         <DashboardCard
           icon={Clock}
           title="Pending Approvals"
           value={pendingCount.toString()}
-          change={{ percentage: 8, trend: "up" }}
         />
         <DashboardCard
           icon={Truck}
           title="Active Trips"
           value={activeTrips.toString()}
-          change={{ percentage: 5, trend: "down" }}
         />
         <DashboardCard
           icon={DollarSign}
           title="Monthly Revenue"
-          value="KES 2.4M"
-          change={{ percentage: 18, trend: "up" }}
+          value="—"
         />
       </div>
 
@@ -167,17 +147,6 @@ export function AdminDashboard() {
 
       {/* Revenue Chart */}
       <RevenueChart />
-
-      {/* Latest Bookings */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-slate-900">Latest Bookings</h3>
-          <Button variant="ghost" className="text-blue-600 hover:text-blue-700 text-sm">
-            View All →
-          </Button>
-        </div>
-        <DataTable columns={dashboardBookingColumns} data={normalizedBookings} loading={bookingsLoading} />
-      </div>
 
       {/* Pending Approvals */}
       <div>

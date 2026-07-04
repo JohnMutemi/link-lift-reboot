@@ -1,11 +1,44 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { Pool } from "pg";
-import { getServerConfig } from "../config.server";
 
-const pool = new Pool({ connectionString: getServerConfig().databaseUrl });
+async function getPool() {
+  const module = await import("./db.server");
+  return module.pool;
+}
+
+// Server-side authentication validation
+export const validateAdminLogin = createServerFn({ method: "POST" })
+  .validator(
+    z.object({
+      email: z.string().email(),
+      password: z.string(),
+    })
+  )
+  .handler(async ({ data }) => {
+    // Get admin credentials from environment variables
+    // In production, store these securely (e.g., hashed in database, use proper auth service)
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@linkfreight.com";
+    const adminPassword = process.env.ADMIN_PASSWORD || "LinkFreight2024!";
+
+    if (data.email === adminEmail && data.password === adminPassword) {
+      return {
+        success: true,
+        user: {
+          id: "admin-001",
+          email: data.email,
+          name: "Admin User",
+        },
+      };
+    }
+
+    return {
+      success: false,
+      error: "Invalid credentials",
+    };
+  });
 
 async function ensureTables() {
+  const pool = await getPool();
   await pool.query(`
     CREATE TABLE IF NOT EXISTS bookings (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -65,50 +98,25 @@ async function ensureTables() {
 }
 
 async function seedDefaultRows() {
+  const pool = await getPool();
   const existing = await pool.query("SELECT COUNT(*)::int AS count FROM bookings");
   if (existing.rows[0].count > 0) {
     return;
   }
 
-  await pool.query(`
-    INSERT INTO bookings (booking_number, customer, container, destination, status, date, value)
-    VALUES
-      ('BK-1001', 'Apex Logistics', 'CTR-2001', 'Mombasa', 'pending', '2026-07-02', 145000),
-      ('BK-1002', 'Northwind Supplies', 'CTR-2002', 'Kampala', 'approved', '2026-07-03', 220000),
-      ('BK-1003', 'Delta Cargo', 'CTR-2003', 'Dar es Salaam', 'in-transit', '2026-07-04', 310000)
-  `);
-
-  await pool.query(`
-    INSERT INTO customers (name, contact, bookings, revenue, outstanding, status)
-    VALUES
-      ('Apex Logistics', 'ops@apex.co', 5, 4200000, 180000, 'active'),
-      ('Northwind Supplies', 'finance@northwind.co', 2, 1800000, 45000, 'active')
-  `);
-
-  await pool.query(`
-    INSERT INTO drivers (name, phone, truck, license_expiry, trips_completed, status)
-    VALUES
-      ('James Kariuki', '+254700111222', 'TRK-01', '2027-10-12', 18, 'available'),
-      ('Maria Wanjiku', '+254700333444', 'TRK-02', '2027-08-21', 32, 'on-trip')
-  `);
-
-  await pool.query(`
-    INSERT INTO fleet (truck_number, driver, mileage, status, next_service_date, current_location)
-    VALUES
-      ('TRK-01', 'James Kariuki', '124500', 'available', '2026-08-01', 'Nairobi'),
-      ('TRK-02', 'Maria Wanjiku', '98000', 'on-trip', '2026-08-15', 'Mombasa')
-  `);
+  // Seed data removed - using live database only
 }
 
 export async function resetAdminTables() {
+  const pool = await getPool();
   await ensureTables();
   await pool.query("TRUNCATE TABLE bookings, customers, drivers, fleet RESTART IDENTITY CASCADE");
-  await seedDefaultRows();
   return { success: true };
 }
 
 // Bookings
 export const listBookings = createServerFn({ method: "GET" }).handler(async () => {
+  const pool = await getPool();
   await ensureTables();
   const res = await pool.query("SELECT * FROM bookings ORDER BY created_at DESC");
   return res.rows;
@@ -117,6 +125,7 @@ export const listBookings = createServerFn({ method: "GET" }).handler(async () =
 export const getBooking = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const res = await pool.query("SELECT * FROM bookings WHERE id = $1", [data.id]);
     return res.rows[0] ?? null;
@@ -125,6 +134,7 @@ export const getBooking = createServerFn({ method: "POST" })
 export const createBooking = createServerFn({ method: "POST" })
   .validator(z.object({ booking: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const b = data.booking;
     const res = await pool.query(
@@ -138,6 +148,7 @@ export const createBooking = createServerFn({ method: "POST" })
 export const updateBooking = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string(), booking: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const b = data.booking;
     const res = await pool.query(
@@ -150,6 +161,7 @@ export const updateBooking = createServerFn({ method: "POST" })
 export const deleteBooking = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     await pool.query("DELETE FROM bookings WHERE id = $1", [data.id]);
     return { success: true };
@@ -159,6 +171,7 @@ export const deleteBooking = createServerFn({ method: "POST" })
 
 // Customers
 export const listCustomers = createServerFn({ method: "GET" }).handler(async () => {
+  const pool = await getPool();
   await ensureTables();
   const res = await pool.query("SELECT * FROM customers ORDER BY name");
   return res.rows;
@@ -167,6 +180,7 @@ export const listCustomers = createServerFn({ method: "GET" }).handler(async () 
 export const createCustomer = createServerFn({ method: "POST" })
   .validator(z.object({ customer: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const c = data.customer;
     const res = await pool.query(
@@ -180,6 +194,7 @@ export const createCustomer = createServerFn({ method: "POST" })
 export const updateCustomer = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string(), customer: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const c = data.customer;
     const res = await pool.query(
@@ -192,6 +207,7 @@ export const updateCustomer = createServerFn({ method: "POST" })
 export const deleteCustomer = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     await pool.query("DELETE FROM customers WHERE id = $1", [data.id]);
     return { success: true };
@@ -199,6 +215,7 @@ export const deleteCustomer = createServerFn({ method: "POST" })
 
 // Drivers
 export const listDrivers = createServerFn({ method: "GET" }).handler(async () => {
+  const pool = await getPool();
   await ensureTables();
   const res = await pool.query("SELECT * FROM drivers ORDER BY name");
   return res.rows;
@@ -207,6 +224,7 @@ export const listDrivers = createServerFn({ method: "GET" }).handler(async () =>
 export const createDriver = createServerFn({ method: "POST" })
   .validator(z.object({ driver: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const d = data.driver;
     const res = await pool.query(
@@ -220,6 +238,7 @@ export const createDriver = createServerFn({ method: "POST" })
 export const updateDriver = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string(), driver: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const d = data.driver;
     const res = await pool.query(
@@ -232,6 +251,7 @@ export const updateDriver = createServerFn({ method: "POST" })
 export const deleteDriver = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     await pool.query("DELETE FROM drivers WHERE id = $1", [data.id]);
     return { success: true };
@@ -239,6 +259,7 @@ export const deleteDriver = createServerFn({ method: "POST" })
 
 // Fleet
 export const listFleet = createServerFn({ method: "GET" }).handler(async () => {
+  const pool = await getPool();
   await ensureTables();
   const res = await pool.query("SELECT * FROM fleet ORDER BY truck_number");
   return res.rows;
@@ -247,6 +268,7 @@ export const listFleet = createServerFn({ method: "GET" }).handler(async () => {
 export const createFleet = createServerFn({ method: "POST" })
   .validator(z.object({ vehicle: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const v = data.vehicle;
     const res = await pool.query(
@@ -260,6 +282,7 @@ export const createFleet = createServerFn({ method: "POST" })
 export const updateFleet = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string(), vehicle: z.any() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const v = data.vehicle;
     const res = await pool.query(
@@ -272,6 +295,7 @@ export const updateFleet = createServerFn({ method: "POST" })
 export const deleteFleet = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     await pool.query("DELETE FROM fleet WHERE id = $1", [data.id]);
     return { success: true };
@@ -279,6 +303,7 @@ export const deleteFleet = createServerFn({ method: "POST" })
 
 // Approvals / status changes
 export const listApprovals = createServerFn({ method: "GET" }).handler(async () => {
+  const pool = await getPool();
   await ensureTables();
   const res = await pool.query("SELECT * FROM bookings ORDER BY created_at DESC");
   return res.rows;
@@ -287,6 +312,7 @@ export const listApprovals = createServerFn({ method: "GET" }).handler(async () 
 export const approveBooking = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const res = await pool.query("UPDATE bookings SET status='approved', updated_at=now() WHERE booking_number=$1 RETURNING *", [data.id]);
     return res.rows[0];
@@ -295,6 +321,7 @@ export const approveBooking = createServerFn({ method: "POST" })
 export const rejectBooking = createServerFn({ method: "POST" })
   .validator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const pool = await getPool();
     await ensureTables();
     const res = await pool.query("UPDATE bookings SET status='rejected', updated_at=now() WHERE booking_number=$1 RETURNING *", [data.id]);
     return res.rows[0];

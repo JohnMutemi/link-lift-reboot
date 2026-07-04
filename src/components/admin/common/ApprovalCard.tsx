@@ -45,40 +45,40 @@ export function ApprovalCard({
   const priorityStyle = priorityConfig[resolvedPriority];
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 p-5 hover:shadow-md transition-shadow">
+    <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl border border-slate-200/50 hover:border-blue-200 hover:shadow-lg p-5 transition-all duration-200 group">
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <p className="font-semibold text-slate-900">{bookingNumber}</p>
+            <p className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{bookingNumber}</p>
             <div
-              className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text} border border-current/20`}
             >
               <div className={`w-1.5 h-1.5 rounded-full ${priorityStyle.dot}`} />
               {resolvedPriority.charAt(0).toUpperCase() + resolvedPriority.slice(1)}
             </div>
           </div>
-          <p className="text-sm text-slate-600">{client}</p>
+          <p className="text-sm text-slate-600 group-hover:text-slate-700">{client}</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4 pb-4 border-b border-slate-100">
+      <div className="grid grid-cols-2 gap-4 mb-4 pb-4 border-b border-slate-200/50">
         <div className="text-sm">
-          <p className="text-slate-600 mb-1">Container</p>
+          <p className="text-slate-500 text-xs uppercase tracking-wide mb-1 font-semibold">Container</p>
           <p className="font-medium text-slate-900">{container}</p>
         </div>
         <div className="text-sm">
-          <p className="text-slate-600 mb-1">Driver</p>
+          <p className="text-slate-500 text-xs uppercase tracking-wide mb-1 font-semibold">Driver</p>
           <p className="font-medium text-slate-900">{driver ?? "Unassigned"}</p>
         </div>
         <div className="text-sm col-span-2">
-          <p className="text-slate-600 mb-1">Route</p>
+          <p className="text-slate-500 text-xs uppercase tracking-wide mb-1 font-semibold">Route</p>
           <p className="font-medium text-slate-900">
             {pickup ? `${pickup} → ${destination}` : destination}
           </p>
         </div>
         {date && (
           <div className="text-sm col-span-2">
-            <p className="text-slate-600 mb-1">Date</p>
+            <p className="text-slate-500 text-xs uppercase tracking-wide mb-1 font-semibold">Date</p>
             <p className="font-medium text-slate-900">{date}</p>
           </div>
         )}
@@ -87,7 +87,7 @@ export function ApprovalCard({
       <div className="flex gap-2">
         <Button
           onClick={onApprove}
-          className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg h-9 flex items-center justify-center gap-2"
+          className="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-white rounded-lg h-9 flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
         >
           <CheckCircle2 className="w-4 h-4" />
           Approve
@@ -95,7 +95,7 @@ export function ApprovalCard({
         <Button
           onClick={onReject}
           variant="outline"
-          className="flex-1 border-red-200 text-red-600 hover:bg-red-50 rounded-lg h-9 flex items-center justify-center gap-2"
+          className="flex-1 border-red-300 text-red-600 hover:bg-red-50/80 hover:border-red-400 rounded-lg h-9 flex items-center justify-center gap-2 transition-all"
         >
           <XCircle className="w-4 h-4" />
           Reject

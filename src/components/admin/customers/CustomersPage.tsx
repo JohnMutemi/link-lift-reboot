@@ -64,6 +64,17 @@ export function CustomersPage() {
   });
 
   const totalBookings = customers.reduce((sum: number, c: any) => sum + (c.bookings ?? 0), 0);
+  const totalRevenue = customers.reduce((sum: number, c: any) => sum + (Number(c.revenue) ?? 0), 0);
+  const totalOutstanding = customers.reduce((sum: number, c: any) => sum + (Number(c.outstanding) ?? 0), 0);
+
+  const formatCurrency = (value: number) => {
+    if (value >= 1000000) {
+      return `KES ${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `KES ${(value / 1000).toFixed(0)}K`;
+    }
+    return `KES ${value}`;
+  };
 
   const openCreateDialog = () => {
     setEditingCustomer(null);
@@ -123,12 +134,12 @@ export function CustomersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Customer Management</h1>
-          <p className="text-slate-600 mt-1">View and manage customer accounts.</p>
+          <h1 className="text-4xl font-bold text-slate-900">Customer Management</h1>
+          <p className="text-slate-600 mt-2">View and manage customer accounts.</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-10" onClick={openCreateDialog}>
+        <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-lg h-10 shadow-lg hover:shadow-xl transition-all" onClick={openCreateDialog}>
           <Plus className="w-4 h-4 mr-2" />
           Add Customer
         </Button>
@@ -136,23 +147,23 @@ export function CustomersPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
-          <p className="text-sm text-slate-600 mb-1">Total Customers</p>
-          <p className="text-2xl font-bold text-slate-900">{customers.length}</p>
+        <div className="bg-white rounded-xl border border-slate-200/50 p-4 hover:shadow-lg hover:border-blue-200 transition-all">
+          <p className="text-sm font-medium text-slate-600 mb-2">Total Customers</p>
+          <p className="text-3xl font-bold text-slate-900">{customers.length}</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
-          <p className="text-sm text-slate-600 mb-1">Total Bookings</p>
-          <p className="text-2xl font-bold text-blue-600">
+        <div className="bg-white rounded-xl border border-slate-200/50 p-4 hover:shadow-lg hover:border-blue-200 transition-all">
+          <p className="text-sm font-medium text-slate-600 mb-2">Total Bookings</p>
+          <p className="text-3xl font-bold text-blue-600">
             {totalBookings}
           </p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
-          <p className="text-sm text-slate-600 mb-1">Total Revenue</p>
-          <p className="text-2xl font-bold text-emerald-600">KES 4M</p>
+        <div className="bg-white rounded-xl border border-slate-200/50 p-4 hover:shadow-lg hover:border-emerald-200 transition-all">
+          <p className="text-sm font-medium text-slate-600 mb-2">Total Revenue</p>
+          <p className="text-3xl font-bold text-emerald-600">{formatCurrency(totalRevenue)}</p>
         </div>
-        <div className="bg-white rounded-xl border border-slate-100 p-4">
-          <p className="text-sm text-slate-600 mb-1">Outstanding</p>
-          <p className="text-2xl font-bold text-amber-600">KES 475K</p>
+        <div className="bg-white rounded-xl border border-slate-200/50 p-4 hover:shadow-lg hover:border-amber-200 transition-all">
+          <p className="text-sm font-medium text-slate-600 mb-2">Outstanding</p>
+          <p className="text-3xl font-bold text-amber-600">{formatCurrency(totalOutstanding)}</p>
         </div>
       </div>
 

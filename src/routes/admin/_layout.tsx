@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAdminSession } from "@/lib/auth";
 import { AdminLayout } from "@/components/admin/layout";
 
@@ -17,12 +17,16 @@ export const Route = createFileRoute("/admin/_layout")({
 });
 
 function AdminLayoutComponent() {
-  const session = getAdminSession();
+  const [session, setSession] = useState<ReturnType<typeof getAdminSession> | null>(null);
 
   useEffect(() => {
-    if (!session) {
+    const currentSession = getAdminSession();
+    if (!currentSession) {
       window.location.href = "/admin-login";
+      return;
     }
+
+    setSession(currentSession);
   }, []);
 
   // Don't render anything while redirecting

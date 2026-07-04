@@ -29,14 +29,14 @@ export function DashboardCard({
         : "text-slate-600";
 
   return (
-    <div className={`bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow ${className}`}>
+    <div className={`bg-white rounded-2xl p-6 shadow-sm border border-slate-200/50 hover:shadow-xl hover:border-blue-200 transition-all duration-200 group ${className}`}>
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-sm font-medium text-slate-600 mb-1">{title}</p>
+          <p className="text-sm font-medium text-slate-600 mb-2 group-hover:text-blue-600 transition-colors">{title}</p>
           <p className="text-3xl font-bold text-slate-900">{value}</p>
         </div>
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 rounded-xl">
-          <Icon className="w-6 h-6 text-blue-600" />
+        <div className="bg-gradient-to-br from-blue-50 via-blue-100 to-amber-50 p-3 rounded-xl border border-blue-200/50 group-hover:shadow-lg transition-all">
+          <Icon className="w-6 h-6 text-blue-600 group-hover:text-amber-500 transition-colors" />
         </div>
       </div>
 

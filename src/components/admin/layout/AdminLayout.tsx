@@ -24,12 +24,15 @@ export function AdminLayout({
   };
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row overflow-hidden bg-slate-50">
+    <div className="flex h-full flex-col lg:flex-row overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Sidebar */}
       <AdminSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
 
+      {/* Glass Divider Effect */}
+      <div className="hidden lg:block w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent opacity-50" />
+
       {/* Main Content */}
-      <div className="flex flex-col flex-1 min-h-screen overflow-hidden min-w-0">
+      <div className="flex flex-col flex-1 min-h-0 min-w-0 relative">
         <AdminTopbar
           userInitial={userInitial}
           userName={userName}
@@ -37,7 +40,7 @@ export function AdminLayout({
           onLogout={handleLogout}
         />
 
-        <main className="flex-1 min-h-0 overflow-y-auto">
+        <main className="flex-1 min-h-0 overflow-y-scroll admin-scrollbar">
           <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
             {children}
           </div>
