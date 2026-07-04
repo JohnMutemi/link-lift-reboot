@@ -107,6 +107,7 @@ export const submitContactForm = createServerFn({ method: "POST" })
 
     await sendEmail({
       to: SITE.email,
+      replyTo: data.email,
       subject: data.subject || "Contact enquiry",
       text: body,
       html,
@@ -141,6 +142,8 @@ export const submitQuoteForm = createServerFn({ method: "POST" })
     });
 
     await sendEmail({
+      to: SITE.email,
+      replyTo: data.email,
       subject: `Enquiry from ${data.name || "website visitor"}`,
       text: body,
       html,
